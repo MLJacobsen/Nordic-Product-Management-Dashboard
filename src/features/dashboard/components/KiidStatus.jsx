@@ -29,7 +29,7 @@ function KiidStatus() {
       data-testid="kiid-status"
     >
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-lg font-semibold text-neutral-800">KIID Compliance</h3>
+        <h3 className="text-lg font-semibold text-neutral-800">Nøkkelinformasjon (KIID)</h3>
         <span
           className={`text-2xl font-bold ${allCompliant ? 'text-green-600' : 'text-red-600'}`}
           data-testid="kiid-ratio"
@@ -40,12 +40,12 @@ function KiidStatus() {
 
       {allCompliant ? (
         <p className="text-green-700 text-sm font-medium" data-testid="kiid-compliant">
-          ✓ All funds have KIID documents
+          ✓ All funds have Nøkkelinformasjon
         </p>
       ) : (
         <div data-testid="kiid-non-compliant">
           <p className="text-red-700 text-sm font-medium mb-1">
-            ✗ {fundsMissingKiid.length} fund{fundsMissingKiid.length > 1 ? 's' : ''} missing KIID
+            ✗ {fundsMissingKiid.length} fund{fundsMissingKiid.length > 1 ? 's' : ''} missing Nøkkelinformasjon
           </p>
           <ul className="text-red-600 text-xs space-y-0.5">
             {fundsMissingKiid.map((f) => (
