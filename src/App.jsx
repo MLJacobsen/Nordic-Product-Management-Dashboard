@@ -17,7 +17,7 @@ function App() {
     <TaskProvider>
       <TagProvider>
         <ListProvider>
-          <div className="App min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex flex-col items-center py-12 px-4" data-testid="app">
+          <div className="App min-h-screen stb-gradient-light flex flex-col items-center py-12 px-4" data-testid="app">
             <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-6">
               {/* Main task area */}
               <div className="flex-1 min-w-0">
