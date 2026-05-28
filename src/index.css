@@ -3,18 +3,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
-  /* Storebrand brand colors */
-  --color-primary-50: #f0f4f8;
-  --color-primary-100: #d9e2ec;
-  --color-primary-200: #bcccdc;
-  --color-primary-300: #9fb3c8;
-  --color-primary-400: #627d98;
-  --color-primary-500: #003366;
-  --color-primary-600: #002b57;
-  --color-primary-700: #002347;
-  --color-primary-800: #001b38;
-  --color-primary-900: #001429;
-  --color-primary-950: #000d1a;
+  /* Storebrand brand colors — deep maroon red */
+  --color-primary-50: #fdf2f2;
+  --color-primary-100: #fce4e4;
+  --color-primary-200: #f9c5c5;
+  --color-primary-300: #f09898;
+  --color-primary-400: #c9444d;
+  --color-primary-500: #6e1018;
+  --color-primary-600: #5c0d14;
+  --color-primary-700: #4a0a10;
+  --color-primary-800: #3b080d;
+  --color-primary-900: #2d060a;
+  --color-primary-950: #1a0306;
 
   /* Storebrand accent (warm orange) */
   --color-secondary-50: #fff8f3;
@@ -72,9 +72,9 @@
     Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
 
   --shadow-soft:
-    0 2px 15px -3px rgba(0, 51, 102, 0.06), 0 10px 20px -2px rgba(0, 51, 102, 0.03);
+    0 2px 15px -3px rgba(110, 16, 24, 0.06), 0 10px 20px -2px rgba(110, 16, 24, 0.03);
   --shadow-card:
-    0 1px 3px rgba(0, 51, 102, 0.08), 0 4px 12px rgba(0, 51, 102, 0.04);
+    0 1px 3px rgba(110, 16, 24, 0.08), 0 4px 12px rgba(110, 16, 24, 0.04);
 }
 
 /*
@@ -150,7 +150,7 @@ code {
 
 /* Storebrand-style hero gradient */
 .stb-gradient {
-  background: linear-gradient(135deg, #003366 0%, #001b38 50%, #002b57 100%);
+  background: linear-gradient(135deg, #6e1018 0%, #3b080d 50%, #5c0d14 100%);
 }
 
 .stb-gradient-light {
