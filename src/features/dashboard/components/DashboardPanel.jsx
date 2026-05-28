@@ -17,8 +17,8 @@ const STB_IMAGES = {
   ogImage: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/logos/storebrand-asset-management-page-share.jpg?width=600&quality=75&format=webp',
 };
 
-function ImageCard({ src, alt, caption }) {
-  return (
+function ImageCard({ src, alt, caption, href }) {
+  const content = (
     <div className="rounded-2xl overflow-hidden shadow-card relative group">
       <img
         src={src}
@@ -33,6 +33,15 @@ function ImageCard({ src, alt, caption }) {
       )}
     </div>
   );
+
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
+  return content;
 }
 
 function DashboardPanel() {
@@ -100,11 +109,13 @@ function DashboardPanel() {
               src={STB_IMAGES.people}
               alt="Porteføljeforvaltere"
               caption="Våre eksperter"
+              href="https://www.storebrandam.com/no-NO/kontakt-oss/our-teams/portfolio-managers/"
             />
             <ImageCard
               src={STB_IMAGES.ogImage}
               alt="Storebrand Asset Management"
               caption="Nordisk kapitalforvaltning"
+              href="https://www.storebrandam.com/no-NO/om-oss/"
             />
           </div>
 
