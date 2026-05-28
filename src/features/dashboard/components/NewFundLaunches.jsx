@@ -56,7 +56,7 @@ function NewFundLaunches() {
       data-testid="new-fund-launches"
     >
       <h3 className="text-lg font-semibold text-neutral-800">
-        New Fund Launches 2026 – Performances
+        New Fund Launches 2026 – Performance
       </h3>
 
       <div className="space-y-3">
