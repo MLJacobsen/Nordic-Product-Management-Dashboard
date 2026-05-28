@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
 import MonthlyReportStatus from './MonthlyReportStatus';
+import NewFundLaunches from './NewFundLaunches';
 import NewsFeed from './NewsFeed';
 import VffOverview from './VffOverview';
 import { fetchWsjNews, fetchE24News, fetchDagensIndustriNews } from '../services/newsService';
@@ -49,6 +50,11 @@ function DashboardPanel() {
           {/* VFF Overview */}
           <div className="bg-white rounded-2xl shadow-card p-6">
             <VffOverview />
+          </div>
+
+          {/* New Fund Launches 2026 */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <NewFundLaunches />
           </div>
 
           {/* Fund NAV table */}
