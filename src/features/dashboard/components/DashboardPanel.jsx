@@ -8,14 +8,13 @@ import NewsFeed from './NewsFeed';
 import VffOverview from './VffOverview';
 import { fetchWsjNews, fetchE24News, fetchDagensIndustriNews } from '../services/newsService';
 
-// Storebrand imagery from their public CDN
+// Storebrand imagery from their public CDN — verified URLs
 const STB_IMAGES = {
   banner: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/banner-photo/banner-stb-front-page.jpg?width=1200&quality=75&format=webp',
   logo: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/logos/stb-logo-pos.svg',
-  nature1: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/nature/storebrand-fjord-norway.jpg?width=600&quality=75&format=webp',
-  nature2: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/nature/storebrand-northern-lights.jpg?width=600&quality=75&format=webp',
-  city: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/city/storebrand-oslo-barcode.jpg?width=600&quality=75&format=webp',
-  sustainability: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/nature/storebrand-windmill-green.jpg?width=600&quality=75&format=webp',
+  nature1: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/nature/ima254529.jpg?width=600&quality=75&format=webp',
+  people: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/people/portfolio-managers/tore_jorgen_rye_tj.jpg?width=600&quality=75&format=webp',
+  ogImage: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/logos/storebrand-asset-management-page-share.jpg?width=600&quality=75&format=webp',
 };
 
 function ImageCard({ src, alt, caption }) {
@@ -79,7 +78,7 @@ function DashboardPanel() {
           <div className="rounded-2xl overflow-hidden shadow-card">
             <img
               src={STB_IMAGES.nature1}
-              alt="Norwegian fjord"
+              alt="Storebrand – Ledende nordisk kapitalforvalter"
               className="w-full h-44 object-cover"
               onError={(e) => { e.target.parentElement.style.display = 'none'; }}
             />
@@ -98,13 +97,13 @@ function DashboardPanel() {
           {/* Another imagery section */}
           <div className="grid grid-cols-2 gap-4">
             <ImageCard
-              src={STB_IMAGES.sustainability}
-              alt="Bærekraft"
-              caption="Bærekraftig forvaltning"
+              src={STB_IMAGES.people}
+              alt="Porteføljeforvaltere"
+              caption="Våre eksperter"
             />
             <ImageCard
-              src={STB_IMAGES.city}
-              alt="Oslo"
+              src={STB_IMAGES.ogImage}
+              alt="Storebrand Asset Management"
               caption="Nordisk kapitalforvaltning"
             />
           </div>
@@ -119,8 +118,8 @@ function DashboardPanel() {
         <div className="w-full lg:w-80 shrink-0 space-y-6">
           {/* Storebrand imagery card */}
           <ImageCard
-            src={STB_IMAGES.nature2}
-            alt="Nordlys"
+            src={STB_IMAGES.banner}
+            alt="Storebrand"
             caption="Investing for a sustainable future"
           />
 
