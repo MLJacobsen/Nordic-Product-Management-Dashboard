@@ -1,11 +1,14 @@
 /**
- * WSJ Markets news service.
- * Uses rss2json API to bypass CORS restrictions on the WSJ RSS feed.
- * Auto-refresh is handled by the component (5-minute interval).
+ * News services for WSJ Markets, Finansavisen, and Dagens Industri.
+ * Uses rss2json API to bypass CORS restrictions on RSS feeds.
+ * Auto-refresh is handled by the components (5-minute interval).
  */
 
+const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json?rss_url=';
+
 const WSJ_RSS_URL = 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml';
-const RSS2JSON_API = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(WSJ_RSS_URL)}`;
+const FINANSAVISEN_RSS_URL = 'https://finansavisen.no/rss';
+const DAGENS_INDUSTRI_RSS_URL = 'https://digital.di.se/rss';
 
 function formatDate(dateStr) {
   try {
@@ -16,19 +19,31 @@ function formatDate(dateStr) {
   }
 }
 
-export async function fetchWsjNews() {
+async function fetchRssFeed(rssUrl, count = 6) {
   try {
-    const response = await fetch(RSS2JSON_API);
+    const apiUrl = `${RSS2JSON_BASE}${encodeURIComponent(rssUrl)}`;
+    const response = await fetch(apiUrl);
     if (!response.ok) throw new Error('Feed unavailable');
     const data = await response.json();
     if (data.status !== 'ok' || !data.items) throw new Error('Invalid response');
-    return data.items.slice(0, 8).map((item) => ({
+    return data.items.slice(0, count).map((item) => ({
       title: item.title || '',
       link: item.link || item.guid || '#',
       pubDate: formatDate(item.pubDate),
     }));
   } catch {
-    // Last resort fallback — should rarely trigger
-    return [{ title: 'Unable to load WSJ news. Check connection.', link: '#', pubDate: '' }];
+    return [{ title: 'Kunne ikke laste nyheter. Sjekk tilkobling.', link: '#', pubDate: '' }];
   }
+}
+
+export async function fetchWsjNews() {
+  return fetchRssFeed(WSJ_RSS_URL, 6);
+}
+
+export async function fetchFinansavisenNews() {
+  return fetchRssFeed(FINANSAVISEN_RSS_URL, 6);
+}
+
+export async function fetchDagensIndustriNews() {
+  return fetchRssFeed(DAGENS_INDUSTRI_RSS_URL, 6);
 }

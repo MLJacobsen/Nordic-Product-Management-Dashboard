@@ -3,20 +3,21 @@ import { motion } from 'framer-motion';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
 import MonthlyReportStatus from './MonthlyReportStatus';
-import WsjNewsFeed from './WsjNewsFeed';
+import NewsFeed from './NewsFeed';
 import VffOverview from './VffOverview';
+import { fetchWsjNews, fetchFinansavisenNews, fetchDagensIndustriNews } from '../services/newsService';
 
 function DashboardPanel() {
   return (
-    <motion.aside
-      className="space-y-0 overflow-hidden rounded-2xl shadow-card"
+    <motion.div
+      className="space-y-6"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
       data-testid="dashboard-panel"
     >
       {/* Storebrand-style header with hero image */}
-      <div className="stb-gradient relative overflow-hidden">
+      <div className="stb-gradient relative overflow-hidden rounded-2xl shadow-card">
         <img
           src="https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/banner-photo/banner-stb-front-page.jpg?width=800&quality=75&format=webp"
           alt=""
@@ -35,21 +36,81 @@ function DashboardPanel() {
         </div>
       </div>
 
-      {/* Dashboard content sections */}
-      <div className="bg-white p-6 space-y-6">
-        <KiidStatus />
-        <MonthlyReportStatus />
-        <VffOverview />
-      </div>
+      {/* Two-column layout: KPIs left, News + images right */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Left column — KPIs and fund data */}
+        <div className="flex-1 min-w-0 space-y-6">
+          {/* Status cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <KiidStatus />
+            <MonthlyReportStatus />
+          </div>
 
-      <div className="bg-neutral-50 p-6 space-y-6">
-        <FundNavTable />
-      </div>
+          {/* VFF Overview */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <VffOverview />
+          </div>
 
-      <div className="bg-white p-6 space-y-6 border-t border-neutral-100">
-        <WsjNewsFeed />
+          {/* Fund NAV table */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <FundNavTable />
+          </div>
+        </div>
+
+        {/* Right column — News feeds + imagery */}
+        <div className="w-full lg:w-80 shrink-0 space-y-6">
+          {/* Storebrand imagery card */}
+          <div className="rounded-2xl overflow-hidden shadow-card">
+            <img
+              src="https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/nature/nature-water-mountain.jpg?width=400&quality=75&format=webp"
+              alt="Nordic nature"
+              className="w-full h-36 object-cover"
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
+          </div>
+
+          {/* WSJ Markets */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewsFeed
+              title="WSJ Markets"
+              fetchFn={fetchWsjNews}
+              icon="🇺🇸"
+              testId="wsj-news-feed"
+            />
+          </div>
+
+          {/* Finansavisen */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewsFeed
+              title="Finansavisen"
+              fetchFn={fetchFinansavisenNews}
+              icon="🇳🇴"
+              testId="finansavisen-news-feed"
+            />
+          </div>
+
+          {/* Dagens Industri */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewsFeed
+              title="Dagens Industri"
+              fetchFn={fetchDagensIndustriNews}
+              icon="🇸🇪"
+              testId="di-news-feed"
+            />
+          </div>
+
+          {/* Second decorative image */}
+          <div className="rounded-2xl overflow-hidden shadow-card">
+            <img
+              src="https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/nature/nature-forest-light.jpg?width=400&quality=75&format=webp"
+              alt="Nordic forest"
+              className="w-full h-32 object-cover"
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
+          </div>
+        </div>
       </div>
-    </motion.aside>
+    </motion.div>
   );
 }
 
