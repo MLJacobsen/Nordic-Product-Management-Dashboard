@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import FundNavTable from './FundNavTable';
+import FundNavTableSE from './FundNavTableSE';
+import FbfOverview from './FbfOverview';
 import KiidStatus from './KiidStatus';
 import MonthlyReportStatus from './MonthlyReportStatus';
 import NewFundLaunches from './NewFundLaunches';
@@ -45,6 +47,8 @@ function ImageCard({ src, alt, caption, href }) {
 }
 
 function DashboardPanel() {
+  const [activeTab, setActiveTab] = useState('norway');
+
   return (
     <motion.div
       className="space-y-6"
@@ -73,6 +77,30 @@ function DashboardPanel() {
         </div>
       </div>
 
+      {/* Country tabs */}
+      <div className="flex gap-1 bg-neutral-100 rounded-xl p-1">
+        <button
+          onClick={() => setActiveTab('norway')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'norway'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇳🇴 Norge
+        </button>
+        <button
+          onClick={() => setActiveTab('sweden')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'sweden'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇸🇪 Sverige
+        </button>
+      </div>
+
       {/* Two-column layout: KPIs left, News + images right */}
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left column — KPIs and fund data */}
@@ -93,9 +121,9 @@ function DashboardPanel() {
             />
           </div>
 
-          {/* VFF Overview */}
+          {/* VFF / FBF Overview — tab dependent */}
           <div className="bg-white rounded-2xl shadow-card p-6">
-            <VffOverview />
+            {activeTab === 'norway' ? <VffOverview /> : <FbfOverview />}
           </div>
 
           {/* New Fund Launches 2026 */}
@@ -119,9 +147,9 @@ function DashboardPanel() {
             />
           </div>
 
-          {/* Fund NAV table */}
+          {/* Fund NAV table — tab dependent */}
           <div className="bg-white rounded-2xl shadow-card p-6">
-            <FundNavTable />
+            {activeTab === 'norway' ? <FundNavTable /> : <FundNavTableSE />}
           </div>
         </div>
 
