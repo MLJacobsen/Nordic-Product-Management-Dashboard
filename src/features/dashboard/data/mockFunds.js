@@ -1,26 +1,54 @@
 /**
- * Mock fund data representing Storebrand's fund portfolio.
- * Replace with real API calls via fundService.js when available.
+ * Fund data representing Storebrand Asset Management's fund portfolio.
+ * Source: https://www.storebrandam.com/no-NO/produkter/fond?sort=name&sortDir=asc
+ * Replace with real API calls via fundService.js when a structured endpoint is available.
  */
 const mockFunds = [
-  { id: 'stb-global', name: 'Storebrand Global Solutions', nav: 2847.32, currency: 'NOK', kiid: true, category: 'Equity' },
-  { id: 'stb-norge', name: 'Storebrand Norge', nav: 1523.18, currency: 'NOK', kiid: true, category: 'Equity' },
-  { id: 'stb-norden', name: 'Storebrand Norden', nav: 1891.45, currency: 'NOK', kiid: true, category: 'Equity' },
-  { id: 'stb-fremtid-30', name: 'Storebrand Fremtid 30', nav: 312.67, currency: 'NOK', kiid: true, category: 'Balanced' },
-  { id: 'stb-fremtid-50', name: 'Storebrand Fremtid 50', nav: 498.21, currency: 'NOK', kiid: true, category: 'Balanced' },
-  { id: 'stb-fremtid-80', name: 'Storebrand Fremtid 80', nav: 721.09, currency: 'NOK', kiid: true, category: 'Balanced' },
-  { id: 'stb-global-indeks', name: 'Storebrand Global Indeks', nav: 4215.88, currency: 'NOK', kiid: true, category: 'Index' },
-  { id: 'stb-usa-indeks', name: 'Storebrand USA Indeks', nav: 5102.44, currency: 'NOK', kiid: true, category: 'Index' },
-  { id: 'stb-europa-indeks', name: 'Storebrand Europa Indeks', nav: 1345.72, currency: 'NOK', kiid: true, category: 'Index' },
-  { id: 'stb-emerging', name: 'Storebrand Emerging Markets', nav: 892.36, currency: 'NOK', kiid: true, category: 'Equity' },
-  { id: 'stb-rente', name: 'Storebrand Norsk Kreditt', nav: 1102.15, currency: 'NOK', kiid: true, category: 'Fixed Income' },
-  { id: 'stb-global-rente', name: 'Storebrand Global Credit', nav: 987.63, currency: 'NOK', kiid: true, category: 'Fixed Income' },
-  { id: 'stb-likviditet', name: 'Storebrand Likviditet', nav: 1015.42, currency: 'NOK', kiid: true, category: 'Money Market' },
-  { id: 'stb-delphi-norge', name: 'Delphi Norge', nav: 3456.91, currency: 'NOK', kiid: true, category: 'Equity' },
-  { id: 'stb-delphi-nordic', name: 'Delphi Nordic', nav: 2134.58, currency: 'NOK', kiid: true, category: 'Equity' },
-  { id: 'stb-trippel', name: 'Storebrand Trippel Smart', nav: 1678.24, currency: 'NOK', kiid: true, category: 'Factor' },
-  { id: 'stb-global-esg', name: 'Storebrand Global ESG Plus', nav: 2901.77, currency: 'NOK', kiid: true, category: 'Equity' },
-  { id: 'stb-short-duration', name: 'Storebrand Short Duration', nav: 1028.91, currency: 'NOK', kiid: true, category: 'Fixed Income' },
+  // Norwegian Equity Funds
+  { id: 'stb-aksje-innland', name: 'Storebrand Aksje Innland', nav: 487.12, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-norge', name: 'Storebrand Norge', nav: 1523.18, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-norge-horisont', name: 'Storebrand Norge Horisont', nav: 298.45, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-norge-inst', name: 'Storebrand Norge Institusjon', nav: 612.37, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-vekst', name: 'Storebrand Vekst', nav: 891.64, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-verdi', name: 'Storebrand Verdi', nav: 1045.89, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-equal-opp', name: 'Storebrand Equal Opportunities', nav: 156.72, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-fornybar', name: 'Storebrand Fornybar Energi', nav: 89.34, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'stb-global-all', name: 'Storebrand Global All Countries', nav: 234.56, currency: 'NOK', kiid: true, category: 'Aksje' },
+
+  // Index Funds
+  { id: 'stb-indeks-norge', name: 'Storebrand Indeks Norge', nav: 2323.41, currency: 'NOK', kiid: true, category: 'Indeks' },
+  { id: 'stb-indeks-norden', name: 'Storebrand Indeks - Norden', nav: 1891.45, currency: 'NOK', kiid: true, category: 'Indeks' },
+  { id: 'stb-indeks-alle', name: 'Storebrand Indeks - Alle Markeder', nav: 412.88, currency: 'NOK', kiid: true, category: 'Indeks' },
+  { id: 'stb-global-indeks', name: 'Storebrand Global Indeks', nav: 4215.88, currency: 'NOK', kiid: true, category: 'Indeks' },
+  { id: 'stb-global-indeks-vs', name: 'Storebrand Global Indeks Valutasikret', nav: 3987.21, currency: 'NOK', kiid: true, category: 'Indeks' },
+  { id: 'stb-europe-indeks', name: 'Storebrand Europe Index', nav: 1345.72, currency: 'NOK', kiid: true, category: 'Indeks' },
+  { id: 'stb-indeks-nye-markeder', name: 'Storebrand Indeks Nye Markeder', nav: 567.93, currency: 'NOK', kiid: true, category: 'Indeks' },
+
+  // Bond Funds (Rentefond)
+  { id: 'stb-frn-finans', name: 'Storebrand FRN Finansfond', nav: 1028.15, currency: 'NOK', kiid: true, category: 'Rente' },
+  { id: 'stb-global-fi', name: 'Storebrand Global Fixed Income', nav: 987.63, currency: 'NOK', kiid: true, category: 'Rente' },
+  { id: 'stb-nordic-hy', name: 'Storebrand Nordic High Yield', nav: 1102.44, currency: 'NOK', kiid: true, category: 'Rente' },
+  { id: 'stb-global-corp-13', name: 'Storebrand Global Corporate Bond IG 1-3Y', nav: 1015.42, currency: 'NOK', kiid: true, category: 'Rente' },
+  { id: 'stb-global-corp-46', name: 'Storebrand Global Corporate Bond IG 4-6Y', nav: 998.87, currency: 'NOK', kiid: true, category: 'Rente' },
+
+  // Lifecycle Funds (Fremtid)
+  { id: 'stb-fremtid-10', name: 'Storebrand Fremtid 10', nav: 198.34, currency: 'NOK', kiid: true, category: 'Kombinasjon' },
+  { id: 'stb-fremtid-50', name: 'Storebrand Fremtid 50', nav: 498.21, currency: 'NOK', kiid: true, category: 'Kombinasjon' },
+  { id: 'stb-fremtid-100', name: 'Storebrand Fremtid 100', nav: 721.09, currency: 'NOK', kiid: true, category: 'Kombinasjon' },
+
+  // Delphi Funds
+  { id: 'delphi-global', name: 'Delphi Global', nav: 2847.32, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'delphi-global-vs', name: 'Delphi Global Valutasikret', nav: 2601.15, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'delphi-kombinasjon', name: 'Delphi Kombinasjon', nav: 1234.56, currency: 'NOK', kiid: true, category: 'Kombinasjon' },
+  { id: 'delphi-nordic', name: 'Delphi Nordic', nav: 2134.58, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'delphi-norge', name: 'Delphi Norge', nav: 3456.91, currency: 'NOK', kiid: true, category: 'Aksje' },
+
+  // SKAGEN Funds
+  { id: 'skagen-focus', name: 'SKAGEN Focus', nav: 187.45, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'skagen-global', name: 'SKAGEN Global', nav: 2456.78, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'skagen-kon-tiki', name: 'SKAGEN Kon-Tiki', nav: 112.34, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'skagen-m2', name: 'SKAGEN m2', nav: 234.89, currency: 'NOK', kiid: true, category: 'Aksje' },
+  { id: 'skagen-vekst', name: 'SKAGEN Vekst', nav: 567.12, currency: 'NOK', kiid: true, category: 'Aksje' },
 ];
 
 export default mockFunds;
