@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
+import MonthlyReportStatus from './MonthlyReportStatus';
 import WsjNewsFeed from './WsjNewsFeed';
 import VffOverview from './VffOverview';
 
@@ -37,6 +38,7 @@ function DashboardPanel() {
       {/* Dashboard content sections */}
       <div className="bg-white p-6 space-y-6">
         <KiidStatus />
+        <MonthlyReportStatus />
         <VffOverview />
       </div>
 
