@@ -9,6 +9,7 @@ import { ListProvider } from './context/ListContext';
 import GlobalTaskForm from './features/tasks/components/GlobalTaskForm';
 import TaskBoard from './features/lists/components/TaskBoard';
 import DashboardPanel from './features/dashboard/components/DashboardPanel';
+import VacationPlanner from './features/dashboard/components/VacationPlanner';
 
 function App() {
   const [showInput, setShowInput] = useState(false);
@@ -65,6 +66,8 @@ function App() {
                 </motion.div>
                 
                 <TaskBoard />
+
+                <VacationPlanner />
               </div>
             </div>
           </div>
