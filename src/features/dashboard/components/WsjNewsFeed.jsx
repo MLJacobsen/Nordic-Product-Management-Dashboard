@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { fetchWsjNews } from '../services/newsService';
+
+const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
 
 function WsjNewsFeed() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
+  const loadNews = useCallback(async () => {
+    const data = await fetchWsjNews();
+    setArticles(data);
+    setLoading(false);
+    setLastUpdated(new Date());
+  }, []);
 
   useEffect(() => {
-    fetchWsjNews().then((data) => {
-      setArticles(data);
-      setLoading(false);
-    });
-  }, []);
+    loadNews();
+    const interval = setInterval(loadNews, REFRESH_INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [loadNews]);
 
   if (loading) {
     return (
@@ -25,11 +34,18 @@ function WsjNewsFeed() {
 
   return (
     <div data-testid="wsj-news-feed">
-      <h3 className="text-lg font-semibold text-neutral-800 mb-3">WSJ Markets</h3>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-lg font-semibold text-neutral-800">WSJ Markets</h3>
+        {lastUpdated && (
+          <span className="text-xs text-neutral-400">
+            Oppdatert {lastUpdated.toLocaleTimeString('no-NO', { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        )}
+      </div>
       <ul className="space-y-2">
         {articles.map((article, index) => (
           <motion.li
-            key={index}
+            key={`${article.title}-${index}`}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}

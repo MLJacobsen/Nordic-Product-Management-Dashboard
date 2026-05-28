@@ -1,38 +1,34 @@
 /**
  * WSJ Markets news service.
- * In production, use a CORS proxy or backend endpoint to fetch the RSS feed.
- * Falls back to mock data if the feed is unavailable.
+ * Uses rss2json API to bypass CORS restrictions on the WSJ RSS feed.
+ * Auto-refresh is handled by the component (5-minute interval).
  */
 
 const WSJ_RSS_URL = 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml';
+const RSS2JSON_API = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(WSJ_RSS_URL)}`;
 
-const mockNews = [
-  { title: 'Global Stocks Rally on Trade Optimism', link: 'https://www.wsj.com', pubDate: '2026-05-26' },
-  { title: 'Fed Signals Steady Rates Through Summer', link: 'https://www.wsj.com', pubDate: '2026-05-26' },
-  { title: 'Oil Prices Climb as OPEC Maintains Output Cuts', link: 'https://www.wsj.com', pubDate: '2026-05-25' },
-  { title: 'European Banks Post Strong Q1 Results', link: 'https://www.wsj.com', pubDate: '2026-05-25' },
-  { title: 'Nordic Markets Outperform on ESG Inflows', link: 'https://www.wsj.com', pubDate: '2026-05-24' },
-];
-
-function parseRssItems(xmlText) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(xmlText, 'text/xml');
-  const items = doc.querySelectorAll('item');
-  return Array.from(items).slice(0, 8).map((item) => ({
-    title: item.querySelector('title')?.textContent || '',
-    link: item.querySelector('link')?.textContent || '#',
-    pubDate: item.querySelector('pubDate')?.textContent || '',
-  }));
+function formatDate(dateStr) {
+  try {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('no-NO', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  } catch {
+    return dateStr;
+  }
 }
 
 export async function fetchWsjNews() {
   try {
-    const response = await fetch(WSJ_RSS_URL);
+    const response = await fetch(RSS2JSON_API);
     if (!response.ok) throw new Error('Feed unavailable');
-    const xml = await response.text();
-    return parseRssItems(xml);
+    const data = await response.json();
+    if (data.status !== 'ok' || !data.items) throw new Error('Invalid response');
+    return data.items.slice(0, 8).map((item) => ({
+      title: item.title || '',
+      link: item.link || item.guid || '#',
+      pubDate: formatDate(item.pubDate),
+    }));
   } catch {
-    // Fallback to mock data when CORS blocks the request
-    return mockNews;
+    // Last resort fallback — should rarely trigger
+    return [{ title: 'Unable to load WSJ news. Check connection.', link: '#', pubDate: '' }];
   }
 }
