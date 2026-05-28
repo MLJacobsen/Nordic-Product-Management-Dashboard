@@ -37,13 +37,8 @@ function PerformanceChart({ fund }) {
           strokeLinejoin="round"
         />
         {/* Start and end dots */}
-        <circle cx={points.split(' ')[0].split(',')[0]} cy={points.split(' ')[0].split(',')[1]} r="2.5" fill={isPositive ? '#16a34a' : '#dc2626'} />
-        <circle
-          cx={performance.length > 0 ? padding + ((performance.length - 1) / (performance.length - 1)) * (width - 2 * padding) : 0}
-          cy={height - padding - ((navValues[navValues.length - 1] - minNav) / range) * (height - 2 * padding)}
-          r="2.5"
-          fill={isPositive ? '#16a34a' : '#dc2626'}
-        />
+        <circle cx={points[0].split(',')[0]} cy={points[0].split(',')[1]} r="2.5" fill={isPositive ? '#16a34a' : '#dc2626'} />
+        <circle cx={points[points.length - 1].split(',')[0]} cy={points[points.length - 1].split(',')[1]} r="2.5" fill={isPositive ? '#16a34a' : '#dc2626'} />
       </svg>
       <span className={`text-sm font-bold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
         {isPositive ? '+' : ''}{totalReturn.toFixed(2)}%
