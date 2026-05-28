@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
 import WsjNewsFeed from './WsjNewsFeed';
+import VffOverview from './VffOverview';
 
 function DashboardPanel() {
   return (
@@ -18,6 +19,7 @@ function DashboardPanel() {
       </h2>
 
       <KiidStatus />
+      <VffOverview />
       <FundNavTable />
       <WsjNewsFeed />
     </motion.aside>
