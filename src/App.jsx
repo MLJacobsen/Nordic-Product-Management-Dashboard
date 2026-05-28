@@ -19,8 +19,13 @@ function App() {
         <ListProvider>
           <div className="App min-h-screen stb-gradient-light flex flex-col items-center py-12 px-4" data-testid="app">
             <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-6">
-              {/* Main task area */}
+              {/* Nordic PM Dashboard — main content */}
               <div className="flex-1 min-w-0">
+                <DashboardPanel />
+              </div>
+
+              {/* Task board — sidebar */}
+              <div className="w-full lg:w-96 shrink-0">
                 <motion.div 
                   className="mb-6 bg-white rounded-2xl shadow-soft p-6"
                   initial={{ opacity: 0, y: -20 }}
@@ -28,9 +33,8 @@ function App() {
                   transition={{ duration: 0.5 }}
                   data-testid="app-header"
                 >
-                  <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-3xl font-bold text-neutral-800 tracking-tight">Task Dashboard</h1>
-                    {/* Stats will be displayed from TaskContext */}
+                  <div className="flex justify-between items-center mb-4">
+                    <h1 className="text-xl font-bold text-neutral-800 tracking-tight">Task Board</h1>
                   </div>
                   
                   <AnimatePresence>
@@ -60,13 +64,7 @@ function App() {
                   </AnimatePresence>
                 </motion.div>
                 
-                {/* The TaskBoard component now manages all task lists */}
                 <TaskBoard />
-              </div>
-
-              {/* Nordic PM Dashboard panel */}
-              <div className="w-full lg:w-96 shrink-0">
-                <DashboardPanel />
               </div>
             </div>
           </div>
