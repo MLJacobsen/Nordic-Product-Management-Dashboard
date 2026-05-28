@@ -7,7 +7,7 @@
 const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 const WSJ_RSS_URL = 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml';
-const FINANSAVISEN_RSS_URL = 'https://finansavisen.no/rss';
+const FINANSAVISEN_RSS_URL = 'https://www.dn.no/rss';
 const DAGENS_INDUSTRI_RSS_URL = 'https://digital.di.se/rss';
 
 function formatDate(dateStr) {
@@ -40,7 +40,7 @@ export async function fetchWsjNews() {
   return fetchRssFeed(WSJ_RSS_URL, 6);
 }
 
-export async function fetchFinansavisenNews() {
+export async function fetchDagensNaeringslivNews() {
   return fetchRssFeed(FINANSAVISEN_RSS_URL, 6);
 }
 

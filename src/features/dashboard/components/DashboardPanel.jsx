@@ -5,7 +5,7 @@ import KiidStatus from './KiidStatus';
 import MonthlyReportStatus from './MonthlyReportStatus';
 import NewsFeed from './NewsFeed';
 import VffOverview from './VffOverview';
-import { fetchWsjNews, fetchFinansavisenNews, fetchDagensIndustriNews } from '../services/newsService';
+import { fetchWsjNews, fetchDagensNaeringslivNews, fetchDagensIndustriNews } from '../services/newsService';
 
 function DashboardPanel() {
   return (
@@ -79,13 +79,13 @@ function DashboardPanel() {
             />
           </div>
 
-          {/* Finansavisen */}
+          {/* Dagens Næringsliv */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
-              title="Finansavisen"
-              fetchFn={fetchFinansavisenNews}
+              title="Dagens Næringsliv"
+              fetchFn={fetchDagensNaeringslivNews}
               icon="🇳🇴"
-              testId="finansavisen-news-feed"
+              testId="dn-news-feed"
             />
           </div>
 

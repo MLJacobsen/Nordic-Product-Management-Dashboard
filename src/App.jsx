@@ -25,7 +25,7 @@ function App() {
               </div>
 
               {/* Task board — sidebar */}
-              <div className="w-full lg:w-96 shrink-0">
+              <div className="w-full lg:w-72 shrink-0">
                 <motion.div 
                   className="mb-6 bg-white rounded-2xl shadow-soft p-6"
                   initial={{ opacity: 0, y: -20 }}
