@@ -28,7 +28,7 @@ function DashboardPanel() {
             className="h-6 mb-4 brightness-0 invert"
           />
           <h2 className="text-xl font-bold text-white tracking-tight">
-            Nordic PM Dashboard
+            Nordic Product Management Dashboard
           </h2>
           <p className="text-sm text-primary-200 mt-1">Storebrand Asset Management</p>
         </div>
