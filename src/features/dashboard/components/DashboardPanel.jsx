@@ -126,11 +126,6 @@ function DashboardPanel() {
             {activeTab === 'norway' ? <VffOverview /> : <FbfOverview />}
           </div>
 
-          {/* New Fund Launches 2026 */}
-          <div className="bg-white rounded-2xl shadow-card p-6">
-            <NewFundLaunches />
-          </div>
-
           {/* Another imagery section */}
           <div className="grid grid-cols-2 gap-4">
             <ImageCard
@@ -153,8 +148,13 @@ function DashboardPanel() {
           </div>
         </div>
 
-        {/* Right column — News feeds + imagery */}
+        {/* Right column — Fund launches, imagery, then news at bottom */}
         <div className="w-full lg:w-80 shrink-0 space-y-6">
+          {/* New Fund Launches 2026 — prominent at top */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewFundLaunches />
+          </div>
+
           {/* Storebrand imagery card */}
           <ImageCard
             src={STB_IMAGES.banner}
@@ -162,7 +162,15 @@ function DashboardPanel() {
             caption="Investing for a sustainable future"
           />
 
-          {/* WSJ Markets */}
+          {/* Storebrand brand message */}
+          <div className="stb-gradient rounded-2xl p-5 shadow-card">
+            <p className="text-white text-sm font-medium leading-relaxed">
+              «Vi forvalter kapital med mål om langsiktig verdiskaping og bærekraftig utvikling.»
+            </p>
+            <p className="text-primary-200 text-xs mt-2 opacity-70">— Storebrand Asset Management</p>
+          </div>
+
+          {/* Market News — bottom of right column */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
               title="WSJ Markets"
@@ -172,7 +180,6 @@ function DashboardPanel() {
             />
           </div>
 
-          {/* E24 */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
               title="E24"
@@ -182,7 +189,6 @@ function DashboardPanel() {
             />
           </div>
 
-          {/* Dagens Industri */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
               title="Dagens Industri"
@@ -190,14 +196,6 @@ function DashboardPanel() {
               icon="🇸🇪"
               testId="di-news-feed"
             />
-          </div>
-
-          {/* Storebrand brand message */}
-          <div className="stb-gradient rounded-2xl p-5 shadow-card">
-            <p className="text-white text-sm font-medium leading-relaxed">
-              «Vi forvalter kapital med mål om langsiktig verdiskaping og bærekraftig utvikling.»
-            </p>
-            <p className="text-primary-200 text-xs mt-2 opacity-70">— Storebrand Asset Management</p>
           </div>
         </div>
       </div>
