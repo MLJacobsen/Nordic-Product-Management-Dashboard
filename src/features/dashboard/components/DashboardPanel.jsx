@@ -126,11 +126,6 @@ function DashboardPanel() {
             />
           </div>
 
-          {/* VFF / FBF Overview — tab dependent */}
-          <div className="bg-white rounded-2xl shadow-card p-6">
-            {activeTab === 'norway' ? <VffOverview /> : <FbfOverview />}
-          </div>
-
           {/* Another imagery section */}
           <div className="grid grid-cols-2 gap-4">
             <ImageCard
@@ -153,8 +148,13 @@ function DashboardPanel() {
           </div>
         </div>
 
-        {/* Right column — imagery, then news at bottom */}
+        {/* Right column — VFF/FBF at top, imagery, then news at bottom */}
         <div className="w-full lg:w-80 shrink-0 space-y-6">
+          {/* VFF / FBF Overview — tab dependent */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            {activeTab === 'norway' ? <VffOverview /> : <FbfOverview />}
+          </div>
+
           {/* Storebrand imagery card */}
           <ImageCard
             src={STB_IMAGES.banner}
