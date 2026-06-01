@@ -149,7 +149,7 @@ function DashboardPanel() {
         </div>
 
         {/* Right column — Fund launches, imagery, then news at bottom */}
-        <div className="w-full lg:w-80 shrink-0 space-y-6">
+        <div className="w-full lg:w-96 shrink-0 space-y-6">
           {/* New Fund Launches 2026 — prominent at top */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewFundLaunches />
