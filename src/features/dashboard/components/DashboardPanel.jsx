@@ -111,6 +111,11 @@ function DashboardPanel() {
             <MonthlyReportStatus />
           </div>
 
+          {/* New Fund Launches 2026 — near the top for visibility */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <NewFundLaunches />
+          </div>
+
           {/* Decorative image divider */}
           <div className="rounded-2xl overflow-hidden shadow-card">
             <img
@@ -148,13 +153,8 @@ function DashboardPanel() {
           </div>
         </div>
 
-        {/* Right column — Fund launches, imagery, then news at bottom */}
-        <div className="w-full lg:w-96 shrink-0 space-y-6">
-          {/* New Fund Launches 2026 — prominent at top */}
-          <div className="bg-white rounded-2xl shadow-card p-5">
-            <NewFundLaunches />
-          </div>
-
+        {/* Right column — imagery, then news at bottom */}
+        <div className="w-full lg:w-80 shrink-0 space-y-6">
           {/* Storebrand imagery card */}
           <ImageCard
             src={STB_IMAGES.banner}
