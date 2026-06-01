@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import AumOverview from './AumOverview';
 import FundNavTable from './FundNavTable';
 import FundNavTableSE from './FundNavTableSE';
 import FbfOverview from './FbfOverview';
@@ -153,6 +154,11 @@ function DashboardPanel() {
           {/* VFF / FBF Overview — tab dependent */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             {activeTab === 'norway' ? <VffOverview /> : <FbfOverview />}
+          </div>
+
+          {/* AUM Overview — Snowflake data */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <AumOverview />
           </div>
 
           {/* Storebrand imagery card */}
