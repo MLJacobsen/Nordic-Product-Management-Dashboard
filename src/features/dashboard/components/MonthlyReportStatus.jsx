@@ -60,8 +60,10 @@ function MonthlyReportStatus() {
 
       <p className="text-xs text-neutral-500 mb-2">
         Forventet rapport: <span className="font-medium">{periodLabel}</span>
-        {isPastDeadline && (
+        {isPastDeadline ? (
           <span className="ml-2 text-red-500 font-medium">(frist passert — 5. i måneden)</span>
+        ) : (
+          <span className="ml-2 text-neutral-400">(frist: 5. {monthNames[new Date().getMonth()]})</span>
         )}
       </p>
 
