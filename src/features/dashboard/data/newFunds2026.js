@@ -2,6 +2,8 @@
  * New fund launches in 2026 by Storebrand Asset Management.
  * Includes simulated monthly performance data for charting.
  */
+const FUND_LIST_URL = 'https://www.storebrandam.com/no-NO/produkter/fond/';
+
 const newFunds2026 = [
   {
     id: 'stb-global-dev-markets',
@@ -11,7 +13,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Aksje – Global',
     description: 'Fossilfritt indeksnært aksjefond med bred eksponering mot utviklede markeder.',
-    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-global-developed-markets/',
+    url: FUND_LIST_URL,
     performance: [
       { month: 'Jan', nav: 100.00 },
       { month: 'Feb', nav: 101.85 },
@@ -28,7 +30,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Aksje – USA',
     description: 'Klimabevisst amerikansk aksjefond med aktiv forvaltning.',
-    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-us-plus/',
+    url: FUND_LIST_URL,
     performance: [
       { month: 'Feb', nav: 100.00 },
       { month: 'Mar', nav: 104.10 },
@@ -44,7 +46,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Rente – Norden',
     description: 'Investment grade obligasjonsfond med mellomlangt durasjonsmål i nordiske markeder.',
-    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-nordic-ig-medium-duration/',
+    url: FUND_LIST_URL,
     performance: [
       { month: 'Jan', nav: 100.00 },
       { month: 'Feb', nav: 100.52 },
@@ -61,7 +63,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Rente – Norge',
     description: 'Akkumulerende rentefond – renteinntekter reinvesteres automatisk.',
-    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-norsk-obligasjon-akkumulerende/',
+    url: FUND_LIST_URL,
     performance: [
       { month: 'Jan', nav: 100.00 },
       { month: 'Feb', nav: 100.35 },
@@ -78,7 +80,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Aksje – Fremvoksende',
     description: 'Oppdatert vekstmarkedsfond med forsterket bærekraftsprofil.',
-    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-emerging-markets-enhanced/',
+    url: FUND_LIST_URL,
     performance: [
       { month: 'Mar', nav: 100.00 },
       { month: 'Apr', nav: 103.40 },
