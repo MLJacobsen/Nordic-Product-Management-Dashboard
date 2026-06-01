@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import AumOverview from './AumOverview';
-import FundNavTable from './FundNavTable';
-import FundNavTableSE from './FundNavTableSE';
 import FbfOverview from './FbfOverview';
+import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
 import MonthlyReportStatus from './MonthlyReportStatus';
 import NewFundLaunches from './NewFundLaunches';
@@ -102,7 +101,12 @@ function DashboardPanel() {
         </button>
       </div>
 
-      {/* Two-column layout: KPIs left, News + images right */}
+      {/* Content based on active tab */}
+      {activeTab === 'sweden' ? (
+        <div className="bg-white rounded-2xl shadow-card p-6">
+          <FbfOverview />
+        </div>
+      ) : (
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left column — KPIs and fund data */}
         <div className="flex-1 min-w-0 space-y-6">
@@ -145,7 +149,7 @@ function DashboardPanel() {
 
           {/* Fund NAV table — tab dependent */}
           <div className="bg-white rounded-2xl shadow-card p-6">
-            {activeTab === 'norway' ? <FundNavTable /> : <FundNavTableSE />}
+            <FundNavTable />
           </div>
         </div>
 
@@ -153,7 +157,7 @@ function DashboardPanel() {
         <div className="w-full lg:w-80 shrink-0 space-y-6">
           {/* VFF / FBF Overview — tab dependent */}
           <div className="bg-white rounded-2xl shadow-card p-5">
-            {activeTab === 'norway' ? <VffOverview /> : <FbfOverview />}
+            <VffOverview />
           </div>
 
           {/* AUM Overview — Snowflake data */}
@@ -205,6 +209,7 @@ function DashboardPanel() {
           </div>
         </div>
       </div>
+      )}
     </motion.div>
   );
 }
