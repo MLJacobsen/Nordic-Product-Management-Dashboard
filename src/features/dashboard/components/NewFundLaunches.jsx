@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import newFunds2026 from '../data/newFunds2026';
 
 function PerformanceChart({ fund }) {
+  const [hovered, setHovered] = useState(null);
   const { performance } = fund;
   if (!performance || performance.length < 2) return null;
 
@@ -15,31 +16,59 @@ function PerformanceChart({ fund }) {
   const height = 60;
   const padding = 4;
 
-  const points = performance.map((p, i) => {
+  const pointsData = performance.map((p, i) => {
     const x = padding + (i / (performance.length - 1)) * (width - 2 * padding);
     const y = height - padding - ((p.nav - minNav) / range) * (height - 2 * padding);
-    return `${x},${y}`;
+    return { x, y, month: p.month, nav: p.nav };
   });
 
-  const polyline = points.join(' ');
+  const polyline = pointsData.map((p) => `${p.x},${p.y}`).join(' ');
   const totalReturn = ((navValues[navValues.length - 1] / navValues[0]) - 1) * 100;
   const isPositive = totalReturn >= 0;
+  const color = isPositive ? '#16a34a' : '#dc2626';
 
   return (
     <div className="flex items-center gap-3">
-      <svg width={width} height={height} className="shrink-0">
-        <polyline
-          points={polyline}
-          fill="none"
-          stroke={isPositive ? '#16a34a' : '#dc2626'}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* Start and end dots */}
-        <circle cx={points[0].split(',')[0]} cy={points[0].split(',')[1]} r="2.5" fill={isPositive ? '#16a34a' : '#dc2626'} />
-        <circle cx={points[points.length - 1].split(',')[0]} cy={points[points.length - 1].split(',')[1]} r="2.5" fill={isPositive ? '#16a34a' : '#dc2626'} />
-      </svg>
+      <a
+        href={fund.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Klikk for å se fondssiden"
+        className="relative cursor-pointer"
+        onMouseLeave={() => setHovered(null)}
+      >
+        <svg width={width} height={height} className="shrink-0 hover:opacity-80 transition-opacity">
+          <polyline
+            points={polyline}
+            fill="none"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {/* Data points — interactive */}
+          {pointsData.map((p, i) => (
+            <circle
+              key={i}
+              cx={p.x}
+              cy={p.y}
+              r={hovered === i ? 4.5 : 2.5}
+              fill={color}
+              className="transition-all duration-150"
+              onMouseEnter={() => setHovered(i)}
+            />
+          ))}
+        </svg>
+        {/* Tooltip on hover */}
+        {hovered !== null && (
+          <div
+            className="absolute -top-8 bg-neutral-800 text-white text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap pointer-events-none z-10"
+            style={{ left: pointsData[hovered].x - 20 }}
+          >
+            {pointsData[hovered].month}: {pointsData[hovered].nav.toFixed(2)}
+          </div>
+        )}
+      </a>
       <span className={`text-sm font-bold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
         {isPositive ? '+' : ''}{totalReturn.toFixed(2)}%
       </span>
@@ -63,14 +92,21 @@ function NewFundLaunches() {
         {newFunds2026.map((fund, index) => (
           <motion.div
             key={fund.id}
-            className="bg-neutral-50 rounded-xl p-4 border border-neutral-100"
+            className="bg-neutral-50 rounded-xl p-4 border border-neutral-100 hover:border-primary-200 hover:shadow-md transition-all duration-200"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.08 }}
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <h4 className="text-sm font-bold text-neutral-800 truncate">{fund.name}</h4>
+                <a
+                  href={fund.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-bold text-neutral-800 hover:text-primary-700 transition-colors truncate block"
+                >
+                  {fund.name} ↗
+                </a>
                 <p className="text-xs text-neutral-500 mt-0.5">
                   {fund.category} · Lansert {new Date(fund.launchDate).toLocaleDateString('no-NO', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </p>
@@ -89,7 +125,7 @@ function NewFundLaunches() {
       </div>
 
       <p className="text-[10px] text-neutral-400 italic">
-        Avkastning siden lansering. Historisk avkastning er ingen garanti for fremtidig avkastning.
+        Avkastning siden lansering. Historisk avkastning er ingen garanti for fremtidig avkastning. Klikk på graf eller fondsnavn for å gå til fondssiden.
       </p>
     </motion.div>
   );

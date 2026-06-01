@@ -11,7 +11,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Aksje – Global',
     description: 'Fossilfritt indeksnært aksjefond med bred eksponering mot utviklede markeder.',
-    // Monthly NAV since launch (end-of-month)
+    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-global-developed-markets/',
     performance: [
       { month: 'Jan', nav: 100.00 },
       { month: 'Feb', nav: 101.85 },
@@ -28,6 +28,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Aksje – USA',
     description: 'Klimabevisst amerikansk aksjefond med aktiv forvaltning.',
+    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-us-plus/',
     performance: [
       { month: 'Feb', nav: 100.00 },
       { month: 'Mar', nav: 104.10 },
@@ -43,6 +44,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Rente – Norden',
     description: 'Investment grade obligasjonsfond med mellomlangt durasjonsmål i nordiske markeder.',
+    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-nordic-ig-medium-duration/',
     performance: [
       { month: 'Jan', nav: 100.00 },
       { month: 'Feb', nav: 100.52 },
@@ -59,6 +61,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Rente – Norge',
     description: 'Akkumulerende rentefond – renteinntekter reinvesteres automatisk.',
+    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-norsk-obligasjon-akkumulerende/',
     performance: [
       { month: 'Jan', nav: 100.00 },
       { month: 'Feb', nav: 100.35 },
@@ -75,6 +78,7 @@ const newFunds2026 = [
     currency: 'NOK',
     category: 'Aksje – Fremvoksende',
     description: 'Oppdatert vekstmarkedsfond med forsterket bærekraftsprofil.',
+    url: 'https://www.storebrandam.com/no-NO/produkter/fond/storebrand-emerging-markets-enhanced/',
     performance: [
       { month: 'Mar', nav: 100.00 },
       { month: 'Apr', nav: 103.40 },
