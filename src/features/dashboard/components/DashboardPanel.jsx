@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import AumOverview from './AumOverview';
+import AumOverviewLux from './AumOverviewLux';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
@@ -99,12 +100,26 @@ function DashboardPanel() {
         >
           🇸🇪 Sverige
         </button>
+        <button
+          onClick={() => setActiveTab('luxembourg')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'luxembourg'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇱🇺 Luxembourg
+        </button>
       </div>
 
       {/* Content based on active tab */}
       {activeTab === 'sweden' ? (
         <div className="bg-white rounded-2xl shadow-card p-6">
           <FbfOverview />
+        </div>
+      ) : activeTab === 'luxembourg' ? (
+        <div className="bg-white rounded-2xl shadow-card p-6">
+          <AumOverviewLux />
         </div>
       ) : (
       <div className="flex flex-col lg:flex-row gap-6">
