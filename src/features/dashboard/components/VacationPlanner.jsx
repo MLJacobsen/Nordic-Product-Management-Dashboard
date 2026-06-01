@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const WEEKS = {
@@ -7,9 +7,24 @@ const WEEKS = {
   August: [32, 33, 34, 35],
 };
 
+const STORAGE_KEY = 'stb-vacation-planner-2026';
+
+function loadFromStorage() {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
 function VacationPlanner() {
-  const [people, setPeople] = useState([]);
+  const [people, setPeople] = useState(loadFromStorage);
   const [newName, setNewName] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(people));
+  }, [people]);
 
   const addPerson = (e) => {
     e.preventDefault();
