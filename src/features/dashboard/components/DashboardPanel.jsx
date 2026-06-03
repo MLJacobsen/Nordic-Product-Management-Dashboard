@@ -8,6 +8,7 @@ import KiidStatus from './KiidStatus';
 import MonthlyReportStatus from './MonthlyReportStatus';
 import NewFundLaunches from './NewFundLaunches';
 import NewsFeed from './NewsFeed';
+import PlannerGuidelines from './PlannerGuidelines';
 import VffOverview from './VffOverview';
 import { fetchWsjNews, fetchE24News, fetchDagensIndustriNews } from '../services/newsService';
 
@@ -110,6 +111,16 @@ function DashboardPanel() {
         >
           🇱🇺 Luxembourg
         </button>
+        <button
+          onClick={() => setActiveTab('guidelines')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'guidelines'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          📋 Guidelines - Planner
+        </button>
       </div>
 
       {/* Content based on active tab */}
@@ -121,6 +132,8 @@ function DashboardPanel() {
         <div className="bg-white rounded-2xl shadow-card p-6">
           <AumOverviewLux />
         </div>
+      ) : activeTab === 'guidelines' ? (
+        <PlannerGuidelines />
       ) : (
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left column — KPIs and fund data */}
