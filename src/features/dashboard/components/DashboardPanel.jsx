@@ -211,7 +211,7 @@ function DashboardPanel() {
           {/* Market News — bottom of right column */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
-              title="WSJ Markets"
+              title="CNBC Markets"
               fetchFn={fetchWsjNews}
               icon="🇺🇸"
               testId="wsj-news-feed"

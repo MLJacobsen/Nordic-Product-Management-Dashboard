@@ -7,7 +7,7 @@
 const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json?rss_url=';
 const ALLORIGINS_BASE = 'https://api.allorigins.win/raw?url=';
 
-const WSJ_RSS_URL = 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml';
+const WSJ_RSS_URL = 'https://www.cnbc.com/id/100003114/device/rss/rss.html';
 const E24_RSS_URL = 'https://e24.no/rss2';
 const DAGENS_INDUSTRI_RSS_URL = 'https://digital.di.se/rss';
 
