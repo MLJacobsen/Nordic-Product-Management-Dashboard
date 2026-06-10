@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import AumOverview from './AumOverview';
+import AumOverviewIre from './AumOverviewIre';
 import AumOverviewLux from './AumOverviewLux';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
@@ -112,6 +113,16 @@ function DashboardPanel() {
           🇱🇺 Luxembourg
         </button>
         <button
+          onClick={() => setActiveTab('ireland')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'ireland'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇮🇪 Ireland
+        </button>
+        <button
           onClick={() => setActiveTab('guidelines')}
           className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
             activeTab === 'guidelines'
@@ -131,6 +142,10 @@ function DashboardPanel() {
       ) : activeTab === 'luxembourg' ? (
         <div className="bg-white rounded-2xl shadow-card p-6">
           <AumOverviewLux />
+        </div>
+      ) : activeTab === 'ireland' ? (
+        <div className="bg-white rounded-2xl shadow-card p-6">
+          <AumOverviewIre />
         </div>
       ) : activeTab === 'guidelines' ? (
         <PlannerGuidelines />
