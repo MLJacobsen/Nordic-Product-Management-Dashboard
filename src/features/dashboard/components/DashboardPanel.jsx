@@ -10,6 +10,7 @@ import MonthlyReportStatus from './MonthlyReportStatus';
 import NewFundLaunches from './NewFundLaunches';
 import NewsFeed from './NewsFeed';
 import PlannerGuidelines from './PlannerGuidelines';
+import RevenueOverview from './RevenueOverview';
 import VffOverview from './VffOverview';
 import { fetchWsjNews, fetchE24News, fetchDagensIndustriNews } from '../services/newsService';
 
@@ -162,6 +163,11 @@ function DashboardPanel() {
           {/* New Fund Launches 2026 — near the top for visibility */}
           <div className="bg-white rounded-2xl shadow-card p-6">
             <NewFundLaunches />
+          </div>
+
+          {/* Revenue per fund */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <RevenueOverview />
           </div>
 
           {/* Decorative image divider */}
