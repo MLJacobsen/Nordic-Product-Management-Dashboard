@@ -137,12 +137,32 @@ function DashboardPanel() {
 
       {/* Content based on active tab */}
       {activeTab === 'sweden' ? (
-        <div className="bg-white rounded-2xl shadow-card p-6">
-          <FbfOverview />
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <FbfOverview />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewsFeed
+              title="Dagens Industri"
+              fetchFn={fetchDagensIndustriNews}
+              icon="🇸🇪"
+              testId="di-news-feed"
+            />
+          </div>
         </div>
       ) : activeTab === 'luxembourg' ? (
-        <div className="bg-white rounded-2xl shadow-card p-6">
-          <AumOverviewLux />
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <AumOverviewLux />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewsFeed
+              title="CNBC Markets"
+              fetchFn={fetchWsjNews}
+              icon="🇺🇸"
+              testId="cnbc-news-feed"
+            />
+          </div>
         </div>
       ) : activeTab === 'ireland' ? (
         <div className="bg-white rounded-2xl shadow-card p-6">
@@ -232,28 +252,10 @@ function DashboardPanel() {
           {/* Market News — bottom of right column */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
-              title="CNBC Markets"
-              fetchFn={fetchWsjNews}
-              icon="🇺🇸"
-              testId="wsj-news-feed"
-            />
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-card p-5">
-            <NewsFeed
               title="E24"
               fetchFn={fetchE24News}
               icon="🇳🇴"
               testId="e24-news-feed"
-            />
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-card p-5">
-            <NewsFeed
-              title="Dagens Industri"
-              fetchFn={fetchDagensIndustriNews}
-              icon="🇸🇪"
-              testId="di-news-feed"
             />
           </div>
         </div>
