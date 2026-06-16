@@ -64,6 +64,12 @@ vi.mock('./TaskListConfig', () => {
   };
 });
 
+vi.mock('../../suggestions/components/SuggestionBoard', () => ({
+  default: function MockSuggestionBoard() {
+    return <div data-testid="mocked-suggestion-board" />;
+  },
+}));
+
 // Mock context hooks
 const mockTasks = [
   { id: 1, text: 'Task 1', isCompleted: false },

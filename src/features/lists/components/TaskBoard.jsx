@@ -8,6 +8,7 @@ import ListAddTask from './ListAddTask';
 import { useTaskContext } from '../../../context/TaskContext';
 import { useTagContext } from '../../../context/TagContext';
 import { useListContext } from '../../../context/ListContext';
+import SuggestionBoard from '../../suggestions/components/SuggestionBoard';
 
 function TaskBoard() {
   const { tasks, completeAllTasks, deleteCompletedTasks } = useTaskContext();
@@ -220,6 +221,9 @@ function TaskBoard() {
             </div>
           );
         })}
+
+        {/* Suggestion Board */}
+        <SuggestionBoard />
 
         {/* Add new task list button */}
         <motion.button
