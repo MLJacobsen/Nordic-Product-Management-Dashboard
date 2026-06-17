@@ -2,8 +2,23 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import fbfData from '../data/fbfData';
 
+/**
+ * Returns true if we're between the 5th and 15th of a month AND the data
+ * file hasn't been updated for the previous month yet.
+ */
+function needsUpdate(dataMonth, dataYear) {
+  const now = new Date();
+  const day = now.getDate();
+  if (day < 5 || day > 15) return false;
+  const expectedMonth = now.getMonth(); // 0-indexed current = expected previous (1-indexed)
+  const expectedYear = expectedMonth === 0 ? now.getFullYear() - 1 : now.getFullYear();
+  const expMonth = expectedMonth === 0 ? 12 : expectedMonth;
+  return dataYear < expectedYear || (dataYear === expectedYear && dataMonth < expMonth);
+}
+
 function FbfOverview() {
-  const { period, summary, monthlyHistory, totals } = fbfData;
+  const { period, summary, monthlyHistory, totals, dataMonth, dataYear } = fbfData;
+  const updateNeeded = needsUpdate(dataMonth, dataYear);
 
   const maxChartValue = Math.max(...monthlyHistory.map((m) => Math.abs(m.netFlow)));
 
@@ -18,6 +33,12 @@ function FbfOverview() {
         <h3 className="text-lg font-semibold text-neutral-800">FBF Nettosparande</h3>
         <span className="text-xs text-neutral-400">{period}</span>
       </div>
+
+      {updateNeeded && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
+          ⚠️ Nya siffror kan finnas — uppdatera fbfData.js (5:e–15:e varje mån.)
+        </div>
+      )}
 
       {/* Summary */}
       <p className="text-sm text-neutral-600 italic whitespace-pre-line">{summary}</p>

@@ -2,6 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import vffData from '../data/vffData';
 
+/**
+ * Returns true if we're between the 5th and 15th of a month AND the data
+ * file hasn't been updated for the previous month yet.
+ */
+function needsUpdate(dataMonth, dataYear) {
+  const now = new Date();
+  const day = now.getDate();
+  if (day < 5 || day > 15) return false;
+  // Expected: data should cover (currentMonth - 1)
+  const expectedMonth = now.getMonth(); // 0-indexed current = expected previous (1-indexed)
+  const expectedYear = expectedMonth === 0 ? now.getFullYear() - 1 : now.getFullYear();
+  const expMonth = expectedMonth === 0 ? 12 : expectedMonth; // 1-indexed prev month
+  return dataYear < expectedYear || (dataYear === expectedYear && dataMonth < expMonth);
+}
+
 function VffInflowBar({ label, value, max, color }) {
   const percentage = Math.max(0, (value / max) * 100);
   return (
@@ -21,7 +36,8 @@ function VffInflowBar({ label, value, max, color }) {
 }
 
 function VffOverview() {
-  const { month, summary, totalSAM, privateSAM, monthlyHistory } = vffData;
+  const { month, summary, totalSAM, privateSAM, monthlyHistory, dataMonth, dataYear } = vffData;
+  const updateNeeded = needsUpdate(dataMonth, dataYear);
 
   // Find max value for chart scaling
   const maxChartValue = Math.max(...monthlyHistory.map((m) => Math.abs(m.sam)));
@@ -37,6 +53,12 @@ function VffOverview() {
         <h3 className="text-lg font-semibold text-neutral-800">VFF Nettotegning</h3>
         <span className="text-xs text-neutral-400">{month}</span>
       </div>
+
+      {updateNeeded && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
+          ⚠️ Nye tall kan være tilgjengelige — oppdater vffData.js (5.–15. hver mnd.)
+        </div>
+      )}
 
       {/* Summary */}
       <p className="text-sm text-neutral-600 italic">{summary}</p>
