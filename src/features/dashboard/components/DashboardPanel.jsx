@@ -145,19 +145,19 @@ function DashboardPanel() {
           {/* Left column — KPIs and fund data */}
           <div className="flex-1 min-w-0 space-y-6">
             <div className="bg-white rounded-2xl shadow-card p-6">
-              <NewFundLaunches />
-            </div>
-            <div className="bg-white rounded-2xl shadow-card p-6">
               <AumOverviewSe />
             </div>
             <div className="bg-white rounded-2xl shadow-card p-6">
               <RevenueOverviewSe />
             </div>
           </div>
-          {/* Right column — FBF overview + News */}
+          {/* Right column — FBF, New Fund Launches, News */}
           <div className="w-full lg:w-80 shrink-0 space-y-6">
             <div className="bg-white rounded-2xl shadow-card p-5">
               <FbfOverview />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-5">
+              <NewFundLaunches />
             </div>
             <div className="bg-white rounded-2xl shadow-card p-5">
               <NewsFeed
@@ -208,9 +208,9 @@ function DashboardPanel() {
         {/* Left column — KPIs and fund data */}
         <div className="flex-1 min-w-0 space-y-6">
 
-          {/* New Fund Launches 2026 — near the top for visibility */}
+          {/* AUM Overview — Snowflake data */}
           <div className="bg-white rounded-2xl shadow-card p-6">
-            <NewFundLaunches />
+            <AumOverview />
           </div>
 
           {/* Revenue per fund */}
@@ -250,16 +250,16 @@ function DashboardPanel() {
           </div>
         </div>
 
-        {/* Right column — VFF/FBF at top, imagery, then news at bottom */}
+        {/* Right column — VFF at top, New Fund Launches, then news at bottom */}
         <div className="w-full lg:w-80 shrink-0 space-y-6">
           {/* VFF / FBF Overview — tab dependent */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <VffOverview />
           </div>
 
-          {/* AUM Overview — Snowflake data */}
+          {/* New Fund Launches 2026 */}
           <div className="bg-white rounded-2xl shadow-card p-5">
-            <AumOverview />
+            <NewFundLaunches />
           </div>
 
           {/* Storebrand imagery card */}
