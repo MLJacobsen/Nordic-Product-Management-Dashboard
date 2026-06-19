@@ -25,7 +25,7 @@ function AumOverviewIre() {
           Total AUM – IE Domiciled Funds
         </h3>
         <span className="text-[10px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
-          Manual
+          AMX / Carne Group
         </span>
       </div>
 
