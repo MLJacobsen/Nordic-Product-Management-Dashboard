@@ -7,10 +7,8 @@ import AumOverviewLux from './AumOverviewLux';
 import AumOverviewSe from './AumOverviewSe';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
-import KiidStatus from './KiidStatus';
 import LuxFlowOverview from './LuxFlowOverview';
 import LuxNavOverview from './LuxNavOverview';
-import MonthlyReportStatus from './MonthlyReportStatus';
 import NewFundLaunches from './NewFundLaunches';
 import NewsFeed from './NewsFeed';
 import PlannerGuidelines from './PlannerGuidelines';
@@ -192,11 +190,6 @@ function DashboardPanel() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left column — KPIs and fund data */}
         <div className="flex-1 min-w-0 space-y-6">
-          {/* Status cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <KiidStatus />
-            <MonthlyReportStatus />
-          </div>
 
           {/* New Fund Launches 2026 — near the top for visibility */}
           <div className="bg-white rounded-2xl shadow-card p-6">
