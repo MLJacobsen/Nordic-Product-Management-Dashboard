@@ -7,6 +7,7 @@ import AumOverviewSe from './AumOverviewSe';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
+import LuxNavOverview from './LuxNavOverview';
 import MonthlyReportStatus from './MonthlyReportStatus';
 import NewFundLaunches from './NewFundLaunches';
 import NewsFeed from './NewsFeed';
@@ -156,6 +157,9 @@ function DashboardPanel() {
         </div>
       ) : activeTab === 'luxembourg' ? (
         <div className="space-y-6">
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <LuxNavOverview />
+          </div>
           <div className="bg-white rounded-2xl shadow-card p-6">
             <AumOverviewLux />
           </div>
