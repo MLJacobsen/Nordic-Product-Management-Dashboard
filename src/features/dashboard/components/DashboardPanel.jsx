@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import AumOverview from './AumOverview';
 import AumOverviewIre from './AumOverviewIre';
 import AumOverviewLux from './AumOverviewLux';
+import AumOverviewSe from './AumOverviewSe';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
@@ -140,6 +141,9 @@ function DashboardPanel() {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl shadow-card p-6">
             <FbfOverview />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <AumOverviewSe />
           </div>
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
