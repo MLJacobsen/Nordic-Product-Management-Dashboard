@@ -141,23 +141,32 @@ function DashboardPanel() {
 
       {/* Content based on active tab */}
       {activeTab === 'sweden' ? (
-        <div className="space-y-6">
-          <div className="bg-white rounded-2xl shadow-card p-6">
-            <FbfOverview />
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Left column — KPIs and fund data */}
+          <div className="flex-1 min-w-0 space-y-6">
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <NewFundLaunches />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <AumOverviewSe />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <RevenueOverviewSe />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-5">
+              <NewsFeed
+                title="Dagens Industri"
+                fetchFn={fetchDagensIndustriNews}
+                icon="🇸🇪"
+                testId="di-news-feed"
+              />
+            </div>
           </div>
-          <div className="bg-white rounded-2xl shadow-card p-6">
-            <AumOverviewSe />
-          </div>
-          <div className="bg-white rounded-2xl shadow-card p-6">
-            <RevenueOverviewSe />
-          </div>
-          <div className="bg-white rounded-2xl shadow-card p-5">
-            <NewsFeed
-              title="Dagens Industri"
-              fetchFn={fetchDagensIndustriNews}
-              icon="🇸🇪"
-              testId="di-news-feed"
-            />
+          {/* Right column — FBF overview */}
+          <div className="w-full lg:w-80 shrink-0 space-y-6">
+            <div className="bg-white rounded-2xl shadow-card p-5">
+              <FbfOverview />
+            </div>
           </div>
         </div>
       ) : activeTab === 'luxembourg' ? (
