@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import snowflakeAumIre from '../data/snowflakeAumIre';
 
 function AumOverviewIre() {
-  const [expanded, setExpanded] = useState(false);
+  const totalAum = snowflakeAumIre.reduce((sum, f) => sum + f.aumUsd, 0);
+  const sorted = [...snowflakeAumIre].sort((a, b) => b.aumUsd - a.aumUsd);
+  const asOfDate = snowflakeAumIre[0]?.asOfDate || '';
 
-  const validFunds = snowflakeAumIre.filter((f) => f.aumMillEur != null);
-  const totalAum = validFunds.reduce((sum, f) => sum + f.aumMillEur, 0);
-  const sorted = [...validFunds].sort((a, b) => b.aumMillEur - a.aumMillEur);
-  const top5 = sorted.slice(0, 5);
-  const noData = validFunds.length === 0;
-
-  const formatAum = (mill) => {
-    if (mill >= 1000) return `${(mill / 1000).toFixed(1)} bn`;
-    return `${mill.toLocaleString('en-GB')} mn`;
+  const fmtUsd = (val) => {
+    if (val >= 1e9) return `$${(val / 1e9).toFixed(2)} bn`;
+    if (val >= 1e6) return `$${(val / 1e6).toFixed(1)} mn`;
+    return `$${val.toLocaleString('en-US')}`;
   };
 
   return (
@@ -28,82 +25,35 @@ function AumOverviewIre() {
           Total AUM – IE Domiciled Funds
         </h3>
         <span className="text-[10px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
-          ❄️ Snowflake
+          Manual
         </span>
       </div>
 
       {/* Total */}
       <div className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-4 border border-primary-200">
-        {noData ? (
-          <>
-            <p className="text-xs text-neutral-500 mb-1">AUM data</p>
-            <p className="text-sm text-amber-600 font-medium">
-              ⚠️ IE funds not yet in Snowflake
-            </p>
-            <p className="text-[10px] text-neutral-400 mt-1">
-              {snowflakeAumIre.length} funds registered · Waiting for data
-            </p>
-          </>
-        ) : (
-          <>
-            <p className="text-xs text-neutral-500 mb-1">Total AUM</p>
-            <p className="text-2xl font-bold text-primary-800">
-              {(totalAum / 1000).toFixed(1)} mrd EUR
-            </p>
-            <p className="text-[10px] text-neutral-400 mt-1">
-              {validFunds.length} funds · As of {new Date().toLocaleDateString('en-GB')}
-            </p>
-          </>
-        )}
+        <p className="text-xs text-neutral-500 mb-1">Total AUM</p>
+        <p className="text-2xl font-bold text-primary-800">
+          {fmtUsd(totalAum)}
+        </p>
+        <p className="text-[10px] text-neutral-400 mt-1">
+          {snowflakeAumIre.length} funds · As of {new Date(asOfDate).toLocaleDateString('en-GB')}
+        </p>
       </div>
 
-      {/* Top 5 */}
-      {!noData && (
-        <>
-          <div className="space-y-1.5">
-            <p className="text-xs font-medium text-neutral-500">Top 5 Funds (AUM)</p>
-            {top5.map((fund, i) => (
-              <div key={fund.fundId} className="flex items-center justify-between text-xs">
-                <span className="text-neutral-600 truncate flex-1 mr-2">
-                  <span className="text-neutral-400 mr-1">{i + 1}.</span>
-                  {fund.name}
-                </span>
-                <span className="font-semibold text-neutral-800 shrink-0">
-                  {formatAum(fund.aumMillEur)} EUR
-                </span>
-              </div>
-            ))}
+      {/* Fund list */}
+      <div className="space-y-1.5">
+        {sorted.map((fund, i) => (
+          <div key={fund.fundId} className="flex items-center justify-between text-xs py-0.5 border-b border-neutral-50">
+            <span className="text-neutral-600 truncate flex-1 mr-2">
+              <span className="text-neutral-400 mr-1">{i + 1}.</span>
+              {fund.name}
+            </span>
+            <span className="font-semibold text-neutral-800 shrink-0">
+              {fmtUsd(fund.aumUsd)}
+            </span>
           </div>
-
-          {/* Expandable full list */}
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="text-[11px] text-primary-600 hover:text-primary-800 font-medium"
-          >
-            {expanded ? '▲ Hide all funds' : '▼ Show all funds'}
-          </button>
-
-          {expanded && (
-            <motion.div
-              className="space-y-1 max-h-64 overflow-y-auto"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-            >
-              {sorted.map((fund, i) => (
-                <div key={fund.fundId} className="flex items-center justify-between text-[11px] py-0.5 border-b border-neutral-50">
-                  <span className="text-neutral-600 truncate flex-1 mr-2">
-                    <span className="text-neutral-300 mr-1">{i + 1}.</span>
-                    {fund.name}
-                  </span>
-                  <span className="font-medium text-neutral-700 shrink-0">
-                    {fund.aumMillEur.toLocaleString('en-GB')} mn EUR
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-          )}
-        </>
-      )}
+        ))}
+      </div>
     </motion.div>
   );
 }
