@@ -13,6 +13,7 @@ import NewFundLaunches from './NewFundLaunches';
 import NewsFeed from './NewsFeed';
 import PlannerGuidelines from './PlannerGuidelines';
 import RevenueOverview from './RevenueOverview';
+import RevenueOverviewSe from './RevenueOverviewSe';
 import VffOverview from './VffOverview';
 import { fetchWsjNews, fetchE24News, fetchDagensIndustriNews } from '../services/newsService';
 
@@ -145,6 +146,9 @@ function DashboardPanel() {
           </div>
           <div className="bg-white rounded-2xl shadow-card p-6">
             <AumOverviewSe />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <RevenueOverviewSe />
           </div>
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed

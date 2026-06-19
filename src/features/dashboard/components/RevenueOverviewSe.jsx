@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import fundRevenueData from '../data/fundRevenue';
+import fundRevenueSeData from '../data/fundRevenueSe';
 
-function RevenueOverview() {
+function RevenueOverviewSe() {
   const [showAll, setShowAll] = useState(false);
 
-  const sorted = [...fundRevenueData].sort((a, b) => b.estRevenueMillNok - a.estRevenueMillNok);
-  const totalRevenue = sorted.reduce((sum, f) => sum + f.estRevenueMillNok, 0);
+  const sorted = [...fundRevenueSeData].sort((a, b) => b.estRevenueMillSek - a.estRevenueMillSek);
+  const totalRevenue = sorted.reduce((sum, f) => sum + f.estRevenueMillSek, 0);
   const top10 = sorted.slice(0, 10);
   const displayList = showAll ? sorted : top10;
 
-  const formatMnok = (val) => {
-    if (val >= 1000) return `${(val / 1000).toFixed(2)} mrd`;
-    return `${val.toFixed(0)} MNOK`;
+  const formatMsek = (val) => {
+    if (val >= 1000) return `${(val / 1000).toFixed(2)} mdr`;
+    return `${val.toFixed(0)} MSEK`;
   };
 
-  // Bar width relative to max
-  const maxRevenue = sorted[0]?.estRevenueMillNok || 1;
+  const maxRevenue = sorted[0]?.estRevenueMillSek || 1;
 
   return (
     <motion.div
       className="space-y-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      data-testid="revenue-overview"
+      data-testid="revenue-overview-se"
     >
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-neutral-800">
-          Revenue per Fund – NO Domiciled
+          Revenue per Fund – SE Domiciled
         </h3>
         <span className="text-[10px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
           Est. annual ongoing charge
@@ -40,7 +39,7 @@ function RevenueOverview() {
           <div>
             <p className="text-xs text-neutral-500 mb-0.5">Estimated total annual revenue (ongoing charges)</p>
             <p className="text-2xl font-bold text-green-800">
-              {formatMnok(totalRevenue)}
+              {formatMsek(totalRevenue)}
             </p>
           </div>
           <div className="text-right">
@@ -59,7 +58,7 @@ function RevenueOverview() {
               <div className="flex items-center justify-between mb-0.5">
                 <span className="font-medium text-neutral-700 truncate mr-2">{fund.name}</span>
                 <span className="font-bold text-green-700 shrink-0">
-                  {fund.estRevenueMillNok.toFixed(1)} MNOK
+                  {fund.estRevenueMillSek.toFixed(1)} MSEK
                 </span>
               </div>
               {/* Revenue bar */}
@@ -67,12 +66,12 @@ function RevenueOverview() {
                 <motion.div
                   className="h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"
                   initial={{ width: 0 }}
-                  animate={{ width: `${(fund.estRevenueMillNok / maxRevenue) * 100}%` }}
+                  animate={{ width: `${(fund.estRevenueMillSek / maxRevenue) * 100}%` }}
                   transition={{ delay: i * 0.03, duration: 0.4 }}
                 />
               </div>
               <div className="flex justify-between mt-0.5 text-[10px] text-neutral-400">
-                <span>AUM: {fund.aumMillNok.toLocaleString('en-GB')} MNOK</span>
+                <span>AUM: {fund.aumMillSek.toLocaleString('en-GB')} MSEK</span>
                 <span>OC: {fund.terPct.toFixed(2)}%</span>
               </div>
             </div>
@@ -95,4 +94,4 @@ function RevenueOverview() {
   );
 }
 
-export default RevenueOverview;
+export default RevenueOverviewSe;
