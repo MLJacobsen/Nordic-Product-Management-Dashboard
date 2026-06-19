@@ -148,16 +148,16 @@ function DashboardPanel() {
               <AumOverviewSe />
             </div>
             <div className="bg-white rounded-2xl shadow-card p-6">
+              <NewFundLaunches />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-6">
               <RevenueOverviewSe />
             </div>
           </div>
-          {/* Right column — FBF, New Fund Launches, News */}
+          {/* Right column — FBF, News */}
           <div className="w-full lg:w-80 shrink-0 space-y-6">
             <div className="bg-white rounded-2xl shadow-card p-5">
               <FbfOverview />
-            </div>
-            <div className="bg-white rounded-2xl shadow-card p-5">
-              <NewFundLaunches />
             </div>
             <div className="bg-white rounded-2xl shadow-card p-5">
               <NewsFeed
@@ -213,6 +213,11 @@ function DashboardPanel() {
             <AumOverview />
           </div>
 
+          {/* New Fund Launches 2026 */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <NewFundLaunches />
+          </div>
+
           {/* Revenue per fund */}
           <div className="bg-white rounded-2xl shadow-card p-6">
             <RevenueOverview />
@@ -250,16 +255,11 @@ function DashboardPanel() {
           </div>
         </div>
 
-        {/* Right column — VFF at top, New Fund Launches, then news at bottom */}
+        {/* Right column — VFF at top, then news at bottom */}
         <div className="w-full lg:w-80 shrink-0 space-y-6">
           {/* VFF / FBF Overview — tab dependent */}
           <div className="bg-white rounded-2xl shadow-card p-5">
             <VffOverview />
-          </div>
-
-          {/* New Fund Launches 2026 */}
-          <div className="bg-white rounded-2xl shadow-card p-5">
-            <NewFundLaunches />
           </div>
 
           {/* Storebrand imagery card */}
