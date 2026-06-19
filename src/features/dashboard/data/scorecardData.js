@@ -23,6 +23,28 @@ const scorecardData = {
     ],
   },
 
+  // Dealing breakdown by fund (from DEALING sheet)
+  dealingByFund: [
+    { fund: 'STOR US PLUS LU F GBP ACC', subscriptions: 509, redemptions: 520, transfers: 6, total: 1035 },
+    { fund: 'STOR GBL PLUS LU I GBP ACC', subscriptions: 105, redemptions: 102, transfers: 0, total: 207 },
+    { fund: 'STOR GBL PLUS LU H GBP ACC', subscriptions: 51, redemptions: 139, transfers: 0, total: 190 },
+    { fund: 'STOR GBL PLUS LU B GBP ACC', subscriptions: 69, redemptions: 107, transfers: 0, total: 176 },
+    { fund: 'STOR EM PLUS LU I GBP ACC', subscriptions: 32, redemptions: 82, transfers: 0, total: 114 },
+    { fund: 'STOR EM PLUS LU B GBP ACC', subscriptions: 7, redemptions: 10, transfers: 0, total: 17 },
+    { fund: 'SKAG KON-TIKI LU B EUR ACC', subscriptions: 7, redemptions: 3, transfers: 0, total: 10 },
+    { fund: 'STOR GBL PLUS LU I EUR ACC', subscriptions: 2, redemptions: 6, transfers: 0, total: 8 },
+    { fund: 'STOR EM PLUS LU I USD ACC', subscriptions: 5, redemptions: 3, transfers: 0, total: 8 },
+    { fund: 'SKAG GLOBAL LU B EUR ACC', subscriptions: 2, redemptions: 6, transfers: 0, total: 8 },
+    { fund: 'SKAG KON-TIKI LU A EUR ACC', subscriptions: 5, redemptions: 1, transfers: 0, total: 6 },
+    { fund: 'STOR GBL PLUS LU B EUR ACC', subscriptions: 1, redemptions: 0, transfers: 2, total: 3 },
+    { fund: 'STOR GBL SOL LU B EUR ACC', subscriptions: 2, redemptions: 0, transfers: 0, total: 2 },
+    { fund: 'STOR US PLUS LU B GBP ACC', subscriptions: 1, redemptions: 0, transfers: 0, total: 1 },
+    { fund: 'SKAG KON-TIKI LU I2 EUR ACC', subscriptions: 0, redemptions: 1, transfers: 0, total: 1 },
+    { fund: 'SKAG FOCUS LU B EUR ACC', subscriptions: 1, redemptions: 0, transfers: 0, total: 1 },
+    { fund: 'SKAG GLOBAL LU A EUR ACC', subscriptions: 1, redemptions: 0, transfers: 0, total: 1 },
+    { fund: 'SKAG KON-TIKI LU B GBP ACC', subscriptions: 0, redemptions: 1, transfers: 0, total: 1 },
+  ],
+
   // REGISTRATION - MONTHLY STATS
   registration: {
     title: 'Registration – Active & New Accounts',
@@ -37,6 +59,41 @@ const scorecardData = {
       { ref: 16, indicator: 'Investors >20% of AUM', may: 0, apr: 0, ytd: 'N/A' },
     ],
   },
+
+  // Shareholder nationality breakdown (from Nationality Report sheet)
+  shareholderByResidency: [
+    { residency: 'United Kingdom', count: 161, pct: 72.5 },
+    { residency: 'Luxembourg', count: 26, pct: 11.7 },
+    { residency: 'Norway', count: 23, pct: 10.4 },
+    { residency: 'France', count: 5, pct: 2.3 },
+    { residency: 'Ireland', count: 2, pct: 0.9 },
+    { residency: 'Switzerland', count: 1, pct: 0.5 },
+    { residency: 'Netherlands', count: 1, pct: 0.5 },
+    { residency: 'Belgium', count: 1, pct: 0.5 },
+    { residency: 'Jersey', count: 1, pct: 0.5 },
+  ],
+
+  // Holdings by fund (from Nationality Report)
+  holdingsByFund: [
+    { fund: 'STOR GBL PLUS LU I GBP ACC', holders: 36 },
+    { fund: 'STOR US PLUS LU F GBP ACC', holders: 35 },
+    { fund: 'STOR GBL PLUS LU H GBP ACC', holders: 31 },
+    { fund: 'STOR EM PLUS LU I GBP ACC', holders: 30 },
+    { fund: 'STOR GBL PLUS LU B GBP ACC', holders: 24 },
+    { fund: 'SKAG KON-TIKI LU B EUR ACC', holders: 11 },
+    { fund: 'SKAG KON-TIKI LU A EUR ACC', holders: 6 },
+    { fund: 'SKAG GLOBAL LU A EUR ACC', holders: 6 },
+    { fund: 'STOR GBL PLUS LU B EUR ACC', holders: 6 },
+    { fund: 'STOR GBL SOL LU B EUR ACC', holders: 5 },
+    { fund: 'STOR EM PLUS LU I USD ACC', holders: 4 },
+    { fund: 'SKAG GLOBAL LU B EUR ACC', holders: 4 },
+    { fund: 'SKAG FOCUS LU A EUR ACC', holders: 4 },
+    { fund: 'STOR EM PLUS LU B GBP ACC', holders: 4 },
+    { fund: 'SKAG FOCUS LU B EUR ACC', holders: 3 },
+    { fund: 'STOR GBL PLUS LU I EUR ACC', holders: 2 },
+    { fund: 'STOR US PLUS LU B GBP ACC', holders: 2 },
+    { fund: 'STOR GBL SOL LU B GBP ACC', holders: 2 },
+  ],
 
   // CASH - ITEMS OVER 30 DAYS
   cash: {
