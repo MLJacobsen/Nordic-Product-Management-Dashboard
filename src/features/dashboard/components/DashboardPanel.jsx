@@ -159,13 +159,13 @@ function DashboardPanel() {
       ) : activeTab === 'luxembourg' ? (
         <div className="space-y-6">
           <div className="bg-white rounded-2xl shadow-card p-6">
-            <LuxNavOverview />
+            <AumOverviewLux />
           </div>
           <div className="bg-white rounded-2xl shadow-card p-6">
             <LuxFlowOverview />
           </div>
           <div className="bg-white rounded-2xl shadow-card p-6">
-            <AumOverviewLux />
+            <LuxNavOverview />
           </div>
           <div className="bg-white rounded-2xl shadow-card p-5">
             <NewsFeed
