@@ -22,6 +22,7 @@ function SuggestionBoard() {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [text, setText] = useState('');
+  const [anonymous, setAnonymous] = useState(false);
 
   useEffect(() => {
     saveSuggestions(suggestions);
@@ -32,13 +33,14 @@ function SuggestionBoard() {
     if (!text.trim()) return;
     const newSuggestion = {
       id: Date.now().toString(),
-      name: name.trim() || 'Anonymous',
+      name: anonymous ? 'Anonymous' : (name.trim() || 'Anonymous'),
       text: text.trim(),
       createdAt: new Date().toISOString(),
     };
     setSuggestions([newSuggestion, ...suggestions]);
     setName('');
     setText('');
+    setAnonymous(false);
     setShowForm(false);
   };
 
@@ -78,11 +80,21 @@ function SuggestionBoard() {
           >
             <input
               type="text"
-              placeholder="Your name (optional)"
+              placeholder="Your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full text-sm px-3 py-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300"
+              disabled={anonymous}
+              className={`w-full text-sm px-3 py-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 ${anonymous ? 'bg-neutral-100 text-neutral-400' : ''}`}
             />
+            <label className="flex items-center gap-2 text-xs text-neutral-600 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={anonymous}
+                onChange={(e) => setAnonymous(e.target.checked)}
+                className="rounded border-neutral-300 text-primary-500 focus:ring-primary-300"
+              />
+              Submit anonymously
+            </label>
             <textarea
               placeholder="Your suggestion..."
               value={text}
