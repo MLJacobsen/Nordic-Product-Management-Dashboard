@@ -153,6 +153,12 @@ function DashboardPanel() {
             <div className="bg-white rounded-2xl shadow-card p-6">
               <RevenueOverviewSe />
             </div>
+          </div>
+          {/* Right column — FBF overview + News */}
+          <div className="w-full lg:w-80 shrink-0 space-y-6">
+            <div className="bg-white rounded-2xl shadow-card p-5">
+              <FbfOverview />
+            </div>
             <div className="bg-white rounded-2xl shadow-card p-5">
               <NewsFeed
                 title="Dagens Industri"
@@ -160,12 +166,6 @@ function DashboardPanel() {
                 icon="🇸🇪"
                 testId="di-news-feed"
               />
-            </div>
-          </div>
-          {/* Right column — FBF overview */}
-          <div className="w-full lg:w-80 shrink-0 space-y-6">
-            <div className="bg-white rounded-2xl shadow-card p-5">
-              <FbfOverview />
             </div>
           </div>
         </div>
