@@ -36,7 +36,7 @@ function FbfOverview() {
 
       {updateNeeded && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
-          ⚠️ Nya siffror kan finnas — uppdatera fbfData.js (5:e–15:e varje mån.)
+          ⚠️ New figures may be available — update fbfData.js (5th–15th each month)
         </div>
       )}
 
@@ -95,7 +95,7 @@ function FbfOverview() {
         rel="noopener noreferrer"
         className="block text-xs text-primary-500 hover:text-primary-700 transition-colors"
       >
-        Källa: Fondbolagens Förening →
+        Source: Swedish Funds Association →
       </a>
     </motion.div>
   );

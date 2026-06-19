@@ -12,8 +12,8 @@ function AumOverviewIre() {
   const noData = validFunds.length === 0;
 
   const formatAum = (mill) => {
-    if (mill >= 1000) return `${(mill / 1000).toFixed(1)} mrd`;
-    return `${mill.toLocaleString('no-NO')} mill`;
+    if (mill >= 1000) return `${(mill / 1000).toFixed(1)} bn`;
+    return `${mill.toLocaleString('en-GB')} mn`;
   };
 
   return (
@@ -41,17 +41,17 @@ function AumOverviewIre() {
               ⚠️ IE funds not yet in Snowflake
             </p>
             <p className="text-[10px] text-neutral-400 mt-1">
-              {snowflakeAumIre.length} fond registrert · Venter på data
+              {snowflakeAumIre.length} funds registered · Waiting for data
             </p>
           </>
         ) : (
           <>
-            <p className="text-xs text-neutral-500 mb-1">Totalt AUM</p>
+            <p className="text-xs text-neutral-500 mb-1">Total AUM</p>
             <p className="text-2xl font-bold text-primary-800">
               {(totalAum / 1000).toFixed(1)} mrd EUR
             </p>
             <p className="text-[10px] text-neutral-400 mt-1">
-              {validFunds.length} fond · Per {new Date().toLocaleDateString('no-NO')}
+              {validFunds.length} funds · As of {new Date().toLocaleDateString('en-GB')}
             </p>
           </>
         )}
@@ -61,7 +61,7 @@ function AumOverviewIre() {
       {!noData && (
         <>
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-neutral-500">Topp 5 fond (AUM)</p>
+            <p className="text-xs font-medium text-neutral-500">Top 5 Funds (AUM)</p>
             {top5.map((fund, i) => (
               <div key={fund.fundId} className="flex items-center justify-between text-xs">
                 <span className="text-neutral-600 truncate flex-1 mr-2">
@@ -80,7 +80,7 @@ function AumOverviewIre() {
             onClick={() => setExpanded(!expanded)}
             className="text-[11px] text-primary-600 hover:text-primary-800 font-medium"
           >
-            {expanded ? '▲ Skjul alle fond' : '▼ Vis alle fond'}
+            {expanded ? '▲ Hide all funds' : '▼ Show all funds'}
           </button>
 
           {expanded && (
@@ -96,7 +96,7 @@ function AumOverviewIre() {
                     {fund.name}
                   </span>
                   <span className="font-medium text-neutral-700 shrink-0">
-                    {fund.aumMillEur.toLocaleString('no-NO')} mill EUR
+                    {fund.aumMillEur.toLocaleString('en-GB')} mn EUR
                   </span>
                 </div>
               ))}

@@ -33,7 +33,7 @@ function PerformanceChart({ fund }) {
         href={fund.url}
         target="_blank"
         rel="noopener noreferrer"
-        title="Klikk for å se fondssiden"
+        title="Click to see fund page"
         className="relative cursor-pointer"
         onMouseLeave={() => setHovered(null)}
       >
@@ -125,7 +125,7 @@ function NewFundLaunches() {
       </div>
 
       <p className="text-[10px] text-neutral-400 italic">
-        Avkastning siden lansering. Historisk avkastning er ingen garanti for fremtidig avkastning. Klikk på graf eller fondsnavn for å gå til fondssiden.
+        Returns since launch. Historical returns are no guarantee for future returns. Click on chart or fund name to go to fund page.
       </p>
     </motion.div>
   );

@@ -40,13 +40,13 @@ function LuxNavOverview() {
 
       {pendingUpdate && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
-          ⏳ Venter på dagens NAV fra JP Morgan (~10:00)
+          ⏳ Waiting for today's NAV from JP Morgan (~10:00)
         </div>
       )}
 
       {isStale && !pendingUpdate && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
-          ⚠️ NAV ikke oppdatert i dag — oppdater luxNavData.js
+          ⚠️ NAV not updated today — update luxNavData.js
         </div>
       )}
 
@@ -116,7 +116,7 @@ function LuxNavOverview() {
       </div>
 
       <p className="text-[10px] text-neutral-400 italic">
-        Kilde: JP Morgan NAV Report · lux.navproductionteam@jpmorgan.com
+        Source: JP Morgan NAV Report · lux.navproductionteam@jpmorgan.com
       </p>
     </motion.div>
   );

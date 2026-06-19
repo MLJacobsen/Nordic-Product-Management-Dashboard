@@ -30,7 +30,7 @@ function RevenueOverview() {
           Revenue per Fund – NO Domiciled
         </h3>
         <span className="text-[10px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
-          Est. årlig forvaltningshonorar
+          Est. annual management fee
         </span>
       </div>
 
@@ -38,13 +38,13 @@ function RevenueOverview() {
       <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-neutral-500 mb-0.5">Estimert total årlig inntekt (forvaltningshonorar)</p>
+            <p className="text-xs text-neutral-500 mb-0.5">Estimated total annual revenue (management fees)</p>
             <p className="text-2xl font-bold text-green-800">
               {formatMnok(totalRevenue)}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-neutral-500">{sorted.length} fond</p>
+            <p className="text-xs text-neutral-500">{sorted.length} funds</p>
             <p className="text-xs text-neutral-400">AUM × TER</p>
           </div>
         </div>
@@ -72,7 +72,7 @@ function RevenueOverview() {
                 />
               </div>
               <div className="flex justify-between mt-0.5 text-[10px] text-neutral-400">
-                <span>AUM: {fund.aumMillNok.toLocaleString('no-NO')} MNOK</span>
+                <span>AUM: {fund.aumMillNok.toLocaleString('en-GB')} MNOK</span>
                 <span>TER: {fund.terPct.toFixed(2)}%</span>
               </div>
             </div>
@@ -85,11 +85,11 @@ function RevenueOverview() {
         onClick={() => setShowAll(!showAll)}
         className="text-[11px] text-primary-600 hover:text-primary-800 font-medium"
       >
-        {showAll ? `▲ Vis topp 10` : `▼ Vis alle ${sorted.length} fond`}
+        {showAll ? `▲ Show top 10` : `▼ Show all ${sorted.length} funds`}
       </button>
 
       <p className="text-[10px] text-neutral-400 italic">
-        Estimert basert på AUM × TER (forvaltningshonorar). Ekskluderer eventuelle suksesshonorarer og transaksjonsgebyrer.
+        Estimated based on AUM × TER (management fees). Excludes potential performance fees and transaction fees.
       </p>
     </motion.div>
   );

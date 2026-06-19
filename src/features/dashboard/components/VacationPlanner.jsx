@@ -54,7 +54,7 @@ function VacationPlanner() {
 
   return (
     <div className="bg-white rounded-2xl shadow-card p-4" data-testid="vacation-planner">
-      <h3 className="text-sm font-bold text-neutral-800 mb-3">🌴 Ferieplanlegger – Sommer 2026</h3>
+      <h3 className="text-sm font-bold text-neutral-800 mb-3">🌴 Vacation Planner – Summer 2026</h3>
 
       {/* Add person form */}
       <form onSubmit={addPerson} className="flex gap-2 mb-3">
@@ -62,7 +62,7 @@ function VacationPlanner() {
           type="text"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
-          placeholder="Legg til navn..."
+          placeholder="Add name..."
           className="flex-1 text-xs px-2 py-1.5 border border-neutral-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-400"
         />
         <button
@@ -79,7 +79,7 @@ function VacationPlanner() {
           <table className="w-full text-[10px]">
             <thead>
               <tr>
-                <th className="text-left text-neutral-500 font-medium pb-1 pr-2">Navn</th>
+                <th className="text-left text-neutral-500 font-medium pb-1 pr-2">Name</th>
                 {Object.entries(WEEKS).map(([month, weeks]) => (
                   <th
                     key={month}
@@ -125,7 +125,7 @@ function VacationPlanner() {
                                 ? 'bg-green-500 border-green-600'
                                 : 'bg-neutral-50 border-neutral-200 hover:border-green-400'
                             }`}
-                            title={`Uke ${week}`}
+                            title={`Week ${week}`}
                           />
                         </td>
                       );
@@ -134,7 +134,7 @@ function VacationPlanner() {
                       <button
                         onClick={() => removePerson(pIdx)}
                         className="text-neutral-300 hover:text-red-500 transition-colors"
-                        title="Fjern"
+                        title="Remove"
                       >
                         ✕
                       </button>
@@ -148,11 +148,11 @@ function VacationPlanner() {
       )}
 
       {people.length === 0 && (
-        <p className="text-xs text-neutral-400 italic">Ingen lagt til ennå. Legg til navn for å markere ferie.</p>
+        <p className="text-xs text-neutral-400 italic">None added yet. Add a name to mark vacation.</p>
       )}
 
       {people.length > 0 && (
-        <p className="text-[10px] text-neutral-400 mt-2">Klikk på ukenummer for å markere ferie (grønn = ferie)</p>
+        <p className="text-[10px] text-neutral-400 mt-2">Click on week number to mark vacation (green = vacation)</p>
       )}
     </div>
   );

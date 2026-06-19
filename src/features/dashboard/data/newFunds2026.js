@@ -12,7 +12,7 @@ const newFunds2026 = [
     nav: 108.42,
     currency: 'NOK',
     category: 'Aksje – Global',
-    description: 'Fossilfritt indeksnært aksjefond med bred eksponering mot utviklede markeder.',
+    description: 'Fossil-free index-like equity fund with broad exposure to developed markets.',
     url: FUND_LIST_URL,
     performance: [
       { month: 'Jan', nav: 100.00 },
@@ -29,7 +29,7 @@ const newFunds2026 = [
     nav: 112.37,
     currency: 'NOK',
     category: 'Aksje – USA',
-    description: 'Klimabevisst amerikansk aksjefond med aktiv forvaltning.',
+    description: 'Climate-conscious US equity fund with active management.',
     url: FUND_LIST_URL,
     performance: [
       { month: 'Feb', nav: 100.00 },
@@ -45,7 +45,7 @@ const newFunds2026 = [
     nav: 101.85,
     currency: 'NOK',
     category: 'Rente – Norden',
-    description: 'Investment grade obligasjonsfond med mellomlangt durasjonsmål i nordiske markeder.',
+    description: 'Investment grade bond fund with medium-term duration target in Nordic markets.',
     url: FUND_LIST_URL,
     performance: [
       { month: 'Jan', nav: 100.00 },
@@ -62,7 +62,7 @@ const newFunds2026 = [
     nav: 101.92,
     currency: 'NOK',
     category: 'Rente – Norge',
-    description: 'Akkumulerende rentefond – renteinntekter reinvesteres automatisk.',
+    description: 'Accumulating bond fund — interest income is automatically reinvested.',
     url: FUND_LIST_URL,
     performance: [
       { month: 'Jan', nav: 100.00 },
@@ -79,7 +79,7 @@ const newFunds2026 = [
     nav: 105.64,
     currency: 'NOK',
     category: 'Aksje – Fremvoksende',
-    description: 'Oppdatert vekstmarkedsfond med forsterket bærekraftsprofil.',
+    description: 'Updated emerging markets fund with enhanced sustainability profile.',
     url: FUND_LIST_URL,
     performance: [
       { month: 'Mar', nav: 100.00 },

@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { fetchMonthlyReportStatus } from '../services/fundService';
 
 const monthNames = [
-  'januar', 'februar', 'mars', 'april', 'mai', 'juni',
-  'juli', 'august', 'september', 'oktober', 'november', 'desember',
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
 function MonthlyReportStatus() {
@@ -47,7 +47,7 @@ function MonthlyReportStatus() {
       data-testid="monthly-report-status"
     >
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-lg font-semibold text-neutral-800">Månedsrapport</h3>
+        <h3 className="text-lg font-semibold text-neutral-800">Monthly Report</h3>
         <span
           className={`text-2xl font-bold ${
             allUploaded ? 'text-green-600' : isLateState ? 'text-red-600' : 'text-blue-700'
@@ -59,22 +59,22 @@ function MonthlyReportStatus() {
       </div>
 
       <p className="text-xs text-neutral-500 mb-2">
-        Forventet rapport: <span className="font-medium">{periodLabel}</span>
+        Expected report: <span className="font-medium">{periodLabel}</span>
         {isPastDeadline ? (
-          <span className="ml-2 text-red-500 font-medium">(frist passert — 5. i måneden)</span>
+          <span className="ml-2 text-red-500 font-medium">(deadline passed — 5th of month)</span>
         ) : (
-          <span className="ml-2 text-neutral-400">(frist: 5. {monthNames[new Date().getMonth()]})</span>
+          <span className="ml-2 text-neutral-400">(deadline: 5th {monthNames[new Date().getMonth()]})</span>
         )}
       </p>
 
       {allUploaded ? (
         <p className="text-green-700 text-sm font-medium" data-testid="monthly-report-ok">
-          ✓ Alle fond har lastet opp månedsrapport for {periodLabel}
+          ✓ All funds have uploaded monthly report for {periodLabel}
         </p>
       ) : isLateState ? (
         <div data-testid="monthly-report-late">
           <p className="text-red-700 text-sm font-medium mb-1">
-            ✗ {lateFunds.length} fond mangler månedsrapport (forsinket)
+            ✗ {lateFunds.length} funds missing monthly report (late)
           </p>
           <ul className="text-red-600 text-xs space-y-0.5 max-h-32 overflow-y-auto">
             {lateFunds.map((f) => (
@@ -85,7 +85,7 @@ function MonthlyReportStatus() {
       ) : (
         <div data-testid="monthly-report-pending">
           <p className="text-blue-700 text-sm font-medium mb-1">
-            ⏳ {total - uploaded} fond har ikke lastet opp ennå (frist: 5. i måneden)
+            ⏳ {total - uploaded} funds have not uploaded yet (deadline: 5th of month)
           </p>
           <ul className="text-blue-600 text-xs space-y-0.5 max-h-32 overflow-y-auto">
             {lateFunds.map((f) => (

@@ -50,13 +50,13 @@ function VffOverview() {
       data-testid="vff-overview"
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-neutral-800">VFF Nettotegning</h3>
+        <h3 className="text-lg font-semibold text-neutral-800">VFF Net Subscription</h3>
         <span className="text-xs text-neutral-400">{month}</span>
       </div>
 
       {updateNeeded && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
-          ⚠️ Nye tall kan være tilgjengelige — oppdater vffData.js (5.–15. hver mnd.)
+          ⚠️ New figures may be available — update vffData.js (5th–15th each month)
         </div>
       )}
 
@@ -65,7 +65,7 @@ function VffOverview() {
 
       {/* Monthly bar chart */}
       <div className="space-y-1.5">
-        <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">SAM Nettotegning (mrd. kr.)</p>
+        <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">SAM Net Subscription (bn NOK)</p>
         {monthlyHistory.map((item) => (
           <div key={item.month} className="flex items-center gap-2 text-xs">
             <span className="w-16 text-neutral-500 shrink-0">{item.month.slice(0, 3)}</span>
@@ -99,26 +99,26 @@ function VffOverview() {
           <p className="text-xs font-semibold text-neutral-600 mb-1">Total SAM</p>
           <div className="space-y-1 text-xs text-neutral-700">
             <p>
-              Nettotegning: <span className="font-semibold">{totalSAM.netSubscription} mrd. kr.</span>
-              <span className="text-neutral-400"> ({totalSAM.netSubscriptionShare}% av VFF: {totalSAM.netSubscriptionVffTotal} mrd.)</span>
+              Net Subscription: <span className="font-semibold">{totalSAM.netSubscription} bn NOK</span>
+              <span className="text-neutral-400"> ({totalSAM.netSubscriptionShare}% of VFF: {totalSAM.netSubscriptionVffTotal} bn)</span>
             </p>
             <p>
-              Forvaltningskapital: <span className="font-semibold">{totalSAM.aum} mrd. kr.</span>
-              <span className="text-neutral-400"> ({totalSAM.aumShare}% av VFF: {totalSAM.aumVffTotal} mrd.)</span>
+              AUM: <span className="font-semibold">{totalSAM.aum} bn NOK</span>
+              <span className="text-neutral-400"> ({totalSAM.aumShare}% of VFF: {totalSAM.aumVffTotal} bn)</span>
             </p>
           </div>
         </div>
 
         <div className="bg-neutral-50 rounded-lg p-3">
-          <p className="text-xs font-semibold text-neutral-600 mb-1">Privatkunder SAM</p>
+          <p className="text-xs font-semibold text-neutral-600 mb-1">Private Clients SAM</p>
           <div className="space-y-1 text-xs text-neutral-700">
             <p>
-              Nettotegning: <span className="font-semibold">{(privateSAM.netSubscription * 1000).toFixed(0)} mill. kr.</span>
-              <span className="text-neutral-400"> ({privateSAM.netSubscriptionShare}% av VFF: {privateSAM.netSubscriptionVffTotal} mrd.)</span>
+              Net Subscription: <span className="font-semibold">{(privateSAM.netSubscription * 1000).toFixed(0)} mn NOK</span>
+              <span className="text-neutral-400"> ({privateSAM.netSubscriptionShare}% of VFF: {privateSAM.netSubscriptionVffTotal} bn)</span>
             </p>
             <p>
-              Forvaltningskapital: <span className="font-semibold">{privateSAM.aum} mrd. kr.</span>
-              <span className="text-neutral-400"> ({privateSAM.aumShare}% av VFF: {privateSAM.aumVffTotal} mrd.)</span>
+              AUM: <span className="font-semibold">{privateSAM.aum} bn NOK</span>
+              <span className="text-neutral-400"> ({privateSAM.aumShare}% of VFF: {privateSAM.aumVffTotal} bn)</span>
             </p>
           </div>
         </div>
@@ -131,7 +131,7 @@ function VffOverview() {
         rel="noopener noreferrer"
         className="block text-xs text-primary-500 hover:text-primary-700 transition-colors"
       >
-        Kilde: VFF Statistikk →
+        Source: VFF Statistics →
       </a>
     </motion.div>
   );

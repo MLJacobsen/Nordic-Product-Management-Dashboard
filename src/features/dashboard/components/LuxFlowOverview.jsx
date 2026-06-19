@@ -62,13 +62,13 @@ function LuxFlowOverview() {
 
       {updateNeeded && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
-          ⚠️ Nye flow-tall kan være tilgjengelige — oppdater luxFlowData.js (1.–5. hver mnd.)
+          ⚠️ New flow figures may be available — update luxFlowData.js (1st–5th each month)
         </div>
       )}
 
       {/* Summary card */}
       <div className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-4 border border-primary-200">
-        <p className="text-xs text-neutral-500 mb-1">Netto flow — {title}</p>
+        <p className="text-xs text-neutral-500 mb-1">Net Flow — {title}</p>
         <p className={`text-2xl font-bold ${data.totalNetFlow >= 0 ? 'text-green-700' : 'text-red-700'}`}>
           {formatEur(data.totalNetFlow)}
         </p>

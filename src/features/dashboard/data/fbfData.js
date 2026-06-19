@@ -7,29 +7,29 @@
  * show an "update needed" reminder between the 5th and 15th each month.
  */
 const fbfData = {
-  period: 'maj 2026',
+  period: 'May 2026',
   dataMonth: 5, // 1=Jan … 12=Dec — update when new month is added
   dataYear: 2026,
-  summary: `Nettosparandet i maj var positivt för Storebrand i Sverige.
+  summary: `Net savings in May were positive for Storebrand in Sweden.
 
-Total för Storebrand Sverige
+Total Storebrand Sweden
 
-Nettosparandet i Storebrand endte på 1,5 mdr SEK (2,1 % av FBF:s nettosparande på 71,2 mdr SEK)
+Net savings for Storebrand ended at SEK 1.5 bn (2.1% of FBF total net savings of SEK 71.2 bn)
 
-Förvaltningskapitalet för Storebrand är 205 mdr SEK (3,3% av FBF:s förvaltningskapital på 6.310 mdr SEK)
+AUM for Storebrand is SEK 205 bn (3.3% of FBF total AUM of SEK 6,310 bn)
 
-Privatkunder i Storebrand
+Private Clients
 
-Nettosparandet för privatkunder i Storebrand endte på 410 MSEK (2,3% av FBF:s nettosparande på 17,8 mdr SEK)
+Net savings for private clients at Storebrand ended at SEK 410 mn (2.3% of FBF private net savings of SEK 17.8 bn)
 
-Förvaltningskapitalet för privatkunder i Storebrand är 55 mdr SEK (2,9% av FBF:s förvaltningskapital på 1.920 mdr SEK)`,
+AUM for private clients at Storebrand is SEK 55 bn (2.9% of FBF private AUM of SEK 1,920 bn)`,
 
   monthlyHistory: [
     { month: 'Jan', netFlow: 0.8, marketShare: 1.5 },
     { month: 'Feb', netFlow: 1.1, marketShare: 1.7 },
     { month: 'Mar', netFlow: 0.6, marketShare: 1.2 },
     { month: 'Apr', netFlow: 1.2, marketShare: 1.8 },
-    { month: 'Maj', netFlow: 1.5, marketShare: 2.1 },
+    { month: 'May', netFlow: 1.5, marketShare: 2.1 },
   ],
 
   totals: {

@@ -10,8 +10,8 @@ function AumOverviewSe() {
   const top5 = sorted.slice(0, 5);
 
   const formatAum = (mill) => {
-    if (mill >= 1000) return `${(mill / 1000).toFixed(1)} mdr`;
-    return `${mill.toLocaleString('sv-SE')} MSEK`;
+    if (mill >= 1000) return `${(mill / 1000).toFixed(1)} bn`;
+    return `${mill.toLocaleString('en-GB')} MSEK`;
   };
 
   return (
@@ -32,18 +32,18 @@ function AumOverviewSe() {
 
       {/* Total */}
       <div className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-4 border border-primary-200">
-        <p className="text-xs text-neutral-500 mb-1">Totalt AUM</p>
+        <p className="text-xs text-neutral-500 mb-1">Total AUM</p>
         <p className="text-2xl font-bold text-primary-800">
           {(totalAum / 1000).toFixed(1)} mdr SEK
         </p>
         <p className="text-[10px] text-neutral-400 mt-1">
-          {snowflakeAumSe.length} fonder · Per {new Date().toLocaleDateString('sv-SE')}
+          {snowflakeAumSe.length} funds · As of {new Date().toLocaleDateString('en-GB')}
         </p>
       </div>
 
       {/* Top 5 */}
       <div className="space-y-1.5">
-        <p className="text-xs font-medium text-neutral-500">Topp 5 fonder (AUM)</p>
+        <p className="text-xs font-medium text-neutral-500">Top 5 Funds (AUM)</p>
         {top5.map((fund, i) => (
           <div key={fund.fundId} className="flex items-center justify-between text-xs">
             <span className="text-neutral-600 truncate flex-1 mr-2">
@@ -62,7 +62,7 @@ function AumOverviewSe() {
         onClick={() => setExpanded(!expanded)}
         className="text-[11px] text-primary-600 hover:text-primary-800 font-medium"
       >
-        {expanded ? '▲ Dölj alla fonder' : '▼ Visa alla fonder'}
+        {expanded ? '▲ Hide all funds' : '▼ Show all funds'}
       </button>
 
       {expanded && (
@@ -78,7 +78,7 @@ function AumOverviewSe() {
                 {fund.name}
               </span>
               <span className="font-medium text-neutral-700 shrink-0">
-                {fund.aumMillSek.toLocaleString('sv-SE')} MSEK
+                {fund.aumMillSek.toLocaleString('en-GB')} MSEK
               </span>
             </div>
           ))}

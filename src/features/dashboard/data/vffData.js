@@ -8,10 +8,10 @@
  */
 
 const vffData = {
-  month: 'Mai 2026',
+  month: 'May 2026',
   dataMonth: 5, // 1=Jan … 12=Dec — update when new month is added
   dataYear: 2026,
-  summary: 'Nettotegningen i mai var positiv for Storebrand-, Delphi-, Kron- og SKAGEN Fondene.',
+  summary: 'Net subscription in May was positive for Storebrand, Delphi, Kron and SKAGEN Funds.',
 
   totalSAM: {
     netSubscription: 1.4, // mrd. kr.
@@ -33,12 +33,12 @@ const vffData = {
 
   // Monthly net subscription history (mrd. kr.) for chart
   monthlyHistory: [
-    { month: 'Des 2025', sam: -0.3, vffTotal: 15.4 },
+    { month: 'Dec 2025', sam: -0.3, vffTotal: 15.4 },
     { month: 'Jan 2026', sam: 2.1, vffTotal: 45.2 },
     { month: 'Feb 2026', sam: 0.8, vffTotal: 31.8 },
     { month: 'Mar 2026', sam: 1.5, vffTotal: 38.6 },
     { month: 'Apr 2026', sam: 0.9, vffTotal: 32.5 },
-    { month: 'Mai 2026', sam: 1.4, vffTotal: 36.8 },
+    { month: 'May 2026', sam: 1.4, vffTotal: 36.8 },
   ],
 };
 
