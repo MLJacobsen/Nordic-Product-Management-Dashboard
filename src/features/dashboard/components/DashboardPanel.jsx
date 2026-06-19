@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import AumOverview from './AumOverview';
+import IrishDealsOverview from './IrishDealsOverview';
 import AumOverviewIre from './AumOverviewIre';
 import AumOverviewLux from './AumOverviewLux';
 import AumOverviewSe from './AumOverviewSe';
@@ -177,8 +178,13 @@ function DashboardPanel() {
           </div>
         </div>
       ) : activeTab === 'ireland' ? (
-        <div className="bg-white rounded-2xl shadow-card p-6">
-          <AumOverviewIre />
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <AumOverviewIre />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <IrishDealsOverview />
+          </div>
         </div>
       ) : activeTab === 'guidelines' ? (
         <PlannerGuidelines />
