@@ -5,9 +5,11 @@ import snowflakeAumIre from '../data/snowflakeAumIre';
 function AumOverviewIre() {
   const [expanded, setExpanded] = useState(false);
 
-  const totalAum = snowflakeAumIre.reduce((sum, f) => sum + f.aumMillEur, 0);
-  const sorted = [...snowflakeAumIre].sort((a, b) => b.aumMillEur - a.aumMillEur);
+  const validFunds = snowflakeAumIre.filter((f) => f.aumMillEur != null);
+  const totalAum = validFunds.reduce((sum, f) => sum + f.aumMillEur, 0);
+  const sorted = [...validFunds].sort((a, b) => b.aumMillEur - a.aumMillEur);
   const top5 = sorted.slice(0, 5);
+  const noData = validFunds.length === 0;
 
   const formatAum = (mill) => {
     if (mill >= 1000) return `${(mill / 1000).toFixed(1)} mrd`;
@@ -32,57 +34,75 @@ function AumOverviewIre() {
 
       {/* Total */}
       <div className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-4 border border-primary-200">
-        <p className="text-xs text-neutral-500 mb-1">Totalt AUM</p>
-        <p className="text-2xl font-bold text-primary-800">
-          {(totalAum / 1000).toFixed(1)} mrd EUR
-        </p>
-        <p className="text-[10px] text-neutral-400 mt-1">
-          {snowflakeAumIre.length} fond · Per {new Date().toLocaleDateString('no-NO')}
-        </p>
+        {noData ? (
+          <>
+            <p className="text-xs text-neutral-500 mb-1">AUM data</p>
+            <p className="text-sm text-amber-600 font-medium">
+              ⚠️ IE funds not yet in Snowflake
+            </p>
+            <p className="text-[10px] text-neutral-400 mt-1">
+              {snowflakeAumIre.length} fond registrert · Venter på data
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="text-xs text-neutral-500 mb-1">Totalt AUM</p>
+            <p className="text-2xl font-bold text-primary-800">
+              {(totalAum / 1000).toFixed(1)} mrd EUR
+            </p>
+            <p className="text-[10px] text-neutral-400 mt-1">
+              {validFunds.length} fond · Per {new Date().toLocaleDateString('no-NO')}
+            </p>
+          </>
+        )}
       </div>
 
       {/* Top 5 */}
-      <div className="space-y-1.5">
-        <p className="text-xs font-medium text-neutral-500">Topp 5 fond (AUM)</p>
-        {top5.map((fund, i) => (
-          <div key={fund.fundId} className="flex items-center justify-between text-xs">
-            <span className="text-neutral-600 truncate flex-1 mr-2">
-              <span className="text-neutral-400 mr-1">{i + 1}.</span>
-              {fund.name}
-            </span>
-            <span className="font-semibold text-neutral-800 shrink-0">
-              {formatAum(fund.aumMillEur)} EUR
-            </span>
+      {!noData && (
+        <>
+          <div className="space-y-1.5">
+            <p className="text-xs font-medium text-neutral-500">Topp 5 fond (AUM)</p>
+            {top5.map((fund, i) => (
+              <div key={fund.fundId} className="flex items-center justify-between text-xs">
+                <span className="text-neutral-600 truncate flex-1 mr-2">
+                  <span className="text-neutral-400 mr-1">{i + 1}.</span>
+                  {fund.name}
+                </span>
+                <span className="font-semibold text-neutral-800 shrink-0">
+                  {formatAum(fund.aumMillEur)} EUR
+                </span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* Expandable full list */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="text-[11px] text-primary-600 hover:text-primary-800 font-medium"
-      >
-        {expanded ? '▲ Skjul alle fond' : '▼ Vis alle fond'}
-      </button>
+          {/* Expandable full list */}
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="text-[11px] text-primary-600 hover:text-primary-800 font-medium"
+          >
+            {expanded ? '▲ Skjul alle fond' : '▼ Vis alle fond'}
+          </button>
 
-      {expanded && (
-        <motion.div
-          className="space-y-1 max-h-64 overflow-y-auto"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-        >
-          {sorted.map((fund, i) => (
-            <div key={fund.fundId} className="flex items-center justify-between text-[11px] py-0.5 border-b border-neutral-50">
-              <span className="text-neutral-600 truncate flex-1 mr-2">
-                <span className="text-neutral-300 mr-1">{i + 1}.</span>
-                {fund.name}
-              </span>
-              <span className="font-medium text-neutral-700 shrink-0">
-                {fund.aumMillEur.toLocaleString('no-NO')} mill EUR
-              </span>
-            </div>
-          ))}
-        </motion.div>
+          {expanded && (
+            <motion.div
+              className="space-y-1 max-h-64 overflow-y-auto"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+            >
+              {sorted.map((fund, i) => (
+                <div key={fund.fundId} className="flex items-center justify-between text-[11px] py-0.5 border-b border-neutral-50">
+                  <span className="text-neutral-600 truncate flex-1 mr-2">
+                    <span className="text-neutral-300 mr-1">{i + 1}.</span>
+                    {fund.name}
+                  </span>
+                  <span className="font-medium text-neutral-700 shrink-0">
+                    {fund.aumMillEur.toLocaleString('no-NO')} mill EUR
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          )}
+        </>
       )}
     </motion.div>
   );

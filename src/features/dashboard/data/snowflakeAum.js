@@ -1,58 +1,75 @@
 /**
- * AUM data sourced from Snowflake (FUND_AUM table).
- * Connection: Storebrand Snowflake → GitHub Actions → JSON export
- * Query: SELECT FUND_ID, FUND_NAME, AUM_NOK_MILL FROM PROD.FUND_DATA.FUND_AUM
- *        WHERE REPORT_DATE = CURRENT_DATE() AND DOMICILE = 'NO'
- *
- * TODO: Replace mock data with live Snowflake integration via GitHub Actions secret.
- * See: https://docs.snowflake.com/en/developer-guide/node-js/nodejs-driver
+ * AUM data sourced from Snowflake — NO-domiciled funds.
+ * Source: DDS_SAM.HOLDINGS.AUM_FUND joined with DWH_SAM.CONFORMED_DIM.DIM_FUND
+ * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
  */
 const snowflakeAum = [
-  // Norwegian Equity Funds
-  { fundId: 'stb-aksje-innland', name: 'Storebrand Aksje Innland', aumMillNok: 8432 },
-  { fundId: 'stb-norge', name: 'Storebrand Norge', aumMillNok: 12845 },
-  { fundId: 'stb-norge-horisont', name: 'Storebrand Norge Horisont', aumMillNok: 3214 },
-  { fundId: 'stb-norge-inst', name: 'Storebrand Norge Institusjon', aumMillNok: 15672 },
-  { fundId: 'stb-vekst', name: 'Storebrand Vekst', aumMillNok: 6891 },
-  { fundId: 'stb-verdi', name: 'Storebrand Verdi', aumMillNok: 9456 },
-  { fundId: 'stb-equal-opp', name: 'Storebrand Equal Opportunities', aumMillNok: 2134 },
-  { fundId: 'stb-fornybar', name: 'Storebrand Fornybar Energi', aumMillNok: 4567 },
-  { fundId: 'stb-global-all', name: 'Storebrand Global All Countries', aumMillNok: 18923 },
+  // Storebrand
+  { fundId: 'GLOIDX', name: 'Storebrand Global Indeks', aumMillNok: 63591 },
+  { fundId: 'GLOKRE', name: 'Storebrand Global Kreditt IG', aumMillNok: 29537 },
+  { fundId: 'NOKRE', name: 'Storebrand Norsk Kreditt IG', aumMillNok: 28848 },
+  { fundId: 'GLOQNT', name: 'Storebrand Global Multifactor', aumMillNok: 27507 },
+  { fundId: 'LIKINS', name: 'Storebrand Likviditet', aumMillNok: 27318 },
+  { fundId: 'GLOACX', name: 'Storebrand Indeks - Alle Markeder', aumMillNok: 25714 },
+  { fundId: 'NORIDX', name: 'Storebrand Indeks - Norge', aumMillNok: 19477 },
+  { fundId: 'NORGEI', name: 'Storebrand Norge I', aumMillNok: 19121 },
+  { fundId: 'GLOESG', name: 'Storebrand Global Optimised', aumMillNok: 17803 },
+  { fundId: 'KOKRED', name: 'Storebrand Kort Kreditt IG', aumMillNok: 17118 },
+  { fundId: 'GLOGLT', name: 'Storebrand Global Solutions', aumMillNok: 12889 },
+  { fundId: 'RENTESII', name: 'Storebrand Korte Renter SII', aumMillNok: 11750 },
+  { fundId: 'GLOEMX', name: 'Storebrand Indeks - Nye Markeder', aumMillNok: 9749 },
+  { fundId: 'GLOPLU', name: 'Storebrand Global Plus', aumMillNok: 8608 },
+  { fundId: 'NRDIDX', name: 'Storebrand Indeks - Norden', aumMillNok: 7544 },
+  { fundId: 'GLOIDXVAL', name: 'Storebrand Global Indeks Valutasikret', aumMillNok: 7304 },
+  { fundId: 'NOKR20', name: 'Storebrand Norsk Kreditt IG 20', aumMillNok: 6682 },
+  { fundId: 'KREDITT', name: 'Storebrand Kreditt', aumMillNok: 5622 },
+  { fundId: 'NORDICHY', name: 'Storebrand Nordic High Yield', aumMillNok: 5487 },
+  { fundId: 'GLOBLA13', name: 'Storebrand Global Obligasjon 1-3', aumMillNok: 5157 },
+  { fundId: 'GLOBLA', name: 'Storebrand Global Obligasjon', aumMillNok: 4942 },
+  { fundId: 'NORGE', name: 'Storebrand Norge', aumMillNok: 3634 },
+  { fundId: 'FREMTID100', name: 'Storebrand Fremtid 100', aumMillNok: 2909 },
+  { fundId: 'INNLAN', name: 'Storebrand Aksje Innland', aumMillNok: 2757 },
+  { fundId: 'NORPLU', name: 'Storebrand Norge Horisont', aumMillNok: 2634 },
+  { fundId: 'NORDICIG', name: 'Storebrand Nordic IG Medium Duration', aumMillNok: 2451 },
+  { fundId: 'FORNYBAR', name: 'Storebrand Fornybar Energi', aumMillNok: 2336 },
+  { fundId: 'VERDI', name: 'Storebrand Verdi', aumMillNok: 2059 },
+  { fundId: 'GLOBAL', name: 'Storebrand Global Value', aumMillNok: 1948 },
+  { fundId: 'FREMTID50', name: 'Storebrand Fremtid 50', aumMillNok: 1589 },
+  { fundId: 'FREMTID80', name: 'Storebrand Fremtid 80', aumMillNok: 1342 },
+  { fundId: 'GLOPLUVAL', name: 'Storebrand Global Plus Valutasikret', aumMillNok: 1150 },
+  { fundId: 'STATA', name: 'Storebrand Stat', aumMillNok: 1083 },
+  { fundId: 'GLOQNTVAL', name: 'Storebrand Global Multifaktor Valutasikret', aumMillNok: 1057 },
+  { fundId: 'FREMTID30', name: 'Storebrand Fremtid 30', aumMillNok: 400 },
+  { fundId: 'FREMTID10', name: 'Storebrand Fremtid 10', aumMillNok: 296 },
+  { fundId: 'SMART', name: 'Storebrand Fremtidens Byer', aumMillNok: 185 },
+  { fundId: 'EURIDX', name: 'Storebrand Europe Index', aumMillNok: 179 },
+  { fundId: 'EQUAL', name: 'Storebrand Like Muligheter', aumMillNok: 58 },
 
-  // Index Funds
-  { fundId: 'stb-indeks-norge', name: 'Storebrand Indeks Norge', aumMillNok: 42156 },
-  { fundId: 'stb-indeks-norden', name: 'Storebrand Indeks - Norden', aumMillNok: 28934 },
-  { fundId: 'stb-indeks-alle', name: 'Storebrand Indeks - Alle Markeder', aumMillNok: 67821 },
-  { fundId: 'stb-global-indeks', name: 'Storebrand Global Indeks', aumMillNok: 89234 },
-  { fundId: 'stb-global-indeks-vs', name: 'Storebrand Global Indeks Valutasikret', aumMillNok: 34521 },
-  { fundId: 'stb-europe-indeks', name: 'Storebrand Europe Index', aumMillNok: 12345 },
-  { fundId: 'stb-indeks-nye-markeder', name: 'Storebrand Indeks Nye Markeder', aumMillNok: 8976 },
+  // Kron
+  { fundId: 'KROKING', name: 'Kron Indeks Global', aumMillNok: 15968 },
 
-  // Bond Funds
-  { fundId: 'stb-frn-finans', name: 'Storebrand FRN Finansfond', aumMillNok: 5678 },
-  { fundId: 'stb-global-fi', name: 'Storebrand Global Fixed Income', aumMillNok: 7234 },
-  { fundId: 'stb-nordic-hy', name: 'Storebrand Nordic High Yield', aumMillNok: 11245 },
-  { fundId: 'stb-global-corp-13', name: 'Storebrand Global Corporate Bond IG 1-3Y', aumMillNok: 6789 },
-  { fundId: 'stb-global-corp-46', name: 'Storebrand Global Corporate Bond IG 4-6Y', aumMillNok: 4532 },
+  // Delphi
+  { fundId: 'DVERDE', name: 'Delphi Global', aumMillNok: 8958 },
+  { fundId: 'DVERDEVAL', name: 'Delphi Global Valutasikret', aumMillNok: 1531 },
+  { fundId: 'DNORD', name: 'Delphi Nordic', aumMillNok: 1143 },
+  { fundId: 'DNORGE', name: 'Delphi Norge', aumMillNok: 881 },
+  { fundId: 'DKOMB', name: 'Delphi Kombinasjon', aumMillNok: 524 },
 
-  // Lifecycle Funds
-  { fundId: 'stb-fremtid-10', name: 'Storebrand Fremtid 10', aumMillNok: 3456 },
-  { fundId: 'stb-fremtid-50', name: 'Storebrand Fremtid 50', aumMillNok: 8912 },
-  { fundId: 'stb-fremtid-100', name: 'Storebrand Fremtid 100', aumMillNok: 14567 },
-
-  // Delphi Funds
-  { fundId: 'delphi-global', name: 'Delphi Global', aumMillNok: 21345 },
-  { fundId: 'delphi-global-vs', name: 'Delphi Global Valutasikret', aumMillNok: 9876 },
-  { fundId: 'delphi-kombinasjon', name: 'Delphi Kombinasjon', aumMillNok: 5432 },
-  { fundId: 'delphi-nordic', name: 'Delphi Nordic', aumMillNok: 7654 },
-  { fundId: 'delphi-norge', name: 'Delphi Norge', aumMillNok: 18234 },
-
-  // SKAGEN Funds
-  { fundId: 'skagen-focus', name: 'SKAGEN Focus', aumMillNok: 6543 },
-  { fundId: 'skagen-global', name: 'SKAGEN Global', aumMillNok: 45678 },
-  { fundId: 'skagen-kon-tiki', name: 'SKAGEN Kon-Tiki', aumMillNok: 12345 },
-  { fundId: 'skagen-m2', name: 'SKAGEN m2', aumMillNok: 8765 },
-  { fundId: 'skagen-vekst', name: 'SKAGEN Vekst', aumMillNok: 4321 },
+  // SKAGEN
+  { fundId: 'SKAGLOBAL', name: 'SKAGEN Global', aumMillNok: 29037 },
+  { fundId: 'SKAKONTIKI', name: 'SKAGEN Kon-Tiki', aumMillNok: 22710 },
+  { fundId: 'SKAVEKST', name: 'SKAGEN Vekst', aumMillNok: 15442 },
+  { fundId: 'SKAFOCUS', name: 'SKAGEN Focus', aumMillNok: 3301 },
+  { fundId: 'SKASEL100', name: 'SKAGEN Select 100', aumMillNok: 1044 },
+  { fundId: 'SKAM2', name: 'SKAGEN m2', aumMillNok: 987 },
+  { fundId: 'SKAGLOBALII', name: 'SKAGEN Global II', aumMillNok: 948 },
+  { fundId: 'SEBLIQ', name: 'SEB NOK Liquidity Fund', aumMillNok: 933 },
+  { fundId: 'SKAGLOBALIII', name: 'SKAGEN Global III', aumMillNok: 673 },
+  { fundId: 'VEKST', name: 'Storebrand Vekst', aumMillNok: 757 },
+  { fundId: 'SKASEL60', name: 'SKAGEN Select 60', aumMillNok: 457 },
+  { fundId: 'SKASEL80', name: 'SKAGEN Select 80', aumMillNok: 454 },
+  { fundId: 'SKASEL30', name: 'SKAGEN Select 30', aumMillNok: 379 },
+  { fundId: 'SKASEL15', name: 'SKAGEN Select 15', aumMillNok: 53 },
 ];
 
 export default snowflakeAum;
