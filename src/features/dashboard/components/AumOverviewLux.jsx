@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import snowflakeAumLux from '../data/snowflakeAumLux';
 
 function AumOverviewLux() {
-  const [expanded, setExpanded] = useState(false);
-
   const totalAum = snowflakeAumLux.reduce((sum, f) => sum + f.aumMillEur, 0);
   const sorted = [...snowflakeAumLux].sort((a, b) => b.aumMillEur - a.aumMillEur);
-  const top5 = sorted.slice(0, 5);
 
   const formatAum = (mill) => {
     if (mill >= 1000) return `${(mill / 1000).toFixed(1)} bn`;
@@ -41,11 +38,10 @@ function AumOverviewLux() {
         </p>
       </div>
 
-      {/* Top 5 */}
+      {/* All funds */}
       <div className="space-y-1.5">
-        <p className="text-xs font-medium text-neutral-500">Top 5 Funds (AUM)</p>
-        {top5.map((fund, i) => (
-          <div key={fund.fundId} className="flex items-center justify-between text-xs">
+        {sorted.map((fund, i) => (
+          <div key={fund.fundId} className="flex items-center justify-between text-xs py-0.5 border-b border-neutral-50">
             <span className="text-neutral-600 truncate flex-1 mr-2">
               <span className="text-neutral-400 mr-1">{i + 1}.</span>
               {fund.name}
@@ -56,34 +52,6 @@ function AumOverviewLux() {
           </div>
         ))}
       </div>
-
-      {/* Expandable full list */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="text-[11px] text-primary-600 hover:text-primary-800 font-medium"
-      >
-        {expanded ? '▲ Hide all funds' : '▼ Show all funds'}
-      </button>
-
-      {expanded && (
-        <motion.div
-          className="space-y-1 max-h-64 overflow-y-auto"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-        >
-          {sorted.map((fund, i) => (
-            <div key={fund.fundId} className="flex items-center justify-between text-[11px] py-0.5 border-b border-neutral-50">
-              <span className="text-neutral-600 truncate flex-1 mr-2">
-                <span className="text-neutral-300 mr-1">{i + 1}.</span>
-                {fund.name}
-              </span>
-              <span className="font-medium text-neutral-700 shrink-0">
-                {fund.aumMillEur.toLocaleString('en-GB')} mn EUR
-              </span>
-            </div>
-          ))}
-        </motion.div>
-      )}
     </motion.div>
   );
 }
