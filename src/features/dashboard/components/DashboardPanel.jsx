@@ -7,6 +7,7 @@ import AumOverviewSe from './AumOverviewSe';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
 import KiidStatus from './KiidStatus';
+import LuxFlowOverview from './LuxFlowOverview';
 import LuxNavOverview from './LuxNavOverview';
 import MonthlyReportStatus from './MonthlyReportStatus';
 import NewFundLaunches from './NewFundLaunches';
@@ -159,6 +160,9 @@ function DashboardPanel() {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl shadow-card p-6">
             <LuxNavOverview />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <LuxFlowOverview />
           </div>
           <div className="bg-white rounded-2xl shadow-card p-6">
             <AumOverviewLux />
