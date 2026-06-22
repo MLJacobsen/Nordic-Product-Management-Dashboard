@@ -7,6 +7,7 @@ import AumOverviewLux from './AumOverviewLux';
 import AumOverviewSe from './AumOverviewSe';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
+import FundNavTableSE from './FundNavTableSe';
 import LuxFlowOverview from './LuxFlowOverview';
 import LuxNavOverview from './LuxNavOverview';
 import NewFundLaunches from './NewFundLaunches';
@@ -163,6 +164,9 @@ function DashboardPanel() {
             </div>
             <div className="bg-white rounded-2xl shadow-card p-6">
               <RevenueOverviewSe />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <FundNavTableSE />
             </div>
           </div>
           {/* Right column — FBF, News */}
