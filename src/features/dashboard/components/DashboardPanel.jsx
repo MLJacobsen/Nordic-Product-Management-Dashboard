@@ -236,17 +236,24 @@ function DashboardPanel() {
             <RevenueOverview />
           </div>
 
-          {/* Decorative image divider */}
-          <div className="rounded-2xl overflow-hidden shadow-card">
-            <img
-              src={STB_IMAGES.nature1}
-              alt="Storebrand – Ledende nordisk kapitalforvalter"
-              className="w-full h-44 object-cover"
-              onError={(e) => { e.target.parentElement.style.display = 'none'; }}
-            />
+          {/* Fund NAV table — tab dependent */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <FundNavTable />
           </div>
 
-          {/* Another imagery section */}
+          {/* Decorative image divider — centered */}
+          <div className="flex justify-center">
+            <div className="rounded-2xl overflow-hidden shadow-card max-w-2xl w-full">
+              <img
+                src={STB_IMAGES.nature1}
+                alt="Storebrand – Ledende nordisk kapitalforvalter"
+                className="w-full h-44 object-cover"
+                onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+              />
+            </div>
+          </div>
+
+          {/* Imagery section */}
           <div className="grid grid-cols-2 gap-4">
             <ImageCard
               src={STB_IMAGES.people}
@@ -260,11 +267,6 @@ function DashboardPanel() {
               caption="Nordisk kapitalforvaltning"
               href="https://www.storebrandam.com/no-NO/om-oss/"
             />
-          </div>
-
-          {/* Fund NAV table — tab dependent */}
-          <div className="bg-white rounded-2xl shadow-card p-6">
-            <FundNavTable />
           </div>
         </div>
 
