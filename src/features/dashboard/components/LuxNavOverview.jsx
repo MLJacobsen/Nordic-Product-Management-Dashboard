@@ -7,14 +7,16 @@ function LuxNavOverview() {
 
   const { valuationDate, funds } = luxNavData;
 
-  // Check if data might be stale (older than today)
-  const today = new Date().toISOString().slice(0, 10);
-  const isStale = valuationDate < today;
+  // Check if data might be stale (older than 3 business days)
+  // JPM NAVs arrive T+1 to T+3, so valuation date is typically 1-3 days behind
+  const today = new Date();
+  const valDate = new Date(valuationDate + 'T00:00:00');
+  const diffDays = Math.floor((today - valDate) / (1000 * 60 * 60 * 24));
+  const isStale = diffDays > 4; // Allow up to 4 calendar days (covers weekends)
 
-  // Check if we're in the update window (before 10 AM on a weekday)
-  const now = new Date();
-  const hour = now.getHours();
-  const isWeekday = now.getDay() >= 1 && now.getDay() <= 5;
+  // Check if we're in the update window (before 11 AM on a weekday)
+  const hour = today.getHours();
+  const isWeekday = today.getDay() >= 1 && today.getDay() <= 5;
   const pendingUpdate = isStale && isWeekday && hour >= 5 && hour < 11;
 
   const formatDate = (dateStr) => {
