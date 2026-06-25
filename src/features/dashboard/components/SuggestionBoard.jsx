@@ -149,7 +149,7 @@ function SuggestionBoard() {
                 <p className="text-sm text-neutral-700 flex-1">{s.text}</p>
                 <button
                   onClick={() => handleDelete(s.id)}
-                  className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-red-500 transition-all shrink-0 mt-0.5"
+                  className="text-neutral-400 hover:text-red-500 transition-all shrink-0 mt-0.5"
                   title="Delete suggestion"
                 >
                   <TrashIcon className="h-4 w-4" />
