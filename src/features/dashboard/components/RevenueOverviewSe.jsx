@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import fundRevenueSeData from '../data/fundRevenueSe';
+import fundRevenueSeData, { revenueSeDataDate } from '../data/fundRevenueSe';
 
 function RevenueOverviewSe() {
   const [showAll, setShowAll] = useState(false);
@@ -29,7 +29,7 @@ function RevenueOverviewSe() {
           Revenue per Fund – SE Domiciled
         </h3>
         <span className="text-[10px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
-          Est. annual ongoing charge
+          ❄️ {revenueSeDataDate}
         </span>
       </div>
 

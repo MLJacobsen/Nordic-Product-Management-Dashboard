@@ -6,6 +6,8 @@
  *
  * Note: Estimated annual revenue from ongoing charges only.
  */
+export const revenueSeDataDate = '2026-06-19';
+
 const fundRevenueSe = [
   { fundId: 'SPPUSX', name: 'Storebrand USA', aumMillSek: 55912, terPct: 0.20 },
   { fundId: 'SPPGLX', name: 'Storebrand Global All Countries', aumMillSek: 53589, terPct: 0.31 },

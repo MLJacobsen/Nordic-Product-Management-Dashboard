@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { fetchFunds } from '../services/fundService';
+import { noNavDataDate } from '../data/mockFunds';
 
 function FundNavTable() {
   const [funds, setFunds] = useState([]);
@@ -25,7 +26,10 @@ function FundNavTable() {
 
   return (
     <div data-testid="fund-nav-table">
-      <h3 className="text-lg font-semibold text-neutral-800 mb-3">Fund NAV - NO Domiciled Funds</h3>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-lg font-semibold text-neutral-800">Fund NAV - NO Domiciled Funds</h3>
+        <span className="text-[10px] text-neutral-400">{noNavDataDate}</span>
+      </div>
       <div className="overflow-y-auto max-h-80">
         <table className="w-full text-sm">
           <thead className="sticky top-0 bg-white">

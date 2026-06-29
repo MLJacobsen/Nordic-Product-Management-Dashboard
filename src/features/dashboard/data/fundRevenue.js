@@ -7,6 +7,8 @@
  * Note: This is estimated annual revenue from ongoing charges only.
  * Actual revenue may differ due to performance fees, transaction fees, etc.
  */
+export const revenueNoDataDate = '2026-06-17';
+
 const fundRevenue = [
   // Storebrand Index Funds
   { fundId: 'GLOIDX', name: 'Storebrand Global Indeks', aumMillNok: 63591, terPct: 0.25 },

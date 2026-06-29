@@ -3,6 +3,8 @@
  * Source: DDS_SAM.HOLDINGS.AUM_FUND joined with DWH_SAM.CONFORMED_DIM.DIM_FUND
  * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
  */
+export const aumDataDate = '2026-06-17';
+
 const snowflakeAum = [
   // Storebrand
   { fundId: 'GLOIDX', name: 'Storebrand Global Indeks', aumMillNok: 63591 },

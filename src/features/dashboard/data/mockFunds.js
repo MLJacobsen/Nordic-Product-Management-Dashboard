@@ -3,6 +3,8 @@
  * Source: https://www.storebrandam.com/no-NO/produkter/fond?sort=name&sortDir=asc
  * Replace with real API calls via fundService.js when a structured endpoint is available.
  */
+export const noNavDataDate = '2026-06-17';
+
 const mockFunds = [
   // Norwegian Equity Funds
   { id: 'stb-aksje-innland', name: 'Storebrand Aksje Innland', nav: 487.12, currency: 'NOK', kiid: true, category: 'Aksje', monthlyReportMonth: '2026-05' },

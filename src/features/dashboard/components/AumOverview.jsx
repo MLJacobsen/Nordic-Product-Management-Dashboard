@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import snowflakeAum from '../data/snowflakeAum';
+import snowflakeAum, { aumDataDate } from '../data/snowflakeAum';
 
 function AumOverview() {
   const [expanded, setExpanded] = useState(false);
@@ -26,7 +26,7 @@ function AumOverview() {
           Total AUM – NO Domiciled Funds
         </h3>
         <span className="text-[10px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
-          ❄️ Snowflake
+          ❄️ {aumDataDate}
         </span>
       </div>
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import fundRevenueData from '../data/fundRevenue';
+import fundRevenueData, { revenueNoDataDate } from '../data/fundRevenue';
 
 function RevenueOverview() {
   const [showAll, setShowAll] = useState(false);
@@ -30,7 +30,7 @@ function RevenueOverview() {
           Revenue per Fund – NO Domiciled
         </h3>
         <span className="text-[10px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
-          Est. annual ongoing charge
+          ❄️ {revenueNoDataDate}
         </span>
       </div>
 

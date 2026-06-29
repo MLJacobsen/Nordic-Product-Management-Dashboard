@@ -3,6 +3,8 @@
  * Source: DDS_SAM.HOLDINGS.AUM_FUND joined with DWH_SAM.CONFORMED_DIM.DIM_FUND
  * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
  */
+export const aumSeDataDate = '2026-06-17';
+
 const snowflakeAumSe = [
   { fundId: 'SPPUSX', name: 'Storebrand USA', aumMillSek: 55912 },
   { fundId: 'SPPGLX', name: 'Storebrand Global All Countries', aumMillSek: 53589 },
