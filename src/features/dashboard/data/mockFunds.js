@@ -3,7 +3,7 @@
  * Source: https://www.storebrandam.com/no-NO/produkter/fond?sort=name&sortDir=asc
  * Replace with real API calls via fundService.js when a structured endpoint is available.
  */
-export const noNavDataDate = '2026-06-17';
+export const noNavDataDate = '2026-06-30';
 
 const mockFunds = [
   // Norwegian Equity Funds
