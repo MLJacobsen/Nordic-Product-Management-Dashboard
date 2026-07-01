@@ -4,6 +4,7 @@
  * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
  */
 export const luxShareClassCount = 26;
+export const aumLuxDataDate = '2026-06-30';
 
 const snowflakeAumLux = [
   { fundId: 'LUXGLOPLU', name: 'Storebrand SICAV - Global Plus Lux', aumMillEur: 229 },
