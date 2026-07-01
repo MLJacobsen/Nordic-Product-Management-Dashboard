@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import sharedVacation from '../data/vacationData';
 
 const WEEKS = {
   Juni: [23, 24, 25, 26],
@@ -7,9 +8,10 @@ const WEEKS = {
   August: [32, 33, 34, 35],
 };
 
-const STORAGE_KEY = 'stb-vacation-planner-2026';
+const STORAGE_KEY = 'stb-vacation-planner-2026-local';
+const DELETED_KEY = 'stb-vacation-deleted-2026';
 
-function loadFromStorage() {
+function loadLocalPeople() {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     return data ? JSON.parse(data) : [];
@@ -18,13 +20,40 @@ function loadFromStorage() {
   }
 }
 
+function loadDeletedNames() {
+  try {
+    const data = localStorage.getItem(DELETED_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
+function mergePeople() {
+  const local = loadLocalPeople();
+  const deletedNames = loadDeletedNames();
+  const shared = sharedVacation.filter((p) => !deletedNames.includes(p.name));
+  // Merge: local overrides shared for same name
+  const localNames = new Set(local.map((p) => p.name));
+  return [...local, ...shared.filter((p) => !localNames.has(p.name))];
+}
+
 function VacationPlanner() {
-  const [people, setPeople] = useState(loadFromStorage);
+  const [people, setPeople] = useState(mergePeople);
+  const [deletedNames, setDeletedNames] = useState(loadDeletedNames);
   const [newName, setNewName] = useState('');
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(people));
+    // Save only locally-added/modified people (not shared-origin ones that haven't changed)
+    const sharedNames = new Set(sharedVacation.map((p) => p.name));
+    const localOnly = people.filter((p) => !sharedNames.has(p.name) || 
+      JSON.stringify(p.weeks) !== JSON.stringify((sharedVacation.find(s => s.name === p.name) || {}).weeks));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(localOnly));
   }, [people]);
+
+  useEffect(() => {
+    localStorage.setItem(DELETED_KEY, JSON.stringify(deletedNames));
+  }, [deletedNames]);
 
   const addPerson = (e) => {
     e.preventDefault();
@@ -47,6 +76,8 @@ function VacationPlanner() {
   };
 
   const removePerson = (index) => {
+    const person = people[index];
+    setDeletedNames([...deletedNames, person.name]);
     setPeople((prev) => prev.filter((_, i) => i !== index));
   };
 

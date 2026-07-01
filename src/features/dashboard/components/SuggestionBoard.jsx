@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import sharedSuggestions from '../data/suggestionsData';
 
-const STORAGE_KEY = 'nordic-pm-suggestions';
+const STORAGE_KEY = 'nordic-pm-suggestions-local';
+const DELETED_KEY = 'nordic-pm-suggestions-deleted';
 
-function loadSuggestions() {
+function loadLocalSuggestions() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
@@ -13,20 +15,52 @@ function loadSuggestions() {
   }
 }
 
-function saveSuggestions(suggestions) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(suggestions));
+function loadDeletedIds() {
+  try {
+    const stored = localStorage.getItem(DELETED_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+function mergeSuggestions() {
+  const local = loadLocalSuggestions();
+  const deletedIds = loadDeletedIds();
+  const shared = sharedSuggestions.filter((s) => !deletedIds.includes(s.id));
+  const localFiltered = local.filter((s) => !deletedIds.includes(s.id));
+  // Combine: local first (newest), then shared that aren't duplicates
+  const localIds = new Set(localFiltered.map((s) => s.id));
+  const combined = [...localFiltered, ...shared.filter((s) => !localIds.has(s.id))];
+  return combined.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
+function saveLocalSuggestions(suggestions) {
+  // Only persist items not in the shared/committed data
+  const sharedIds = new Set(sharedSuggestions.map((s) => s.id));
+  const localOnly = suggestions.filter((s) => !sharedIds.has(s.id));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(localOnly));
+}
+
+function saveDeletedIds(ids) {
+  localStorage.setItem(DELETED_KEY, JSON.stringify(ids));
 }
 
 function SuggestionBoard() {
-  const [suggestions, setSuggestions] = useState(loadSuggestions);
+  const [suggestions, setSuggestions] = useState(mergeSuggestions);
+  const [deletedIds, setDeletedIds] = useState(loadDeletedIds);
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
   const [text, setText] = useState('');
   const [anonymous, setAnonymous] = useState(false);
 
   useEffect(() => {
-    saveSuggestions(suggestions);
+    saveLocalSuggestions(suggestions);
   }, [suggestions]);
+
+  useEffect(() => {
+    saveDeletedIds(deletedIds);
+  }, [deletedIds]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,6 +80,7 @@ function SuggestionBoard() {
 
   const handleDelete = (id) => {
     setSuggestions(suggestions.filter((s) => s.id !== id));
+    setDeletedIds([...deletedIds, id]);
   };
 
   return (
