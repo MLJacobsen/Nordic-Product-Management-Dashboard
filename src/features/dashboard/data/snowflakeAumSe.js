@@ -4,6 +4,7 @@
  * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
  */
 export const aumSeDataDate = '2026-06-30';
+export const seShareClassCount = 70;
 
 const snowflakeAumSe = [
   { fundId: 'SPPUSX', name: 'Storebrand USA', aumMillSek: 58387 },

@@ -4,6 +4,7 @@
  * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
  */
 export const aumDataDate = '2026-06-30';
+export const noShareClassCount = 331;
 
 const snowflakeAum = [
   // Storebrand

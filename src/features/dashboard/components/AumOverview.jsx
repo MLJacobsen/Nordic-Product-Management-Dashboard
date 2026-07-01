@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import snowflakeAum, { aumDataDate } from '../data/snowflakeAum';
+import snowflakeAum, { aumDataDate, noShareClassCount } from '../data/snowflakeAum';
 
 function AumOverview() {
   const [expanded, setExpanded] = useState(false);
@@ -37,7 +37,7 @@ function AumOverview() {
           {(totalAum / 1000).toFixed(1)} mrd NOK
         </p>
         <p className="text-[10px] text-neutral-400 mt-1">
-          {snowflakeAum.length} funds · As of {new Date().toLocaleDateString('en-GB')}
+          {snowflakeAum.length} funds · {noShareClassCount} share classes · As of {new Date().toLocaleDateString('en-GB')}
         </p>
       </div>
 

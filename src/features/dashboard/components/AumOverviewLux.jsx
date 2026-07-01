@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import snowflakeAumLux from '../data/snowflakeAumLux';
+import snowflakeAumLux, { luxShareClassCount } from '../data/snowflakeAumLux';
 
 function AumOverviewLux() {
   const totalAum = snowflakeAumLux.reduce((sum, f) => sum + f.aumMillEur, 0);
@@ -34,7 +34,7 @@ function AumOverviewLux() {
           {(totalAum / 1000).toFixed(1)} mrd EUR
         </p>
         <p className="text-[10px] text-neutral-400 mt-1">
-          {snowflakeAumLux.length} funds · As of {new Date().toLocaleDateString('en-GB')}
+          {snowflakeAumLux.length} funds · {luxShareClassCount} share classes · As of {new Date().toLocaleDateString('en-GB')}
         </p>
       </div>
 

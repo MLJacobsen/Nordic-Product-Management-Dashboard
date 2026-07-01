@@ -36,7 +36,7 @@ function AumOverviewIre() {
           {fmtUsd(totalAum)}
         </p>
         <p className="text-[10px] text-neutral-400 mt-1">
-          {snowflakeAumIre.length} funds · As of {new Date(asOfDate).toLocaleDateString('en-GB')}
+          {snowflakeAumIre.length} funds · 2 share classes · As of {new Date(asOfDate).toLocaleDateString('en-GB')}
         </p>
       </div>
 

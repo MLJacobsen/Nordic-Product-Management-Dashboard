@@ -3,6 +3,8 @@
  * Source: DDS_SAM.HOLDINGS.AUM_FUND joined with DWH_SAM.CONFORMED_DIM.DIM_FUND
  * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
  */
+export const luxShareClassCount = 26;
+
 const snowflakeAumLux = [
   { fundId: 'LUXGLOPLU', name: 'Storebrand SICAV - Global Plus Lux', aumMillEur: 229 },
   { fundId: 'LUXEMEP', name: 'Storebrand SICAV - Emerging Markets Plus Lux', aumMillEur: 220 },
