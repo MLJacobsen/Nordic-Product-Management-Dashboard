@@ -1,18 +1,18 @@
 /**
  * AUM data for Sweden-domiciled funds sourced from Snowflake.
  * Source: DDS_SAM.HOLDINGS.AUM_FUND joined with DWH_SAM.CONFORMED_DIM.DIM_FUND
- * Last refreshed: 2026-06-17 (live Snowflake query via Copilot MCP)
+ * Last refreshed: 2026-07-02 (live Snowflake query via Copilot MCP)
  */
 export const aumSeDataDate = '2026-06-30';
 export const seShareClassCount = 126;
 
 const snowflakeAumSe = [
   { fundId: 'SPPUSX', name: 'Storebrand USA', aumMillSek: 58387 },
-  { fundId: 'SPPGLX', name: 'Storebrand Global All Countries', aumMillSek: 55108 },
-  { fundId: 'SPP60', name: 'SPP Generation 60-tal', aumMillSek: 54257 },
-  { fundId: 'SPPGPL', name: 'Storebrand Global Plus', aumMillSek: 53069 },
+  { fundId: 'SPPGLX', name: 'Storebrand Global All Countries', aumMillSek: 55109 },
+  { fundId: 'SPP60', name: 'SPP Generation 60-tal', aumMillSek: 54256 },
+  { fundId: 'SPPGPL', name: 'Storebrand Global Plus', aumMillSek: 53070 },
+  { fundId: 'SPP70', name: 'SPP Generation 70-tal', aumMillSek: 38146 },
   { fundId: 'SPPTPL', name: 'Storebrand Emerging Markets Plus', aumMillSek: 36186 },
-  { fundId: 'SPP70', name: 'SPP Generation 70-tal', aumMillSek: 38145 },
   { fundId: 'SPPEUX', name: 'Storebrand Europa', aumMillSek: 35904 },
   { fundId: 'SPPEMX', name: 'Storebrand Emerging Markets', aumMillSek: 26649 },
   { fundId: 'SPPPEM', name: 'Storebrand Kortränta', aumMillSek: 22715 },
@@ -25,7 +25,7 @@ const snowflakeAumSe = [
   { fundId: 'SPPM80', name: 'SPP Mix 80', aumMillSek: 12002 },
   { fundId: 'SPPJAX', name: 'Storebrand Japan', aumMillSek: 9050 },
   { fundId: 'SPPHIY', name: 'Storebrand High Yield Företagsobligation', aumMillSek: 9044 },
-  { fundId: 'SPPGLT', name: 'Storebrand Global Solutions', aumMillSek: 8851 },
+  { fundId: 'SPPGLT', name: 'Storebrand Global Solutions', aumMillSek: 8850 },
   { fundId: 'SPP80', name: 'SPP Generation 80-tal', aumMillSek: 8479 },
   { fundId: 'SPPGFP', name: 'Storebrand Global Corporate Bond IG 4-6Y', aumMillSek: 6183 },
   { fundId: 'SPPBOL', name: 'Storebrand Sverige Småbolag Plus', aumMillSek: 3359 },

@@ -2,7 +2,7 @@
  * Revenue estimation for SE-domiciled funds.
  * Revenue = AUM (MSEK) × Ongoing Charge per year.
  * Ongoing charges from Snowflake DWH_SAM.CONFORMED_DIM.DIM_FUND.
- * AUM from Snowflake DDS_SAM.HOLDINGS.AUM_FUND (as of 2026-06-19, SEK).
+ * AUM from Snowflake DDS_SAM.HOLDINGS.AUM_FUND (as of 2026-06-30, SEK).
  *
  * Note: Estimated annual revenue from ongoing charges only.
  */
@@ -10,11 +10,11 @@ export const revenueSeDataDate = '2026-06-30';
 
 const fundRevenueSe = [
   { fundId: 'SPPUSX', name: 'Storebrand USA', aumMillSek: 58387, terPct: 0.20 },
-  { fundId: 'SPPGLX', name: 'Storebrand Global All Countries', aumMillSek: 55108, terPct: 0.31 },
-  { fundId: 'SPP60', name: 'SPP Generation 60-tal', aumMillSek: 54257, terPct: 0.41 },
-  { fundId: 'SPPGPL', name: 'Storebrand Global Plus', aumMillSek: 53069, terPct: 0.41 },
+  { fundId: 'SPPGLX', name: 'Storebrand Global All Countries', aumMillSek: 55109, terPct: 0.31 },
+  { fundId: 'SPP60', name: 'SPP Generation 60-tal', aumMillSek: 54256, terPct: 0.41 },
+  { fundId: 'SPPGPL', name: 'Storebrand Global Plus', aumMillSek: 53070, terPct: 0.41 },
   { fundId: 'SPPTPL', name: 'Storebrand Emerging Markets Plus', aumMillSek: 36186, terPct: 0.52 },
-  { fundId: 'SPP70', name: 'SPP Generation 70-tal', aumMillSek: 38145, terPct: 0.41 },
+  { fundId: 'SPP70', name: 'SPP Generation 70-tal', aumMillSek: 38146, terPct: 0.41 },
   { fundId: 'SPPEUX', name: 'Storebrand Europa', aumMillSek: 35904, terPct: 0.21 },
   { fundId: 'SPPEMX', name: 'Storebrand Emerging Markets', aumMillSek: 26649, terPct: 0.43 },
   { fundId: 'SPPPEM', name: 'Storebrand Kortränta', aumMillSek: 22715, terPct: 0.21 },
@@ -27,7 +27,7 @@ const fundRevenueSe = [
   { fundId: 'SPPM80', name: 'SPP Mix 80', aumMillSek: 12002, terPct: 0.80 },
   { fundId: 'SPPJAX', name: 'Storebrand Japan', aumMillSek: 9050, terPct: 0.21 },
   { fundId: 'SPPHIY', name: 'Storebrand High Yield Företagsobligation', aumMillSek: 9044, terPct: 0.51 },
-  { fundId: 'SPPGLT', name: 'Storebrand Global Solutions', aumMillSek: 8851, terPct: 0.76 },
+  { fundId: 'SPPGLT', name: 'Storebrand Global Solutions', aumMillSek: 8850, terPct: 0.76 },
   { fundId: 'SPP80', name: 'SPP Generation 80-tal', aumMillSek: 8479, terPct: 0.41 },
   { fundId: 'SPPGFP', name: 'Storebrand Global Corporate Bond IG 4-6Y', aumMillSek: 6183, terPct: 0.51 },
   { fundId: 'SPPBOL', name: 'Storebrand Sverige Småbolag Plus', aumMillSek: 3359, terPct: 0.52 },
