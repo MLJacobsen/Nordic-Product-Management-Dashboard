@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite"; // Import the new Tailwind CSS Vite
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '',
+  base: '/Nordic-Product-Management-Dashboard/',
   plugins: [
     react(),
     tailwindcss(), // Add the Tailwind CSS Vite plugin
