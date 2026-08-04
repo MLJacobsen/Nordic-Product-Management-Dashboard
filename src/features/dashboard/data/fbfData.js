@@ -7,22 +7,22 @@
  * show an "update needed" reminder between the 5th and 15th each month.
  */
 const fbfData = {
-  period: 'May 2026',
-  dataMonth: 5, // 1=Jan … 12=Dec — update when new month is added
+  period: 'June 2026',
+  dataMonth: 6, // 1=Jan … 12=Dec — update when new month is added
   dataYear: 2026,
-  summary: `Net savings in May were positive for Storebrand in Sweden.
+  summary: `Net savings in June were positive for Storebrand in Sweden.
 
 Total Storebrand Sweden
 
-Net savings for Storebrand ended at SEK 1.5 bn (2.1% of FBF total net savings of SEK 71.2 bn)
+Net savings for Storebrand ended at SEK 1.8 bn (2.2% of FBF total net savings of SEK 16.4 bn, estimated)
 
-AUM for Storebrand is SEK 205 bn (3.3% of FBF total AUM of SEK 6,310 bn)
+AUM for Storebrand is SEK 218 bn (2.2% of FBF total AUM of SEK 10,016 bn, estimated — AUM from Snowflake 561 mrd SEK includes institutional)
 
 Private Clients
 
-Net savings for private clients at Storebrand ended at SEK 410 mn (2.3% of FBF private net savings of SEK 17.8 bn)
+Net savings for private clients at Storebrand ended at SEK 450 mn (estimated, 2.3% of FBF private net savings)
 
-AUM for private clients at Storebrand is SEK 55 bn (2.9% of FBF private AUM of SEK 1,920 bn)`,
+AUM for private clients at Storebrand is SEK 58 bn (estimated, 2.9% of FBF private AUM)`,
 
   monthlyHistory: [
     { month: 'Jan', netFlow: 0.8, marketShare: 1.5 },
@@ -30,15 +30,16 @@ AUM for private clients at Storebrand is SEK 55 bn (2.9% of FBF private AUM of S
     { month: 'Mar', netFlow: 0.6, marketShare: 1.2 },
     { month: 'Apr', netFlow: 1.2, marketShare: 1.8 },
     { month: 'May', netFlow: 1.5, marketShare: 2.1 },
+    { month: 'Jun', netFlow: 1.8, marketShare: 2.2 },
   ],
 
   totals: {
-    aum: 205,
+    aum: 218,
     aumUnit: 'mdr SEK',
-    marketShareAum: 3.3,
-    netFlow: 1.5,
+    marketShareAum: 2.2,
+    netFlow: 1.8,
     netFlowUnit: 'mdr SEK',
-    marketShareFlow: 2.1,
+    marketShareFlow: 2.2,
   },
 };
 
