@@ -19,7 +19,7 @@ function ScorecardTable({ items, columns, onRowClick, expandedRef }) {
         </thead>
         <tbody>
           {items.map((item) => {
-            const isClickable = onRowClick && item.jun !== 0 && item.jun !== '100%';
+            const isClickable = onRowClick && item.jul !== 0 && item.jul !== '100%';
             const isExpanded = expandedRef === item.ref;
             return (
               <tr
@@ -163,14 +163,14 @@ function LuxScorecard() {
   const [expandedSection, setExpandedSection] = useState(null);
 
   const monthColumns = [
+    { key: 'jul', label: 'Jul 2026' },
     { key: 'jun', label: 'Jun 2026' },
-    { key: 'may', label: 'May 2026' },
     { key: 'ytd', label: 'YTD' },
   ];
 
   const cashColumns = [
+    { key: 'jul', label: 'Jul 2026' },
     { key: 'jun', label: 'Jun 2026' },
-    { key: 'may', label: 'May 2026' },
   ];
 
   const toggleSection = (ref) => {

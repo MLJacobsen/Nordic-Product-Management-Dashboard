@@ -1,70 +1,68 @@
 /**
- * Storebrand SICAV Scorecard data — June 2026
+ * Storebrand SICAV Scorecard data — July 2026
  * Source: JPMorgan Client Scorecard (password-protected Excel)
- * Period: June 2026 (with May comparisons and YTD)
+ * Period: July 2026 (with June comparisons and YTD)
  */
 
 const scorecardData = {
-  period: 'June 2026',
-  reportDate: '2026-06-30',
+  period: 'July 2026',
+  reportDate: '2026-07-31',
 
   // DEALING - MONTHLY STATS
   dealing: {
     title: 'Dealing – Monthly Stats',
     items: [
-      { ref: 1, indicator: 'Dealing Volume (all types)', jun: 1965, may: 1789, ytd: 7948 },
-      { ref: 2, indicator: 'Total Subscriptions', jun: 870, may: 800, ytd: 3733 },
-      { ref: 3, indicator: 'Total Redemptions', jun: 1083, may: 981, ytd: 4183 },
-      { ref: 4, indicator: 'Total Transfers', jun: 12, may: 8, ytd: 32 },
-      { ref: 5, indicator: 'Total Switches', jun: 0, may: 0, ytd: 0 },
-      { ref: 6, indicator: 'Dealing Accuracy Rate', jun: '100%', may: '100%', ytd: '97.4%' },
-      { ref: 7, indicator: 'No of STP Deals', jun: 1953, may: 1781, ytd: 7909 },
-      { ref: 8, indicator: 'STP Rate', jun: '99.39%', may: '99.55%', ytd: '99.51%' },
+      { ref: 1, indicator: 'Dealing Volume (all types)', jul: 1858, jun: 1965, ytd: 9806 },
+      { ref: 2, indicator: 'Total Subscriptions', jul: 857, jun: 870, ytd: 4590 },
+      { ref: 3, indicator: 'Total Redemptions', jul: 985, jun: 1083, ytd: 5168 },
+      { ref: 4, indicator: 'Total Transfers', jul: 16, jun: 12, ytd: 48 },
+      { ref: 5, indicator: 'Total Switches', jul: 0, jun: 0, ytd: 0 },
+      { ref: 6, indicator: 'Dealing Accuracy Rate', jul: '100%', jun: '100%', ytd: '98.2%' },
+      { ref: 7, indicator: 'No of STP Deals', jul: 1842, jun: 1953, ytd: 9751 },
+      { ref: 8, indicator: 'STP Rate', jul: '99.14%', jun: '99.39%', ytd: '99.44%' },
     ],
   },
 
   // Dealing breakdown by fund (from DEALING sheet)
   dealingByFund: [
-    { fund: 'STOR US PLUS LU F GBP ACC', subscriptions: 563, redemptions: 546, transfers: 12, total: 1121 },
-    { fund: 'STOR GBL PLUS LU H GBP ACC', subscriptions: 87, redemptions: 166, transfers: 0, total: 253 },
-    { fund: 'STOR GBL PLUS LU B GBP ACC', subscriptions: 99, redemptions: 126, transfers: 0, total: 225 },
-    { fund: 'STOR GBL PLUS LU I GBP ACC', subscriptions: 90, redemptions: 132, transfers: 0, total: 222 },
-    { fund: 'STOR EM PLUS LU I GBP ACC', subscriptions: 19, redemptions: 80, transfers: 0, total: 99 },
-    { fund: 'STOR EM PLUS LU B GBP ACC', subscriptions: 3, redemptions: 10, transfers: 0, total: 13 },
-    { fund: 'STOR GBL PLUS LU I EUR ACC', subscriptions: 3, redemptions: 9, transfers: 0, total: 12 },
-    { fund: 'SKAG KON-TIKI LU I2 EUR ACC', subscriptions: 0, redemptions: 4, transfers: 0, total: 4 },
-    { fund: 'SKAG KON-TIKI LU B EUR ACC', subscriptions: 1, redemptions: 2, transfers: 0, total: 3 },
-    { fund: 'SKAG FOCUS LU B EUR ACC', subscriptions: 1, redemptions: 1, transfers: 0, total: 2 },
-    { fund: 'STOR GBL PLUS LU B EUR ACC', subscriptions: 0, redemptions: 2, transfers: 0, total: 2 },
-    { fund: 'STOR EM PLUS LU I USD ACC', subscriptions: 1, redemptions: 1, transfers: 0, total: 2 },
-    { fund: 'SKAG GLOBAL LU B EUR ACC', subscriptions: 0, redemptions: 2, transfers: 0, total: 2 },
-    { fund: 'STOR US PLUS LU B GBP ACC', subscriptions: 2, redemptions: 0, transfers: 0, total: 2 },
-    { fund: 'SKAG KON-TIKI LU A EUR ACC', subscriptions: 0, redemptions: 1, transfers: 0, total: 1 },
+    { fund: 'STOR US PLUS LU F GBP ACC', subscriptions: 533, redemptions: 607, transfers: 16, total: 1156 },
+    { fund: 'STOR GBL PLUS LU I GBP ACC', subscriptions: 91, redemptions: 95, transfers: 0, total: 186 },
+    { fund: 'STOR GBL PLUS LU B GBP ACC', subscriptions: 93, redemptions: 91, transfers: 0, total: 184 },
+    { fund: 'STOR GBL PLUS LU H GBP ACC', subscriptions: 60, redemptions: 92, transfers: 0, total: 152 },
+    { fund: 'STOR EM PLUS LU I GBP ACC', subscriptions: 54, redemptions: 68, transfers: 0, total: 122 },
+    { fund: 'STOR EM PLUS LU B GBP ACC', subscriptions: 8, redemptions: 13, transfers: 0, total: 21 },
+    { fund: 'SKAG KON-TIKI LU A EUR ACC', subscriptions: 6, redemptions: 6, transfers: 0, total: 12 },
+    { fund: 'STOR GBL PLUS LU I EUR ACC', subscriptions: 1, redemptions: 6, transfers: 0, total: 7 },
+    { fund: 'SKAG FOCUS LU B EUR ACC', subscriptions: 3, redemptions: 2, transfers: 0, total: 5 },
+    { fund: 'SKAG KON-TIKI LU B EUR ACC', subscriptions: 3, redemptions: 1, transfers: 0, total: 4 },
+    { fund: 'STOR EM PLUS LU I USD ACC', subscriptions: 1, redemptions: 2, transfers: 0, total: 3 },
+    { fund: 'SKAG GLOBAL LU B EUR ACC', subscriptions: 1, redemptions: 2, transfers: 0, total: 3 },
     { fund: 'STOR GBL SOL LU B EUR ACC', subscriptions: 1, redemptions: 0, transfers: 0, total: 1 },
-    { fund: 'SKAG KON-TIKI LU B GBP ACC', subscriptions: 0, redemptions: 1, transfers: 0, total: 1 },
+    { fund: 'STOR GBL PLUS LU B EUR ACC', subscriptions: 1, redemptions: 0, transfers: 0, total: 1 },
+    { fund: 'STOR US PLUS LU B GBP ACC', subscriptions: 1, redemptions: 0, transfers: 0, total: 1 },
   ],
 
   // REGISTRATION - MONTHLY STATS
   registration: {
     title: 'Registration – Active & New Accounts',
     items: [
-      { ref: 9, indicator: 'Number of Active Accounts', jun: 65, may: 65, ytd: 'N/A' },
-      { ref: 10, indicator: 'Number of New Accounts', jun: 3, may: 0, ytd: 10 },
-      { ref: 11, indicator: 'Number of Active Holdings', jun: 191, may: 188, ytd: 'N/A' },
-      { ref: 12, indicator: 'Stopped Accounts (AML)', jun: 0, may: 0, ytd: 'N/A' },
-      { ref: 13, indicator: 'Stopped Accounts (PEP)', jun: 0, may: 0, ytd: 'N/A' },
-      { ref: 14, indicator: 'Transaction Monitoring Violations', jun: 0, may: 0, ytd: 0 },
-      { ref: 15, indicator: 'New Accounts in High Risk Countries', jun: 0, may: 0, ytd: 0 },
-      { ref: 16, indicator: 'Investors >20% of AUM', jun: 0, may: 0, ytd: 'N/A' },
+      { ref: 9, indicator: 'Number of Active Accounts', jul: 66, jun: 65, ytd: 'N/A' },
+      { ref: 10, indicator: 'Number of New Accounts', jul: 0, jun: 3, ytd: 10 },
+      { ref: 11, indicator: 'Number of Active Holdings', jul: 192, jun: 191, ytd: 'N/A' },
+      { ref: 12, indicator: 'Stopped Accounts (AML)', jul: 0, jun: 0, ytd: 'N/A' },
+      { ref: 13, indicator: 'Stopped Accounts (PEP)', jul: 0, jun: 0, ytd: 'N/A' },
+      { ref: 14, indicator: 'Transaction Monitoring Violations', jul: 0, jun: 0, ytd: 0 },
+      { ref: 15, indicator: 'New Accounts in High Risk Countries', jul: 0, jun: 0, ytd: 0 },
+      { ref: 16, indicator: 'Investors >20% of AUM', jul: 0, jun: 0, ytd: 'N/A' },
     ],
   },
 
   // Shareholder nationality breakdown (from Nationality Report sheet)
   shareholderByResidency: [
-    { residency: 'United Kingdom', count: 164, pct: 73.2 },
+    { residency: 'United Kingdom', count: 164, pct: 72.9 },
     { residency: 'Luxembourg', count: 26, pct: 11.6 },
-    { residency: 'Norway', count: 23, pct: 10.3 },
-    { residency: 'France', count: 5, pct: 2.2 },
+    { residency: 'Norway', count: 23, pct: 10.2 },
+    { residency: 'France', count: 6, pct: 2.7 },
     { residency: 'Ireland', count: 2, pct: 0.9 },
     { residency: 'Switzerland', count: 1, pct: 0.4 },
     { residency: 'Netherlands', count: 1, pct: 0.4 },
@@ -80,7 +78,7 @@ const scorecardData = {
     { fund: 'STOR EM PLUS LU I GBP ACC', holders: 30 },
     { fund: 'STOR GBL PLUS LU B GBP ACC', holders: 24 },
     { fund: 'SKAG KON-TIKI LU B EUR ACC', holders: 11 },
-    { fund: 'SKAG KON-TIKI LU A EUR ACC', holders: 6 },
+    { fund: 'SKAG KON-TIKI LU A EUR ACC', holders: 7 },
     { fund: 'SKAG GLOBAL LU A EUR ACC', holders: 6 },
     { fund: 'STOR GBL PLUS LU B EUR ACC', holders: 6 },
     { fund: 'STOR GBL SOL LU B EUR ACC', holders: 5 },
@@ -107,28 +105,28 @@ const scorecardData = {
       {
         label: 'Creditors',
         items: [
-          { ref: 17, indicator: 'Value (EUR)', jun: 0, may: 0 },
-          { ref: 18, indicator: 'Number of Items', jun: 0, may: 0 },
+          { ref: 17, indicator: 'Value (EUR)', jul: 0, jun: 0 },
+          { ref: 18, indicator: 'Number of Items', jul: 0, jun: 0 },
         ],
       },
       {
         label: 'Debtors',
         items: [
-          { ref: 19, indicator: 'Value (EUR)', jun: 0, may: 0 },
-          { ref: 20, indicator: 'Number of Items', jun: 0, may: 0 },
+          { ref: 19, indicator: 'Value (EUR)', jul: 0, jun: 0 },
+          { ref: 20, indicator: 'Number of Items', jul: 0, jun: 0 },
         ],
       },
       {
         label: 'Collection Account',
         items: [
-          { ref: 21, indicator: 'Value (EUR)', jun: 0, may: 0 },
-          { ref: 22, indicator: 'Number of Items', jun: 0, may: 0 },
+          { ref: 21, indicator: 'Value (EUR)', jul: 0, jun: 0 },
+          { ref: 22, indicator: 'Number of Items', jul: 0, jun: 0 },
         ],
       },
     ],
     other: [
-      { ref: 23, indicator: 'Missing Payer Details', jun: 0, may: 0 },
-      { ref: 24, indicator: 'TA/FA Share Balance Differences', jun: 0, may: 0 },
+      { ref: 23, indicator: 'Missing Payer Details', jul: 0, jun: 0 },
+      { ref: 24, indicator: 'TA/FA Share Balance Differences', jul: 0, jun: 0 },
     ],
   },
 
