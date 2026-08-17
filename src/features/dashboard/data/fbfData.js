@@ -7,22 +7,22 @@
  * show an "update needed" reminder between the 5th and 15th each month.
  */
 const fbfData = {
-  period: 'June 2026',
-  dataMonth: 6, // 1=Jan … 12=Dec — update when new month is added
+  period: 'July 2026',
+  dataMonth: 7, // 1=Jan … 12=Dec — update when new month is added
   dataYear: 2026,
-  summary: `Net savings in June were positive for Storebrand in Sweden.
+  summary: `Net savings in July were positive for the Swedish fund market with 28.3 mdr SEK in net inflows.
 
 Total Storebrand Sweden
 
-Net savings for Storebrand ended at SEK 1.8 bn (2.2% of FBF total net savings of SEK 16.4 bn, estimated)
+Net savings for Storebrand ended at SEK 1.4 bn (estimated, ~5% of FBF total net savings of SEK 28.3 bn)
 
-AUM for Storebrand is SEK 218 bn (2.2% of FBF total AUM of SEK 10,016 bn, estimated — AUM from Snowflake 561 mrd SEK includes institutional)
+AUM for Storebrand is SEK 213 bn (2.1% of FBF total AUM of SEK 9,954 bn — market AUM declined slightly from June record of 10,016 bn)
 
 Private Clients
 
-Net savings for private clients at Storebrand ended at SEK 450 mn (estimated, 2.3% of FBF private net savings)
+Net savings for private clients at Storebrand ended at SEK 350 mn (estimated)
 
-AUM for private clients at Storebrand is SEK 58 bn (estimated, 2.9% of FBF private AUM)`,
+AUM for private clients at Storebrand is SEK 57 bn (estimated)`,
 
   monthlyHistory: [
     { month: 'Jan', netFlow: 0.8, marketShare: 1.5 },
@@ -31,15 +31,16 @@ AUM for private clients at Storebrand is SEK 58 bn (estimated, 2.9% of FBF priva
     { month: 'Apr', netFlow: 1.2, marketShare: 1.8 },
     { month: 'May', netFlow: 1.5, marketShare: 2.1 },
     { month: 'Jun', netFlow: 1.8, marketShare: 2.2 },
+    { month: 'Jul', netFlow: 1.4, marketShare: 5.0 },
   ],
 
   totals: {
-    aum: 218,
+    aum: 213,
     aumUnit: 'mdr SEK',
-    marketShareAum: 2.2,
-    netFlow: 1.8,
+    marketShareAum: 2.1,
+    netFlow: 1.4,
     netFlowUnit: 'mdr SEK',
-    marketShareFlow: 2.2,
+    marketShareFlow: 5.0,
   },
 };
 
