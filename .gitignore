@@ -125,3 +125,6 @@ dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Workflow file requires manual push with workflow scope
+.github/workflows/snowflake-aum-sync.yml

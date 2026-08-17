@@ -7,15 +7,32 @@ const TaskContext = createContext();
 // Custom hook for using task context
 export const useTaskContext = () => useContext(TaskContext);
 
+const TASK_STORAGE_KEY = 'stb-task-board-tasks';
+
+function loadTasksFromStorage() {
+  try {
+    const data = localStorage.getItem(TASK_STORAGE_KEY);
+    if (data) return JSON.parse(data);
+  } catch { /* ignore */ }
+  return null;
+}
+
 // Task provider component
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState(() => {
-    // Initialize with hydrated data if should hydrate
+    // Try localStorage first, then hydration service
+    const saved = loadTasksFromStorage();
+    if (saved && saved.length > 0) return saved;
     return DataHydrationService.shouldHydrate() 
       ? DataHydrationService.getInitialTasks() 
       : [];
   });
   const [stats, setStats] = useState({ total: 0, completed: 0, remaining: 0 });
+
+  useEffect(() => {
+    // Persist tasks to localStorage on every change
+    localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
 
   useEffect(() => {
     // Update stats whenever tasks change
