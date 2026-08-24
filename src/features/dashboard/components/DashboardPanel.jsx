@@ -1,0 +1,315 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import AumOverview from './AumOverview';
+import IrishDealsOverview from './IrishDealsOverview';
+import AumOverviewIre from './AumOverviewIre';
+import AumOverviewLux from './AumOverviewLux';
+import AumOverviewSe from './AumOverviewSe';
+import FbfOverview from './FbfOverview';
+import FundNavTable from './FundNavTable';
+import FundNavTableSE from './FundNavTableSe';
+import LuxFlowOverview from './LuxFlowOverview';
+import LuxNavOverview from './LuxNavOverview';
+import NewFundLaunches from './NewFundLaunches';
+import NewsFeed from './NewsFeed';
+import PlannerGuidelines from './PlannerGuidelines';
+import RevenueOverview from './RevenueOverview';
+import RevenueOverviewSe from './RevenueOverviewSe';
+import LuxScorecard from './LuxScorecard';
+import SfdrReport from './SfdrReport';
+import VffOverview from './VffOverview';
+import { fetchWsjNews, fetchE24News, fetchDagensIndustriNews } from '../services/newsService';
+
+// Storebrand imagery from their public CDN — verified URLs
+const STB_IMAGES = {
+  banner: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/banner-photo/banner-stb-front-page.jpg?width=1200&quality=75&format=webp',
+  logo: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/logos/stb-logo-pos.svg',
+  nature1: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/photos/nature/ima254529.jpg?width=600&quality=75&format=webp',
+  people: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/people/portfolio-managers/tore_jorgen_rye_tj.jpg?width=600&quality=75&format=webp',
+  ogImage: 'https://www.storebrandam.com/globalassets/storebrand-asset-management/pictures/logos/storebrand-asset-management-page-share.jpg?width=600&quality=75&format=webp',
+};
+
+function ImageCard({ src, alt, caption, href }) {
+  const content = (
+    <div className="rounded-2xl overflow-hidden shadow-card relative group">
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105"
+        onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+      />
+      {caption && (
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3 pt-8">
+          <p className="text-xs text-white font-medium">{caption}</p>
+        </div>
+      )}
+    </div>
+  );
+
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
+  return content;
+}
+
+function DashboardPanel() {
+  const [activeTab, setActiveTab] = useState('norway');
+
+  return (
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      data-testid="dashboard-panel"
+    >
+      {/* Storebrand-style header with hero image */}
+      <div className="stb-gradient relative overflow-hidden rounded-2xl shadow-card">
+        <img
+          src={STB_IMAGES.banner}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-overlay"
+        />
+        <div className="relative p-8 pb-10">
+          <img
+            src={STB_IMAGES.logo}
+            alt="Storebrand Asset Management"
+            className="h-7 mb-5 brightness-0 invert"
+          />
+          <h2 className="text-2xl font-bold text-white tracking-tight">
+            Nordic Product Management Dashboard
+          </h2>
+          <p className="text-sm text-primary-200 mt-1 opacity-80">Storebrand Asset Management</p>
+        </div>
+      </div>
+
+      {/* Country tabs */}
+      <div className="flex gap-1 bg-neutral-100 rounded-xl p-1">
+        <button
+          onClick={() => setActiveTab('norway')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'norway'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇳🇴 Norge
+        </button>
+        <button
+          onClick={() => setActiveTab('sweden')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'sweden'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇸🇪 Sverige
+        </button>
+        <button
+          onClick={() => setActiveTab('luxembourg')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'luxembourg'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇱🇺 Luxembourg
+        </button>
+        <button
+          onClick={() => setActiveTab('ireland')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'ireland'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🇮🇪 Ireland
+        </button>
+        <button
+          onClick={() => setActiveTab('sfdr')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'sfdr'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          🌱 SFDR
+        </button>
+        <button
+          onClick={() => setActiveTab('guidelines')}
+          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'guidelines'
+              ? 'bg-white text-primary-700 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700'
+          }`}
+        >
+          📋 Guidelines - Planner
+        </button>
+      </div>
+
+      {/* Content based on active tab */}
+      {activeTab === 'sweden' ? (
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Left column — KPIs and fund data */}
+          <div className="flex-1 min-w-0 space-y-6">
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <AumOverviewSe />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <NewFundLaunches />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <RevenueOverviewSe />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-6">
+              <FundNavTableSE />
+            </div>
+          </div>
+          {/* Right column — FBF, News */}
+          <div className="w-full lg:w-80 shrink-0 space-y-6">
+            <div className="bg-white rounded-2xl shadow-card p-5">
+              <FbfOverview />
+            </div>
+            <div className="bg-white rounded-2xl shadow-card p-5">
+              <NewsFeed
+                title="Dagens Industri"
+                fetchFn={fetchDagensIndustriNews}
+                icon="🇸🇪"
+                testId="di-news-feed"
+              />
+            </div>
+          </div>
+        </div>
+      ) : activeTab === 'luxembourg' ? (
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <AumOverviewLux />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <LuxFlowOverview />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <LuxScorecard />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <LuxNavOverview />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewsFeed
+              title="CNBC Markets"
+              fetchFn={fetchWsjNews}
+              icon="🇺🇸"
+              testId="cnbc-news-feed"
+            />
+          </div>
+        </div>
+      ) : activeTab === 'ireland' ? (
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <AumOverviewIre />
+          </div>
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <IrishDealsOverview />
+          </div>
+        </div>
+      ) : activeTab === 'sfdr' ? (
+        <SfdrReport />
+      ) : activeTab === 'guidelines' ? (
+        <PlannerGuidelines />
+      ) : (
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Left column — KPIs and fund data */}
+        <div className="flex-1 min-w-0 space-y-6">
+
+          {/* AUM Overview — Snowflake data */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <AumOverview />
+          </div>
+
+          {/* New Fund Launches 2026 */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <NewFundLaunches />
+          </div>
+
+          {/* Revenue per fund */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <RevenueOverview />
+          </div>
+
+          {/* Fund NAV table — tab dependent */}
+          <div className="bg-white rounded-2xl shadow-card p-6">
+            <FundNavTable />
+          </div>
+
+          {/* Decorative image divider — centered */}
+          <div className="flex justify-center">
+            <div className="rounded-2xl overflow-hidden shadow-card max-w-2xl w-full">
+              <img
+                src={STB_IMAGES.nature1}
+                alt="Storebrand – Ledende nordisk kapitalforvalter"
+                className="w-full h-44 object-cover"
+                onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+              />
+            </div>
+          </div>
+
+          {/* Imagery section */}
+          <div className="grid grid-cols-2 gap-4">
+            <ImageCard
+              src={STB_IMAGES.people}
+              alt="Porteføljeforvaltere"
+              caption="Våre eksperter"
+              href="https://www.storebrandam.com/no-NO/kontakt-oss/our-teams/portfolio-managers/"
+            />
+            <ImageCard
+              src={STB_IMAGES.ogImage}
+              alt="Storebrand Asset Management"
+              caption="Nordisk kapitalforvaltning"
+              href="https://www.storebrandam.com/no-NO/om-oss/"
+            />
+          </div>
+        </div>
+
+        {/* Right column — VFF at top, then news at bottom */}
+        <div className="w-full lg:w-80 shrink-0 space-y-6">
+          {/* VFF / FBF Overview — tab dependent */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <VffOverview />
+          </div>
+
+          {/* Storebrand imagery card */}
+          <ImageCard
+            src={STB_IMAGES.banner}
+            alt="Storebrand"
+            caption="Investing for a sustainable future"
+          />
+
+          {/* Storebrand brand message */}
+          <div className="stb-gradient rounded-2xl p-5 shadow-card">
+            <p className="text-white text-sm font-medium leading-relaxed">
+              «Vi forvalter kapital med mål om langsiktig verdiskaping og bærekraftig utvikling.»
+            </p>
+            <p className="text-primary-200 text-xs mt-2 opacity-70">— Storebrand Asset Management</p>
+          </div>
+
+          {/* Market News — bottom of right column */}
+          <div className="bg-white rounded-2xl shadow-card p-5">
+            <NewsFeed
+              title="E24"
+              fetchFn={fetchE24News}
+              icon="🇳🇴"
+              testId="e24-news-feed"
+            />
+          </div>
+        </div>
+      </div>
+      )}
+    </motion.div>
+  );
+}
+
+export default DashboardPanel;
