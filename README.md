@@ -12,6 +12,7 @@ A task management application that allows users to create, organize, and filter 
 - **List Filters**: Filter tasks by tags or completion status
 - **Animations**: Smooth transitions and animations using Framer Motion
 - **Responsive Design**: Works on desktop and mobile devices
+- **Interactive Annual Plan**: Browse Nordic Product Management documents by month, category, domicile, owner, legal status, and text
 
 ## Technology Stack
 
@@ -47,6 +48,38 @@ A task management application that allows users to create, organize, and filter 
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) to view the app
+
+## Annual plan and Microsoft Graph setup
+
+The annual plan reads the latest `Document overview.xlsx` directly from SharePoint after delegated Microsoft Entra sign-in. It does not bundle or silently substitute workbook data in production.
+
+1. Register a **Single-page application** in Microsoft Entra ID.
+2. Add a Web platform redirect URI for local development: `http://localhost:3000/`.
+3. Add the deployed GitHub Pages URI, including the repository base path, for example:
+   `https://<organization>.github.io/Nordic-Product-Management-Dashboard/`.
+4. Add the Microsoft Graph **delegated** permission `Files.ReadWrite`. Microsoft currently lists this as the least-privileged permission supported by the Excel `usedRange` API, although this app only performs reads. Grant consent according to your tenant policy.
+5. Copy `.env.example` to `.env.local` and set the tenant ID, client ID, SharePoint hostname, site path, document library, workbook path, and optional worksheet name. Do not create or configure a client secret for this SPA.
+6. Restart the Vite development server after changing environment values.
+
+The default source configuration corresponds to:
+
+```text
+Host:      storebrand.sharepoint.com
+Site:      /sites/NordiskProdukt
+Library:   Felles
+File:      /2 Governing Documents/Document overview.xlsx
+Worksheet: Sheet1
+```
+
+`VITE_GRAPH_DRIVE_ID` can be used instead of `VITE_GRAPH_DRIVE_NAME`. If the workbook moves, update only the deployment variables or local environment file. Header names are matched defensively, but the workbook should retain a recognizable document/report column.
+
+### GitHub Pages configuration
+
+Set the matching `VITE_*` values as GitHub Actions **repository variables**. The deployment workflow injects them at build time and sets `VITE_BASE_PATH=/Nordic-Product-Management-Dashboard/`. The Entra redirect URI must exactly match the final Pages URL. Tenant and client IDs are public SPA configuration; never add credentials or a client secret.
+
+### Explicit development sample mode
+
+Set `VITE_ANNUAL_PLAN_SAMPLE_MODE=true` only when running the Vite development server to exercise the UI with clearly labelled sample records. Production builds ignore this flag. Authentication, Graph, or workbook errors are shown directly and never trigger a sample-data fallback.
 
 ### Available Scripts
 

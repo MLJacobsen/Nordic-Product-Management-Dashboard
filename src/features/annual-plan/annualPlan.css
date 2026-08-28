@@ -1,0 +1,837 @@
+.annual-plan-content {
+  --annual-ink: #17352f;
+  --annual-muted: #63736f;
+  --annual-green: #16695c;
+  --annual-green-dark: #0f5147;
+  --annual-line: #d9e5e1;
+  color: var(--annual-ink);
+  margin: 0 auto;
+  max-width: 1480px;
+  width: 100%;
+}
+
+.annual-plan-sample-banner {
+  background: #fff3ce;
+  border: 1px solid #ecd58b;
+  border-radius: 12px;
+  color: #654f08;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding: 0.7rem 1rem;
+  text-align: center;
+}
+
+.annual-plan-hero {
+  align-items: flex-start;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(209, 237, 229, 0.8), transparent 34%),
+    linear-gradient(135deg, #fff 0%, #f6fbf9 100%);
+  border: 1px solid var(--annual-line);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px -34px rgba(16, 74, 63, 0.48);
+  display: flex;
+  justify-content: space-between;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.annual-plan-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  margin: 0.45rem 0 1rem;
+}
+
+.annual-plan-hero p {
+  color: var(--annual-muted);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 640px;
+}
+
+.annual-plan-eyebrow {
+  color: var(--annual-green);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.annual-plan-session-actions {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.6rem;
+}
+
+.annual-plan-session-actions > span {
+  color: var(--annual-ink);
+  display: flex;
+  font-size: 0.78rem;
+  font-weight: 650;
+  flex-direction: column;
+  text-align: right;
+}
+
+.annual-plan-session-actions small {
+  color: var(--annual-muted);
+  font-size: 0.68rem;
+  font-weight: 450;
+  margin-top: 0.15rem;
+}
+
+.annual-plan-icon-button {
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--annual-line);
+  border-radius: 999px;
+  color: var(--annual-green-dark);
+  display: inline-flex;
+  height: 2.5rem;
+  justify-content: center;
+  transition: border-color 160ms, background 160ms, transform 160ms;
+  width: 2.5rem;
+}
+
+.annual-plan-icon-button:hover {
+  background: #edf7f4;
+  border-color: #a7c9c0;
+  transform: translateY(-1px);
+}
+
+.annual-plan-icon-button:focus-visible,
+.annual-plan-primary-button:focus-visible,
+.annual-plan-clear-button:focus-visible,
+.annual-wheel-month:focus-visible,
+.annual-plan-document-button:focus-visible,
+.annual-plan-unscheduled button:focus-visible,
+.annual-plan-filters input:focus-visible,
+.annual-plan-filters select:focus-visible {
+  outline: 3px solid #8ac9b9;
+  outline-offset: 3px;
+}
+
+.annual-plan-icon-button svg {
+  height: 1.15rem;
+  width: 1.15rem;
+}
+
+.annual-plan-summary {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 1rem 0;
+}
+
+.annual-plan-summary article {
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--annual-line);
+  border-radius: 16px;
+  display: flex;
+  gap: 0.8rem;
+  min-height: 72px;
+  padding: 0.8rem 1rem;
+}
+
+.annual-plan-summary strong {
+  color: var(--annual-green-dark);
+  font-size: 1.8rem;
+  letter-spacing: -0.04em;
+}
+
+.annual-plan-summary span {
+  color: var(--annual-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.annual-plan-filters {
+  align-items: end;
+  background: #fff;
+  border: 1px solid var(--annual-line);
+  border-radius: 18px;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(240px, 2fr) repeat(3, minmax(135px, 1fr)) auto;
+  padding: 1rem;
+}
+
+.annual-plan-filters label:not(.annual-plan-search) {
+  color: var(--annual-muted);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.68rem;
+  font-weight: 650;
+  gap: 0.35rem;
+  letter-spacing: 0.03em;
+}
+
+.annual-plan-filters input,
+.annual-plan-filters select {
+  background: #f7faf9;
+  border: 1px solid #d6e1de;
+  border-radius: 10px;
+  color: var(--annual-ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+  min-height: 42px;
+  padding: 0.55rem 0.7rem;
+  width: 100%;
+}
+
+.annual-plan-search {
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.annual-plan-search svg {
+  color: #71817d;
+  height: 1rem;
+  left: 0.8rem;
+  pointer-events: none;
+  position: absolute;
+  width: 1rem;
+}
+
+.annual-plan-search input {
+  padding-left: 2.3rem;
+}
+
+.annual-plan-clear-button {
+  background: transparent;
+  border: 0;
+  color: var(--annual-green);
+  font-size: 0.76rem;
+  font-weight: 700;
+  min-height: 42px;
+  padding: 0.4rem;
+}
+
+.annual-plan-legend {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  justify-content: center;
+  padding: 1rem 0 0.25rem;
+}
+
+.annual-plan-legend span {
+  align-items: center;
+  color: var(--annual-muted);
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 600;
+  gap: 0.4rem;
+}
+
+.annual-plan-legend i {
+  border-radius: 50%;
+  height: 0.55rem;
+  width: 0.55rem;
+}
+
+.annual-plan-recurrence-note {
+  color: var(--annual-muted);
+  font-size: 0.68rem;
+  margin: 0.35rem 0 0;
+  text-align: center;
+}
+
+.annual-wheel-layout {
+  align-items: stretch;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(520px, 1.55fr) minmax(300px, 0.75fr);
+  margin-top: 0.5rem;
+}
+
+.annual-wheel-shell,
+.annual-plan-month-panel,
+.annual-plan-unscheduled {
+  background: #fff;
+  border: 1px solid var(--annual-line);
+  border-radius: 24px;
+  box-shadow: 0 18px 45px -38px rgba(16, 74, 63, 0.55);
+}
+
+.annual-wheel-shell {
+  min-width: 0;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.annual-wheel {
+  aspect-ratio: 1;
+  margin: 0 auto;
+  max-width: 720px;
+  position: relative;
+  width: 100%;
+}
+
+.annual-wheel-art {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  position: absolute;
+  width: 100%;
+}
+
+.annual-wheel-art path {
+  fill: #eff6f3;
+  stroke: #fff;
+  stroke-width: 5;
+  transition: fill 180ms, filter 180ms;
+}
+
+.annual-wheel-art path:nth-child(3n + 2) {
+  fill: #e5f0ec;
+}
+
+.annual-wheel-art path:nth-child(3n) {
+  fill: #f4f8f6;
+}
+
+.annual-wheel-art path.selected {
+  fill: #c8e4dc;
+  filter: drop-shadow(0 5px 7px rgba(19, 94, 80, 0.15));
+}
+
+.annual-wheel-center {
+  fill: #fcfefd;
+  stroke: #d9e8e4;
+  stroke-width: 2;
+}
+
+.annual-wheel-center-copy {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.annual-wheel-center-copy span {
+  color: var(--annual-green-dark);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 650;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.annual-wheel-center-copy small {
+  color: var(--annual-muted);
+  font-size: 0.65rem;
+  font-weight: 650;
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+}
+
+.annual-wheel-month {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #d3e2de;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px -9px rgba(18, 76, 65, 0.5);
+  color: var(--annual-ink);
+  display: flex;
+  flex-direction: column;
+  height: clamp(48px, 8vw, 68px);
+  justify-content: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  transition: background 160ms, border-color 160ms, transform 160ms;
+  width: clamp(48px, 8vw, 68px);
+  z-index: 2;
+}
+
+.annual-wheel-month:hover,
+.annual-wheel-month[aria-pressed="true"] {
+  background: var(--annual-green-dark);
+  border-color: var(--annual-green-dark);
+  color: #fff;
+  transform: translate(-50%, -50%) scale(1.06);
+  z-index: 4;
+}
+
+.annual-wheel-month-name {
+  font-size: clamp(0.56rem, 1.3vw, 0.7rem);
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.annual-wheel-month strong {
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
+  line-height: 1.1;
+  margin-top: 0.2rem;
+}
+
+.annual-wheel-dots {
+  display: flex;
+  gap: 2px;
+  margin-top: 0.15rem;
+}
+
+.annual-wheel-dots i {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  height: 5px;
+  width: 5px;
+}
+
+.annual-plan-tooltip {
+  background: #102f29;
+  border-radius: 7px;
+  bottom: calc(100% + 8px);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 550;
+  left: 50%;
+  line-height: 1.35;
+  opacity: 0;
+  padding: 0.4rem 0.55rem;
+  pointer-events: none;
+  position: absolute;
+  transform: translate(-50%, 4px);
+  transition: opacity 120ms, transform 120ms;
+  visibility: hidden;
+  white-space: nowrap;
+  z-index: 20;
+}
+
+button:hover > .annual-plan-tooltip,
+button:focus-visible > .annual-plan-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  visibility: visible;
+}
+
+.annual-plan-month-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: 760px;
+  min-height: 420px;
+  overflow: hidden;
+  padding: 1.25rem;
+}
+
+.annual-plan-panel-heading {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.annual-plan-panel-heading h2 {
+  font-size: 1.45rem;
+  letter-spacing: -0.035em;
+  margin: 0.15rem 0 0;
+}
+
+.annual-plan-count-badge {
+  align-items: center;
+  background: #e8f4f0;
+  border-radius: 999px;
+  color: var(--annual-green-dark);
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 750;
+  height: 2rem;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0 0.55rem;
+}
+
+.annual-plan-document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 1rem;
+  overflow-y: auto;
+  padding: 0.15rem 0.25rem 0.5rem 0.15rem;
+}
+
+.annual-plan-document-button {
+  background: var(--item-background);
+  border: 0;
+  border-left: 4px solid var(--item-color);
+  border-radius: 10px;
+  color: var(--annual-ink);
+  display: flex;
+  flex-direction: column;
+  min-height: 55px;
+  padding: 0.65rem 0.75rem;
+  position: relative;
+  text-align: left;
+  transition: filter 150ms, transform 150ms;
+}
+
+.annual-plan-document-button:hover {
+  filter: saturate(1.08);
+  transform: translateX(2px);
+}
+
+.annual-plan-document-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.annual-plan-document-meta {
+  color: var(--annual-muted);
+  font-size: 0.66rem;
+  margin-top: 0.2rem;
+}
+
+.annual-plan-item-tooltip {
+  bottom: auto;
+  left: auto;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+button:hover > .annual-plan-item-tooltip,
+button:focus-visible > .annual-plan-item-tooltip {
+  transform: translateY(-50%) translateX(0);
+}
+
+.annual-plan-empty-panel {
+  color: var(--annual-muted);
+  font-size: 0.82rem;
+  margin: auto;
+  text-align: center;
+}
+
+.annual-plan-unscheduled {
+  margin-top: 1rem;
+  padding: 1.25rem;
+}
+
+.annual-plan-unscheduled-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.annual-plan-unscheduled button {
+  background: #f9fbfa;
+  border: 1px solid #dae5e2;
+  border-top: 3px solid var(--item-color);
+  border-radius: 10px;
+  color: var(--annual-ink);
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem;
+  text-align: left;
+  transition: background 150ms, transform 150ms;
+}
+
+.annual-plan-unscheduled button:hover {
+  background: #f2f7f5;
+  transform: translateY(-2px);
+}
+
+.annual-plan-unscheduled button span {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.annual-plan-unscheduled button small {
+  color: var(--annual-muted);
+  font-size: 0.65rem;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+}
+
+.annual-plan-no-results {
+  background: #fff;
+  border: 1px dashed #b8ccc6;
+  border-radius: 18px;
+  margin-top: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.annual-plan-no-results h2 {
+  font-size: 1rem;
+  margin: 0 0 0.7rem;
+}
+
+.annual-plan-no-results button,
+.annual-plan-primary-button {
+  background: var(--annual-green);
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+}
+
+.annual-plan-modal-backdrop {
+  align-items: center;
+  background: rgba(8, 27, 23, 0.58);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 1rem;
+  position: fixed;
+  z-index: 50;
+}
+
+.annual-plan-modal {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px -25px rgba(5, 24, 20, 0.7);
+  max-height: min(88vh, 850px);
+  max-width: 850px;
+  overflow-y: auto;
+  padding: clamp(1.2rem, 4vw, 2.2rem);
+  width: 100%;
+}
+
+.annual-plan-modal-header {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--annual-line);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1.2rem;
+}
+
+.annual-plan-modal-header h2 {
+  font-size: clamp(1.55rem, 4vw, 2.2rem);
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  margin: 0.7rem 0 0.3rem;
+}
+
+.annual-plan-modal-header p {
+  color: var(--annual-muted);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.annual-plan-category-pill {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.32rem 0.55rem;
+}
+
+.annual-plan-details-grid {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.annual-plan-details-grid > div {
+  border-bottom: 1px solid #e7eeec;
+  min-width: 0;
+  padding: 1rem 1rem 1rem 0;
+}
+
+.annual-plan-details-grid > div:nth-child(even) {
+  padding-left: 1rem;
+}
+
+.annual-plan-details-grid > div.wide {
+  grid-column: 1 / -1;
+  padding-left: 0;
+}
+
+.annual-plan-details-grid dt {
+  color: var(--annual-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.annual-plan-details-grid dd {
+  color: var(--annual-ink);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.annual-plan-empty {
+  color: #8e9a97;
+  font-style: italic;
+}
+
+.annual-plan-link {
+  color: var(--annual-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.annual-plan-state {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dbe7e3;
+  border-radius: 24px;
+  box-shadow: 0 25px 65px -45px rgba(15, 81, 71, 0.6);
+  color: var(--annual-ink);
+  display: flex;
+  flex-direction: column;
+  margin: clamp(2rem, 8vh, 6rem) auto;
+  max-width: 590px;
+  padding: clamp(2rem, 6vw, 4rem);
+  text-align: center;
+}
+
+.annual-plan-state-icon {
+  align-items: center;
+  background: #e4f2ed;
+  border-radius: 50%;
+  color: var(--annual-green);
+  display: inline-flex;
+  height: 4rem;
+  justify-content: center;
+  width: 4rem;
+}
+
+.annual-plan-state-icon svg {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.annual-plan-state h2 {
+  font-size: 1.55rem;
+  letter-spacing: -0.035em;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.annual-plan-state p {
+  color: var(--annual-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0.3rem 0 1rem;
+}
+
+.annual-plan-state .annual-plan-primary-button {
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 1050px) {
+  .annual-plan-filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .annual-plan-search {
+    grid-column: 1 / -1;
+  }
+
+  .annual-wheel-layout {
+    grid-template-columns: minmax(450px, 1.3fr) minmax(260px, 0.7fr);
+  }
+}
+
+@media (max-width: 820px) {
+  .annual-plan-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .annual-wheel-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .annual-wheel-shell {
+    padding: 0.5rem;
+  }
+
+  .annual-plan-month-panel {
+    max-height: 460px;
+    min-height: 280px;
+  }
+
+  .annual-plan-unscheduled-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .annual-plan-hero {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .annual-plan-session-actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .annual-plan-session-actions > span {
+    margin-right: auto;
+    text-align: left;
+  }
+
+  .annual-plan-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .annual-plan-search {
+    grid-column: auto;
+  }
+
+  .annual-plan-legend {
+    justify-content: flex-start;
+  }
+
+  .annual-wheel-month {
+    border-radius: 10px;
+    height: 44px;
+    width: 44px;
+  }
+
+  .annual-wheel-month strong {
+    font-size: 0.85rem;
+  }
+
+  .annual-wheel-dots {
+    display: none;
+  }
+
+  .annual-wheel-center-copy small {
+    font-size: 0.52rem;
+  }
+
+  .annual-plan-unscheduled-grid,
+  .annual-plan-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .annual-plan-details-grid > div,
+  .annual-plan-details-grid > div:nth-child(even) {
+    grid-column: 1;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .annual-plan-item-tooltip {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .annual-plan-content *,
+  .annual-plan-content *::before,
+  .annual-plan-content *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
