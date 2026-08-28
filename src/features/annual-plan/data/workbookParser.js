@@ -16,28 +16,28 @@ export const MONTHS = [
 export const DOCUMENT_CATEGORIES = {
   reports: {
     label: 'Reports & factsheets',
-    color: '#157a6e',
-    background: '#dff4ef',
+    color: '#6e1018',
+    background: '#fce4e4',
   },
   disclosures: {
     label: 'Sustainability disclosures',
-    color: '#397367',
-    background: '#e2f0ed',
+    color: '#d45a1f',
+    background: '#fff0e4',
   },
   investor: {
     label: 'Investor documents',
-    color: '#a15c2f',
-    background: '#f9eadf',
+    color: '#8d5260',
+    background: '#f6e8ec',
   },
   templates: {
     label: 'Data templates',
-    color: '#5367a5',
-    background: '#e8ebf7',
+    color: '#796157',
+    background: '#f2ece8',
   },
   other: {
     label: 'Other',
-    color: '#6b7280',
-    background: '#eef0f3',
+    color: '#57534e',
+    background: '#f5f5f4',
   },
 };
 

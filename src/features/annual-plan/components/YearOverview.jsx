@@ -64,7 +64,10 @@ export default function YearOverview({ documents, onSelectDocument }) {
         <div>
           <span className="annual-plan-eyebrow">Complete schedule</span>
           <h2 id="year-overview-heading">Year overview</h2>
-          <p>Expand a document row or select a month count to inspect its records.</p>
+          <p>
+            Expand a document row or select a month count to inspect its records.
+            The month header stays visible while you scroll.
+          </p>
         </div>
         <div className="annual-overview-key">
           <span><i className="fixed" />Scheduled</span>

@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import {
+  ArrowPathIcon,
+  CalendarDaysIcon,
   ChartPieIcon,
+  DocumentTextIcon,
   MagnifyingGlassIcon,
+  ScaleIcon,
   Squares2X2Icon,
   TableCellsIcon,
 } from '@heroicons/react/24/outline';
@@ -42,6 +46,7 @@ export function AnnualPlanContent({
   const [owner, setOwner] = useState('all');
   const [legal, setLegal] = useState('all');
   const [category, setCategory] = useState('all');
+  const [schedule, setSchedule] = useState('all');
   const [activeView, setActiveView] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedDocument, setSelectedDocument] = useState(null);
@@ -59,7 +64,8 @@ export function AnnualPlanContent({
     && (owner === 'all' || splitPeople(document.responsible).includes(owner))
     && (legal === 'all' || document.legalRequirement.toLowerCase() === legal)
     && (category === 'all' || document.category === category)
-  )), [category, documents, domicile, legal, owner, search]);
+    && (schedule === 'all' || document.schedule.kind === schedule)
+  )), [category, documents, domicile, legal, owner, schedule, search]);
 
   const unscheduled = filteredDocuments.filter(
     (document) => document.schedule.kind === 'unscheduled',
@@ -77,6 +83,17 @@ export function AnnualPlanContent({
     setOwner('all');
     setLegal('all');
     setCategory('all');
+    setSchedule('all');
+  };
+
+  const showRecords = () => setActiveView('records');
+  const toggleLegalRecords = () => {
+    setLegal((current) => (current === 'yes' ? 'all' : 'yes'));
+    showRecords();
+  };
+  const toggleScheduleRecords = (kind) => {
+    setSchedule((current) => (current === kind ? 'all' : kind));
+    showRecords();
   };
 
   const handleViewKeyDown = (event, viewIndex) => {
@@ -97,9 +114,9 @@ export function AnnualPlanContent({
       <header className="annual-plan-hero">
         <div>
           <span className="annual-plan-eyebrow">Nordic Product Management</span>
-          <h1>Annual plan workspace</h1>
+          <h1>Annual document plan</h1>
           <p>
-            See the complete document workload, timing, legal status, and ownership in one place.
+            Plan, prioritise, and open every document obligation across markets from one shared overview.
           </p>
         </div>
         <div className="annual-plan-session-actions">
@@ -110,11 +127,74 @@ export function AnnualPlanContent({
         </div>
       </header>
 
-      <section aria-label="Annual plan summary" className="annual-plan-summary">
-        <article><strong data-testid="matching-count">{filteredDocuments.length}</strong><span>Matching records</span></article>
-        <article><strong data-testid="legal-count">{legalCount}</strong><span>Legal requirements</span></article>
-        <article><strong data-testid="monthly-count">{recurring.length}</strong><span>Monthly records</span></article>
-        <article><strong data-testid="unscheduled-count">{unscheduled.length}</strong><span>Ad hoc / unscheduled</span></article>
+      <section aria-labelledby="annual-plan-summary-heading" className="annual-plan-summary-section">
+        <div className="annual-plan-summary-heading">
+          <div>
+            <span className="annual-plan-eyebrow">How to read the overview</span>
+            <h2 id="annual-plan-summary-heading">One workbook row equals one record</h2>
+          </div>
+          <p>
+            Counts reflect the current filters. Monthly rows still count once here, even though they
+            repeat from January to December. Select a card to inspect the matching rows.
+          </p>
+        </div>
+        <div aria-live="polite" className="annual-plan-summary">
+          <button
+            aria-label={`Open all ${filteredDocuments.length} records currently in view`}
+            onClick={showRecords}
+            type="button"
+          >
+            <DocumentTextIcon aria-hidden="true" />
+            <span>
+              <strong data-testid="matching-count">{filteredDocuments.length}</strong>
+              <b>Records in view</b>
+              <small>Unique workbook rows included after the current filters.</small>
+              <em>Open records</em>
+            </span>
+          </button>
+          <button
+            aria-label={`${legal === 'yes' ? 'Remove' : 'Show'} legal requirement filter`}
+            aria-pressed={legal === 'yes'}
+            onClick={toggleLegalRecords}
+            type="button"
+          >
+            <ScaleIcon aria-hidden="true" />
+            <span>
+              <strong data-testid="legal-count">{legalCount}</strong>
+              <b>Legally required</b>
+              <small>Rows marked “Yes” in the workbook’s Legal requirement field.</small>
+              <em>{legal === 'yes' ? 'Filter active' : 'Show these rows'}</em>
+            </span>
+          </button>
+          <button
+            aria-label={`${schedule === 'monthly' ? 'Remove' : 'Show'} monthly schedule filter`}
+            aria-pressed={schedule === 'monthly'}
+            onClick={() => toggleScheduleRecords('monthly')}
+            type="button"
+          >
+            <ArrowPathIcon aria-hidden="true" />
+            <span>
+              <strong data-testid="monthly-count">{recurring.length}</strong>
+              <b>Monthly source rows</b>
+              <small>Rows scheduled every month; each one repeats across all 12 months.</small>
+              <em>{schedule === 'monthly' ? 'Filter active' : 'Show these rows'}</em>
+            </span>
+          </button>
+          <button
+            aria-label={`${schedule === 'unscheduled' ? 'Remove' : 'Show'} no fixed month filter`}
+            aria-pressed={schedule === 'unscheduled'}
+            onClick={() => toggleScheduleRecords('unscheduled')}
+            type="button"
+          >
+            <CalendarDaysIcon aria-hidden="true" />
+            <span>
+              <strong data-testid="unscheduled-count">{unscheduled.length}</strong>
+              <b>No fixed month</b>
+              <small>Ad hoc rows kept visible in the table’s dedicated Ad hoc column.</small>
+              <em>{schedule === 'unscheduled' ? 'Filter active' : 'Show these rows'}</em>
+            </span>
+          </button>
+        </div>
       </section>
 
       <section aria-label="Filter annual plan" className="annual-plan-filters">
@@ -150,7 +230,7 @@ export function AnnualPlanContent({
             <option value="no">No</option>
           </select>
         </label>
-        {(search || domicile !== 'all' || owner !== 'all' || legal !== 'all' || category !== 'all') && (
+        {(search || domicile !== 'all' || owner !== 'all' || legal !== 'all' || category !== 'all' || schedule !== 'all') && (
           <button className="annual-plan-clear-button" onClick={clearFilters} type="button">Clear filters</button>
         )}
       </section>
