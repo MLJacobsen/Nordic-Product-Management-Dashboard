@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import {
   ArrowPathIcon,
+  ArrowTopRightOnSquareIcon,
   CalendarDaysIcon,
   ChartPieIcon,
   DocumentTextIcon,
@@ -40,6 +41,7 @@ function matchesSearch(document, search) {
 export function AnnualPlanContent({
   documents,
   sourceName = 'Document overview.xlsx',
+  sourceUrl,
 }) {
   const [search, setSearch] = useState('');
   const [domicile, setDomicile] = useState('all');
@@ -128,10 +130,18 @@ export function AnnualPlanContent({
           </p>
         </div>
         <div className="annual-plan-session-actions">
-          <span>
-            Published workbook
+          <a
+            aria-label={`Open published workbook: ${sourceName}`}
+            href={sourceUrl}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <span>
+              Published workbook
+              <ArrowTopRightOnSquareIcon aria-hidden="true" />
+            </span>
             <small>{sourceName}</small>
-          </span>
+          </a>
         </div>
       </header>
 

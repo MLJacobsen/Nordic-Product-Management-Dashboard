@@ -11,6 +11,7 @@ export default function AnnualPlanPage() {
     <AnnualPlanContent
       documents={publishedDocuments}
       sourceName={documentOverviewMetadata.source}
+      sourceUrl={documentOverviewMetadata.sourceUrl}
     />
   );
 }
