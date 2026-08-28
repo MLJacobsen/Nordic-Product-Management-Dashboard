@@ -17,7 +17,10 @@ vi.mock('framer-motion', () => {
     motion: {
       div: ({ children, ...props }) => React.createElement('div', props, children),
       button: ({ children, ...props }) => React.createElement('button', props, children),
-      p: ({ children, ...props }) => React.createElement('p', props, children)
+      form: ({ children, ...props }) => React.createElement('form', props, children),
+      li: ({ children, ...props }) => React.createElement('li', props, children),
+      p: ({ children, ...props }) => React.createElement('p', props, children),
+      tr: ({ children, ...props }) => React.createElement('tr', props, children)
     },
     AnimatePresence: ({ children }) => children,
   };

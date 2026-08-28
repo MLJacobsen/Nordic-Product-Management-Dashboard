@@ -12,6 +12,7 @@ A task management application that allows users to create, organize, and filter 
 - **List Filters**: Filter tasks by tags or completion status
 - **Animations**: Smooth transitions and animations using Framer Motion
 - **Responsive Design**: Works on desktop and mobile devices
+- **Interactive Annual Plan**: Compare every document type in a full-year matrix, expand monthly workloads, switch to the annual wheel or sortable records explorer, and filter by category, domicile, owner, legal status, and text
 
 ## Technology Stack
 
@@ -48,11 +49,42 @@ A task management application that allows users to create, organize, and filter 
 
 4. Open [http://localhost:3000](http://localhost:3000) to view the app
 
+## Publishing the annual plan workbook
+
+`Document overview.xlsx` is the master for the annual plan. The dashboard publishes a static snapshot of `Sheet1`, so users can open the overview immediately without Microsoft sign-in or a live workbook connection.
+
+When a revised workbook is provided, regenerate the published snapshot:
+
+```bash
+npm run import:annual-plan -- "C:\path\to\Document overview.xlsx"
+```
+
+To use a worksheet other than `Sheet1`, pass its name as the second argument:
+
+```bash
+npm run import:annual-plan -- "C:\path\to\Document overview.xlsx" "Annual plan"
+```
+
+The import command preserves the worksheet cells in
+`src/features/annual-plan/data/documentOverview.json`. The existing defensive
+header and month normalization then prepares them for the dashboard. Review the
+result, run `npm test` and `npm run build`, and deploy the new commit.
+
+The source workbook itself is not served by the site. No credentials, Entra app
+registration, or SharePoint configuration are needed.
+
+### GitHub Pages configuration
+
+The deployment workflow sets
+`VITE_BASE_PATH=/Nordic-Product-Management-Dashboard/` so generated asset URLs
+work from the repository subpath.
+
 ### Available Scripts
 
 - `npm start` - Start the development server
 - `npm start:hydrated` - Start the development server with data hydration enabled
 - `npm run build` - Build for production
+- `npm run import:annual-plan -- <workbook.xlsx> [worksheet]` - Publish a workbook snapshot to the annual plan
 - `npm run build:hydrated` - Build for production with data hydration enabled
 - `npm run build:clean` - Build for production with data hydration explicitly disabled
 - `npm run preview` - Preview the production build locally
