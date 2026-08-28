@@ -4,81 +4,36 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   CalendarDaysIcon,
-  CheckCircleIcon,
-  PlusIcon,
+  ChartBarSquareIcon,
 } from '@heroicons/react/24/outline';
 
-import { TaskProvider } from './context/TaskContext';
-import { TagProvider } from './context/TagContext';
-import { ListProvider } from './context/ListContext';
-
-import GlobalTaskForm from './features/tasks/components/GlobalTaskForm';
-import TaskBoard from './features/lists/components/TaskBoard';
+import DashboardPanel from './features/dashboard/components/DashboardPanel';
+import SuggestionBoard from './features/dashboard/components/SuggestionBoard';
+import VacationPlanner from './features/dashboard/components/VacationPlanner';
 
 const AnnualPlanPage = lazy(() => import('./features/annual-plan/AnnualPlanPage'));
 
-function TaskDashboard() {
-  const [showInput, setShowInput] = useState(false);
-
+function DashboardView() {
   return (
-    <TaskProvider>
-      <TagProvider>
-        <ListProvider>
-          <div className="w-full max-w-6xl mx-auto">
-              <motion.div 
-                className="mb-6 bg-white rounded-2xl shadow-soft p-6"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                data-testid="app-header"
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <h1 className="text-3xl font-bold text-neutral-800 tracking-tight">Task Dashboard</h1>
-                  {/* Stats will be displayed from TaskContext */}
-                </div>
-                
-                <AnimatePresence>
-                  {showInput ? (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden"
-                      data-testid="task-form-container"
-                    >
-                      <GlobalTaskForm onCancel={() => setShowInput(false)} />
-                    </motion.div>
-                  ) : (
-                    <motion.button
-                      className="flex items-center justify-center w-full py-3 px-4 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium transition-colors"
-                      onClick={() => setShowInput(true)}
-                      whileTap={{ scale: 0.97 }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      data-testid="show-task-form-button"
-                    >
-                      <PlusIcon className="h-5 w-5 mr-2" />
-                      Add New Task
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-              
-              {/* The TaskBoard component now manages all task lists */}
-            <TaskBoard />
-          </div>
-        </ListProvider>
-      </TagProvider>
-    </TaskProvider>
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 lg:flex-row">
+      <div className="min-w-0 flex-1">
+        <DashboardPanel />
+      </div>
+      <aside className="w-full shrink-0 lg:w-72" aria-label="Team planning">
+        <SuggestionBoard />
+        <div className="mt-6">
+          <VacationPlanner />
+        </div>
+      </aside>
+    </div>
   );
 }
 
 function App() {
   const getViewFromHash = () => (
-    window.location.hash === '#annual-plan' ? 'annual-plan' : 'tasks'
+    window.location.hash === '#annual-plan' ? 'annual-plan' : 'dashboard'
   );
   const [activeView, setActiveView] = useState(getViewFromHash);
 
@@ -89,18 +44,15 @@ function App() {
   }, []);
 
   const changeView = (view) => {
-    window.location.hash = view === 'annual-plan' ? 'annual-plan' : 'tasks';
+    window.location.hash = view === 'annual-plan' ? 'annual-plan' : 'dashboard';
     setActiveView(view);
   };
 
   return (
-    <div
-      className="App min-h-screen bg-[linear-gradient(145deg,#f4faf7_0%,#f8f7f2_48%,#eef7f4_100%)]"
-      data-testid="app"
-    >
+    <div className="App min-h-screen stb-gradient-light" data-testid="app">
       <nav
         aria-label="Main navigation"
-        className="sticky top-0 z-40 border-b border-neutral-200/80 bg-white/90 px-4 py-3 backdrop-blur-md"
+        className="sticky top-0 z-40 border-b border-neutral-200/80 bg-white/95 px-4 py-3 shadow-sm backdrop-blur-md"
       >
         <div className="mx-auto flex max-w-[1480px] items-center justify-between gap-4">
           <span className="text-sm font-bold tracking-tight text-neutral-800">
@@ -108,23 +60,23 @@ function App() {
           </span>
           <div className="flex rounded-xl bg-neutral-100 p-1">
             <button
-              aria-current={activeView === 'tasks' ? 'page' : undefined}
+              aria-current={activeView === 'dashboard' ? 'page' : undefined}
               className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
-                activeView === 'tasks'
-                  ? 'bg-white text-primary-700 shadow-sm'
+                activeView === 'dashboard'
+                  ? 'bg-white text-primary-600 shadow-sm'
                   : 'text-neutral-600 hover:text-neutral-900'
               }`}
-              onClick={() => changeView('tasks')}
+              onClick={() => changeView('dashboard')}
               type="button"
             >
-              <CheckCircleIcon aria-hidden="true" className="h-4 w-4" />
-              Tasks
+              <ChartBarSquareIcon aria-hidden="true" className="h-4 w-4" />
+              Dashboard
             </button>
             <button
               aria-current={activeView === 'annual-plan' ? 'page' : undefined}
               className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
                 activeView === 'annual-plan'
-                  ? 'bg-white text-emerald-800 shadow-sm'
+                  ? 'bg-white text-primary-600 shadow-sm'
                   : 'text-neutral-600 hover:text-neutral-900'
               }`}
               onClick={() => changeView('annual-plan')}
@@ -137,11 +89,17 @@ function App() {
         </div>
       </nav>
 
-      <main className="px-4 py-6 sm:px-6 sm:py-10">
-        {activeView === 'tasks' ? (
-          <TaskDashboard />
+      <main className="px-4 py-8 sm:py-10">
+        {activeView === 'dashboard' ? (
+          <DashboardView />
         ) : (
-          <Suspense fallback={<p className="py-20 text-center text-sm text-neutral-600" role="status">Opening annual plan…</p>}>
+          <Suspense
+            fallback={(
+              <p className="py-20 text-center text-sm text-neutral-600" role="status">
+                Opening annual plan…
+              </p>
+            )}
+          >
             <AnnualPlanPage />
           </Suspense>
         )}
