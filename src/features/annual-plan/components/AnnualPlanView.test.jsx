@@ -10,10 +10,15 @@ describe('AnnualPlanContent', () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={sampleDocuments} sampleMode />);
 
+    expect(screen.getByRole('button', { name: 'Monthly Factsheet, January: 4 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Monthly Factsheet, December: 4 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Fund Rules, Ad hoc: 2 records' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('tab', { name: 'Annual wheel' }));
     await user.click(screen.getByTestId('annual-wheel-month-0'));
-    expect(screen.getByRole('button', { name: /Monthly Factsheet/i })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Monthly Factsheet/i })).toHaveLength(4);
     expect(screen.getByRole('heading', { name: 'Ad hoc & unscheduled' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Fund Rules/i })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /^Fund Rules/i })).toHaveLength(2);
   });
 
   test('filters by search, domicile, owner, and legal requirement', async () => {
@@ -21,7 +26,7 @@ describe('AnnualPlanContent', () => {
     render(<AnnualPlanContent documents={sampleDocuments} />);
 
     await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'sustainability');
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('1');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('8');
 
     await user.clear(screen.getByRole('searchbox', { name: 'Search document text' }));
     await user.selectOptions(screen.getByRole('combobox', { name: 'Filter by domicile' }), 'LU');
@@ -35,8 +40,9 @@ describe('AnnualPlanContent', () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={sampleDocuments} />);
 
+    await user.click(screen.getByRole('tab', { name: 'Annual wheel' }));
     await user.click(screen.getByTestId('annual-wheel-month-3'));
-    const documentButton = screen.getByRole('button', { name: /Annual Report/i });
+    const documentButton = screen.getAllByRole('button', { name: /Annual Report/i })[0];
     documentButton.focus();
     await user.keyboard('{Enter}');
 
@@ -61,5 +67,32 @@ describe('AnnualPlanContent', () => {
 
     await user.click(screen.getAllByRole('button', { name: 'Clear filters' })[0]);
     expect(screen.getByTestId('matching-count')).toHaveTextContent(String(sampleDocuments.length));
+  });
+
+  test('expands overview rows and opens a focused record group', async () => {
+    const user = userEvent.setup();
+    render(<AnnualPlanContent documents={sampleDocuments} />);
+
+    await user.click(screen.getByRole('button', { name: /^Annual Report 4 total records$/i }));
+    expect(screen.getByRole('button', { name: /SE April Anna Yes/i })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Annual Report, April: 4 records' }));
+    expect(screen.getByRole('region', { name: 'Annual Report records' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /SE Anna Legal requirement/i }));
+    expect(screen.getByRole('dialog', { name: 'Annual Report' })).toBeInTheDocument();
+  });
+
+  test('offers a sortable explorer for every filtered workbook row', async () => {
+    const user = userEvent.setup();
+    render(<AnnualPlanContent documents={sampleDocuments} />);
+
+    await user.click(screen.getByRole('tab', { name: 'All records' }));
+    expect(screen.getByRole('heading', { name: 'Records explorer' })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Open details for/i })).toHaveLength(sampleDocuments.length);
+
+    const domicileHeader = screen.getByRole('columnheader', { name: /Domicile/i });
+    expect(domicileHeader).toHaveAttribute('aria-sort', 'none');
+    await user.click(screen.getByRole('button', { name: 'Domicile' }));
+    expect(domicileHeader).toHaveAttribute('aria-sort', 'ascending');
   });
 });

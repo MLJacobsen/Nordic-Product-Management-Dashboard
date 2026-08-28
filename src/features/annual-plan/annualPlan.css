@@ -32,11 +32,11 @@
   box-shadow: 0 20px 50px -34px rgba(16, 74, 63, 0.48);
   display: flex;
   justify-content: space-between;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.4rem, 3vw, 2.35rem);
 }
 
 .annual-plan-hero h1 {
-  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  font-size: clamp(2rem, 4vw, 3.4rem);
   font-weight: 650;
   letter-spacing: -0.055em;
   line-height: 0.95;
@@ -104,6 +104,11 @@
 .annual-plan-icon-button:focus-visible,
 .annual-plan-primary-button:focus-visible,
 .annual-plan-clear-button:focus-visible,
+.annual-plan-category-filter button:focus-visible,
+.annual-plan-view-tabs button:focus-visible,
+.annual-overview-table button:focus-visible,
+.annual-overview-focus button:focus-visible,
+.annual-records-table button:focus-visible,
 .annual-wheel-month:focus-visible,
 .annual-plan-document-button:focus-visible,
 .annual-plan-unscheduled button:focus-visible,
@@ -234,6 +239,559 @@
   border-radius: 50%;
   height: 0.55rem;
   width: 0.55rem;
+}
+
+.annual-plan-category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.9rem 0 0.4rem;
+}
+
+.annual-plan-category-filter button {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid var(--annual-line);
+  border-radius: 999px;
+  color: var(--annual-muted);
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 650;
+  gap: 0.4rem;
+  padding: 0.42rem 0.65rem;
+  transition: background 150ms, border-color 150ms, color 150ms;
+}
+
+.annual-plan-category-filter button:hover,
+.annual-plan-category-filter button[aria-pressed="true"] {
+  background: #fff;
+  border-color: #8ab9ad;
+  color: var(--annual-green-dark);
+}
+
+.annual-plan-category-filter button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px #8ab9ad;
+}
+
+.annual-plan-category-filter i {
+  border-radius: 50%;
+  height: 0.5rem;
+  width: 0.5rem;
+}
+
+.annual-plan-category-filter span {
+  align-items: center;
+  background: #edf3f1;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.6rem;
+  height: 1.15rem;
+  justify-content: center;
+  min-width: 1.15rem;
+  padding: 0 0.25rem;
+}
+
+.annual-plan-view-tabs {
+  align-items: center;
+  background: #e8f1ee;
+  border-radius: 14px;
+  display: inline-flex;
+  gap: 0.2rem;
+  margin: 0.6rem 0 0.8rem;
+  padding: 0.28rem;
+}
+
+.annual-plan-view-tabs button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  color: var(--annual-muted);
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  gap: 0.4rem;
+  padding: 0.55rem 0.75rem;
+}
+
+.annual-plan-view-tabs button[aria-selected="true"] {
+  background: #fff;
+  box-shadow: 0 2px 7px rgba(24, 72, 63, 0.12);
+  color: var(--annual-green-dark);
+}
+
+.annual-plan-view-tabs svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.annual-overview-card,
+.annual-records-card {
+  background: #fff;
+  border: 1px solid var(--annual-line);
+  border-radius: 24px;
+  box-shadow: 0 18px 45px -38px rgba(16, 74, 63, 0.55);
+  overflow: hidden;
+}
+
+.annual-overview-heading {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1.25rem 1.4rem;
+}
+
+.annual-overview-heading h2 {
+  font-size: 1.45rem;
+  letter-spacing: -0.04em;
+  margin: 0.15rem 0 0.25rem;
+}
+
+.annual-overview-heading p {
+  color: var(--annual-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.annual-overview-key {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: flex-end;
+}
+
+.annual-overview-key span {
+  align-items: center;
+  color: var(--annual-muted);
+  display: inline-flex;
+  font-size: 0.62rem;
+  font-weight: 650;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.annual-overview-key i {
+  border: 2px solid #397367;
+  border-radius: 4px;
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.annual-overview-key i.recurring {
+  background: repeating-linear-gradient(135deg, #d4e9e3, #d4e9e3 3px, #fff 3px, #fff 6px);
+}
+
+.annual-overview-focus {
+  align-items: center;
+  background: linear-gradient(100deg, #ecf7f3, #f7fbfa);
+  border-bottom: 1px solid #cadfd9;
+  border-top: 1px solid #cadfd9;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(150px, 0.45fr) minmax(0, 1.55fr) auto;
+  padding: 0.9rem 1.4rem;
+  position: relative;
+}
+
+.annual-overview-focus > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.annual-overview-focus > div:first-child span {
+  color: var(--annual-green);
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.annual-overview-focus > div:first-child strong {
+  font-size: 0.85rem;
+  margin-top: 0.18rem;
+}
+
+.annual-overview-focus > div:first-child small {
+  color: var(--annual-muted);
+  font-size: 0.62rem;
+  margin-top: 0.1rem;
+}
+
+.annual-overview-focus-items {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.annual-overview-focus-items button {
+  background: #fff;
+  border: 1px solid #d2e3de;
+  border-radius: 9px;
+  color: var(--annual-ink);
+  display: flex;
+  flex-direction: column;
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+}
+
+.annual-overview-focus-items button span {
+  color: var(--annual-green);
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.annual-overview-focus-items button strong {
+  font-size: 0.7rem;
+  margin-top: 0.15rem;
+}
+
+.annual-overview-focus-items button small {
+  color: var(--annual-muted);
+  font-size: 0.58rem;
+  margin-top: 0.1rem;
+}
+
+.annual-overview-focus-close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--annual-muted);
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.annual-overview-focus-close svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.annual-overview-scroll,
+.annual-records-scroll {
+  border-top: 1px solid #e2ebe8;
+  overflow-x: auto;
+}
+
+.annual-overview-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 1140px;
+  width: 100%;
+}
+
+.annual-overview-table th,
+.annual-overview-table td {
+  border-bottom: 1px solid #e7eeec;
+}
+
+.annual-overview-table thead th {
+  background: #f3f7f5;
+  color: #687874;
+  font-size: 0.59rem;
+  font-weight: 750;
+  height: 42px;
+  letter-spacing: 0.06em;
+  padding: 0.35rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.annual-overview-table thead th:first-child,
+.annual-overview-table tbody th:first-child,
+.annual-overview-table tfoot th:first-child {
+  box-shadow: 8px 0 16px -16px rgba(14, 60, 52, 0.75);
+  left: 0;
+  min-width: 245px;
+  position: sticky;
+  text-align: left;
+  z-index: 3;
+}
+
+.annual-overview-table thead th:first-child {
+  padding-left: 1.25rem;
+  z-index: 5;
+}
+
+.annual-overview-category-row th {
+  background: #fbfcfc;
+  color: var(--annual-ink);
+  font-size: 0.68rem;
+  font-weight: 750;
+  padding: 0.65rem 1.25rem;
+  text-align: left;
+}
+
+.annual-overview-category-row i {
+  border-radius: 50%;
+  display: inline-block;
+  height: 0.55rem;
+  margin-right: 0.45rem;
+  width: 0.55rem;
+}
+
+.annual-overview-category-row span {
+  color: var(--annual-muted);
+  float: right;
+  font-size: 0.58rem;
+  font-weight: 550;
+}
+
+.annual-overview-document-row th {
+  background: #fff;
+  padding: 0;
+}
+
+.annual-overview-document-row th > button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--annual-ink);
+  display: flex;
+  gap: 0.45rem;
+  min-height: 54px;
+  padding: 0.55rem 0.75rem 0.55rem 1.1rem;
+  text-align: left;
+  width: 100%;
+}
+
+.annual-overview-document-row th svg {
+  color: var(--annual-green);
+  flex-shrink: 0;
+  height: 0.85rem;
+  width: 0.85rem;
+}
+
+.annual-overview-document-row th span {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.69rem;
+  line-height: 1.2;
+}
+
+.annual-overview-document-row th small {
+  color: #80908c;
+  font-size: 0.56rem;
+  font-weight: 500;
+  margin-top: 0.18rem;
+}
+
+.annual-overview-document-row td {
+  background: #fff;
+  min-width: 61px;
+  padding: 0.35rem;
+  text-align: center;
+}
+
+.annual-overview-document-row td.recurring {
+  background: repeating-linear-gradient(135deg, #f0f7f5, #f0f7f5 5px, #fff 5px, #fff 10px);
+}
+
+.annual-overview-count {
+  align-items: center;
+  background: color-mix(in srgb, var(--category-color) 13%, white);
+  border: 1px solid color-mix(in srgb, var(--category-color) 36%, white);
+  border-radius: 8px;
+  color: var(--category-color);
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 800;
+  height: 1.8rem;
+  justify-content: center;
+  min-width: 1.8rem;
+  transition: background 140ms, color 140ms, transform 140ms;
+}
+
+.annual-overview-count:hover {
+  background: var(--category-color);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.annual-overview-expanded-row td {
+  background: #f5f9f7;
+  padding: 0.7rem 0.9rem 0.7rem 2.6rem;
+}
+
+.annual-overview-expanded-row td > div {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.annual-overview-expanded-row button {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dce7e4;
+  border-radius: 9px;
+  color: var(--annual-ink);
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: auto 1fr auto;
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+}
+
+.annual-overview-domicile {
+  align-items: center;
+  background: #e8f2ef;
+  border-radius: 6px;
+  color: var(--annual-green-dark);
+  display: inline-flex;
+  font-size: 0.58rem;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 1.65rem;
+  min-width: 2rem;
+  padding: 0.2rem 0.35rem;
+}
+
+.annual-overview-expanded-row button > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+}
+
+.annual-overview-expanded-row strong {
+  font-size: 0.66rem;
+}
+
+.annual-overview-expanded-row small {
+  color: var(--annual-muted);
+  font-size: 0.57rem;
+  margin-top: 0.08rem;
+}
+
+.annual-overview-legal,
+.annual-record-legal {
+  background: #edf1f0;
+  border-radius: 999px;
+  color: #71807c;
+  font-size: 0.55rem;
+  font-weight: 750;
+  padding: 0.25rem 0.4rem;
+}
+
+.annual-overview-legal.yes,
+.annual-record-legal.yes {
+  background: #fae8df;
+  color: #934c29;
+}
+
+.annual-overview-table tfoot th,
+.annual-overview-table tfoot td {
+  background: #edf5f2;
+  color: var(--annual-green-dark);
+  font-size: 0.63rem;
+  font-weight: 800;
+  height: 40px;
+  text-align: center;
+}
+
+.annual-overview-table tfoot th {
+  padding-left: 1.25rem;
+}
+
+.annual-records-table {
+  border-collapse: collapse;
+  min-width: 850px;
+  width: 100%;
+}
+
+.annual-records-table th {
+  background: #f3f7f5;
+  border-bottom: 1px solid #dce7e4;
+  color: var(--annual-muted);
+  padding: 0.65rem 0.8rem;
+  text-align: left;
+}
+
+.annual-records-table th button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 0.62rem;
+  font-weight: 750;
+  gap: 0.3rem;
+  letter-spacing: 0.05em;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.annual-records-table th svg {
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.annual-records-table td {
+  border-bottom: 1px solid #e8eeec;
+  color: var(--annual-ink);
+  font-size: 0.7rem;
+  padding: 0.65rem 0.8rem;
+  vertical-align: middle;
+}
+
+.annual-records-table tbody tr:hover {
+  background: #fafcfb;
+}
+
+.annual-record-title {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  min-width: 175px;
+}
+
+.annual-record-title > i {
+  border-radius: 4px;
+  height: 2rem;
+  width: 0.3rem;
+}
+
+.annual-record-title > span,
+.annual-records-table td:nth-child(3) {
+  display: flex;
+  flex-direction: column;
+}
+
+.annual-record-title strong,
+.annual-records-table td:nth-child(3) strong {
+  font-size: 0.7rem;
+}
+
+.annual-record-title small,
+.annual-records-table td:nth-child(3) small {
+  color: var(--annual-muted);
+  font-size: 0.56rem;
+  margin-top: 0.12rem;
+}
+
+.annual-record-chip {
+  background: #edf4f2;
+  border-radius: 6px;
+  color: var(--annual-green-dark);
+  font-size: 0.61rem;
+  font-weight: 800;
+  padding: 0.3rem 0.45rem;
+}
+
+.annual-record-open {
+  background: transparent;
+  border: 1px solid #b9d1cb;
+  border-radius: 7px;
+  color: var(--annual-green);
+  font-family: inherit;
+  font-size: 0.62rem;
+  font-weight: 750;
+  padding: 0.38rem 0.55rem;
 }
 
 .annual-plan-recurrence-note {
@@ -762,6 +1320,25 @@ button:focus-visible > .annual-plan-item-tooltip {
   .annual-plan-unscheduled-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .annual-overview-heading {
+    flex-direction: column;
+  }
+
+  .annual-overview-key {
+    justify-content: flex-start;
+  }
+
+  .annual-overview-focus {
+    grid-template-columns: 1fr;
+    padding-right: 3rem;
+  }
+
+  .annual-overview-focus-close {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.8rem;
+  }
 }
 
 @media (max-width: 560px) {
@@ -790,6 +1367,39 @@ button:focus-visible > .annual-plan-item-tooltip {
 
   .annual-plan-legend {
     justify-content: flex-start;
+  }
+
+  .annual-plan-category-filter {
+    flex-wrap: nowrap;
+    margin-right: -1rem;
+    overflow-x: auto;
+    padding-bottom: 0.7rem;
+  }
+
+  .annual-plan-category-filter button {
+    flex-shrink: 0;
+  }
+
+  .annual-plan-view-tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  .annual-plan-view-tabs button {
+    flex: 1;
+    justify-content: center;
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+  }
+
+  .annual-overview-table thead th:first-child,
+  .annual-overview-table tbody th:first-child,
+  .annual-overview-table tfoot th:first-child {
+    min-width: 190px;
+  }
+
+  .annual-overview-focus-items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .annual-wheel-month {

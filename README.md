@@ -12,7 +12,7 @@ A task management application that allows users to create, organize, and filter 
 - **List Filters**: Filter tasks by tags or completion status
 - **Animations**: Smooth transitions and animations using Framer Motion
 - **Responsive Design**: Works on desktop and mobile devices
-- **Interactive Annual Plan**: Browse Nordic Product Management documents by month, category, domicile, owner, legal status, and text
+- **Interactive Annual Plan**: Compare every document type in a full-year matrix, expand monthly workloads, switch to the annual wheel or sortable records explorer, and filter by category, domicile, owner, legal status, and text
 
 ## Technology Stack
 
