@@ -124,6 +124,35 @@
   max-width: 620px;
 }
 
+.annual-plan-summary-help {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.annual-plan-summary-help button {
+  background: transparent;
+  border: 1px solid #c9979b;
+  border-radius: 999px;
+  color: var(--annual-green);
+  font-family: inherit;
+  font-size: 0.65rem;
+  font-weight: 750;
+  padding: 0.42rem 0.72rem;
+}
+
+.annual-plan-summary-help button:hover:not(:disabled) {
+  background: var(--annual-soft);
+  border-color: var(--annual-green);
+}
+
+.annual-plan-summary-help button:disabled {
+  border-color: #e5ddda;
+  color: #aaa09d;
+  cursor: not-allowed;
+}
+
 .annual-plan-summary {
   display: grid;
   gap: 0.75rem;
@@ -1320,6 +1349,10 @@ button:focus-visible > .annual-plan-item-tooltip {
   .annual-plan-summary-heading {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .annual-plan-summary-help {
+    align-items: flex-start;
   }
 
   .annual-plan-summary {

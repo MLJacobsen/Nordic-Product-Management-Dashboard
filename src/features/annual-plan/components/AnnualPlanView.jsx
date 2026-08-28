@@ -76,6 +76,14 @@ export function AnnualPlanContent({
   const legalCount = filteredDocuments.filter(
     (document) => document.legalRequirement.toLowerCase() === 'yes',
   ).length;
+  const hasActiveFilters = Boolean(
+    search
+    || domicile !== 'all'
+    || owner !== 'all'
+    || legal !== 'all'
+    || category !== 'all'
+    || schedule !== 'all',
+  );
 
   const clearFilters = () => {
     setSearch('');
@@ -133,10 +141,15 @@ export function AnnualPlanContent({
             <span className="annual-plan-eyebrow">How to read the overview</span>
             <h2 id="annual-plan-summary-heading">One workbook row equals one record</h2>
           </div>
-          <p>
-            Counts reflect the current filters. Monthly rows still count once here, even though they
-            repeat from January to December. Select a card to inspect the matching rows.
-          </p>
+          <div className="annual-plan-summary-help">
+            <p>
+              Counts reflect the current filters. Monthly rows still count once here, even though they
+              repeat from January to December. Select a card to inspect the matching rows.
+            </p>
+            <button disabled={!hasActiveFilters} onClick={clearFilters} type="button">
+              Reset filters
+            </button>
+          </div>
         </div>
         <div aria-live="polite" className="annual-plan-summary">
           <button
@@ -230,7 +243,7 @@ export function AnnualPlanContent({
             <option value="no">No</option>
           </select>
         </label>
-        {(search || domicile !== 'all' || owner !== 'all' || legal !== 'all' || category !== 'all' || schedule !== 'all') && (
+        {hasActiveFilters && (
           <button className="annual-plan-clear-button" onClick={clearFilters} type="button">Clear filters</button>
         )}
       </section>
