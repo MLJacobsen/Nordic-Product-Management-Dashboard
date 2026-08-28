@@ -43,14 +43,6 @@ jobs:
         env:
           VITE_ENABLE_DATA_HYDRATION: 'true'
           VITE_BASE_PATH: '/Nordic-Product-Management-Dashboard/'
-          VITE_ENTRA_TENANT_ID: ${{ vars.VITE_ENTRA_TENANT_ID }}
-          VITE_ENTRA_CLIENT_ID: ${{ vars.VITE_ENTRA_CLIENT_ID }}
-          VITE_GRAPH_SHAREPOINT_HOSTNAME: ${{ vars.VITE_GRAPH_SHAREPOINT_HOSTNAME }}
-          VITE_GRAPH_SITE_PATH: ${{ vars.VITE_GRAPH_SITE_PATH }}
-          VITE_GRAPH_DRIVE_NAME: ${{ vars.VITE_GRAPH_DRIVE_NAME }}
-          VITE_GRAPH_DRIVE_ID: ${{ vars.VITE_GRAPH_DRIVE_ID }}
-          VITE_GRAPH_FILE_PATH: ${{ vars.VITE_GRAPH_FILE_PATH }}
-          VITE_GRAPH_WORKSHEET: ${{ vars.VITE_GRAPH_WORKSHEET }}
 
       # Package the build into a tarball so it can be easily verified
       - name: Package the build

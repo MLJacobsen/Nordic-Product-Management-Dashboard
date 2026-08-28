@@ -49,43 +49,42 @@ A task management application that allows users to create, organize, and filter 
 
 4. Open [http://localhost:3000](http://localhost:3000) to view the app
 
-## Annual plan and Microsoft Graph setup
+## Publishing the annual plan workbook
 
-The annual plan reads the latest `Document overview.xlsx` directly from SharePoint after delegated Microsoft Entra sign-in. It does not bundle or silently substitute workbook data in production.
+`Document overview.xlsx` is the master for the annual plan. The dashboard publishes a static snapshot of `Sheet1`, so users can open the overview immediately without Microsoft sign-in or a live workbook connection.
 
-1. Register a **Single-page application** in Microsoft Entra ID.
-2. Add a Web platform redirect URI for local development: `http://localhost:3000/`.
-3. Add the deployed GitHub Pages URI, including the repository base path, for example:
-   `https://<organization>.github.io/Nordic-Product-Management-Dashboard/`.
-4. Add the Microsoft Graph **delegated** permission `Files.ReadWrite`. Microsoft currently lists this as the least-privileged permission supported by the Excel `usedRange` API, although this app only performs reads. Grant consent according to your tenant policy.
-5. Copy `.env.example` to `.env.local` and set the tenant ID, client ID, SharePoint hostname, site path, document library, workbook path, and optional worksheet name. Do not create or configure a client secret for this SPA.
-6. Restart the Vite development server after changing environment values.
+When a revised workbook is provided, regenerate the published snapshot:
 
-The default source configuration corresponds to:
-
-```text
-Host:      storebrand.sharepoint.com
-Site:      /sites/NordiskProdukt
-Library:   Felles
-File:      /2 Governing Documents/Document overview.xlsx
-Worksheet: Sheet1
+```bash
+npm run import:annual-plan -- "C:\path\to\Document overview.xlsx"
 ```
 
-`VITE_GRAPH_DRIVE_ID` can be used instead of `VITE_GRAPH_DRIVE_NAME`. If the workbook moves, update only the deployment variables or local environment file. Header names are matched defensively, but the workbook should retain a recognizable document/report column.
+To use a worksheet other than `Sheet1`, pass its name as the second argument:
+
+```bash
+npm run import:annual-plan -- "C:\path\to\Document overview.xlsx" "Annual plan"
+```
+
+The import command preserves the worksheet cells in
+`src/features/annual-plan/data/documentOverview.json`. The existing defensive
+header and month normalization then prepares them for the dashboard. Review the
+result, run `npm test` and `npm run build`, and deploy the new commit.
+
+The source workbook itself is not served by the site. No credentials, Entra app
+registration, or SharePoint configuration are needed.
 
 ### GitHub Pages configuration
 
-Set the matching `VITE_*` values as GitHub Actions **repository variables**. The deployment workflow injects them at build time and sets `VITE_BASE_PATH=/Nordic-Product-Management-Dashboard/`. The Entra redirect URI must exactly match the final Pages URL. Tenant and client IDs are public SPA configuration; never add credentials or a client secret.
-
-### Explicit development sample mode
-
-Set `VITE_ANNUAL_PLAN_SAMPLE_MODE=true` only when running the Vite development server to exercise the UI with clearly labelled sample records. Production builds ignore this flag. Authentication, Graph, or workbook errors are shown directly and never trigger a sample-data fallback.
+The deployment workflow sets
+`VITE_BASE_PATH=/Nordic-Product-Management-Dashboard/` so generated asset URLs
+work from the repository subpath.
 
 ### Available Scripts
 
 - `npm start` - Start the development server
 - `npm start:hydrated` - Start the development server with data hydration enabled
 - `npm run build` - Build for production
+- `npm run import:annual-plan -- <workbook.xlsx> [worksheet]` - Publish a workbook snapshot to the annual plan
 - `npm run build:hydrated` - Build for production with data hydration enabled
 - `npm run build:clean` - Build for production with data hydration explicitly disabled
 - `npm run preview` - Preview the production build locally

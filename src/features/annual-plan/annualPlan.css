@@ -10,18 +10,6 @@
   width: 100%;
 }
 
-.annual-plan-sample-banner {
-  background: #fff3ce;
-  border: 1px solid #ecd58b;
-  border-radius: 12px;
-  color: #654f08;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  padding: 0.7rem 1rem;
-  text-align: center;
-}
-
 .annual-plan-hero {
   align-items: flex-start;
   background:
@@ -82,27 +70,6 @@
   margin-top: 0.15rem;
 }
 
-.annual-plan-icon-button {
-  align-items: center;
-  background: #fff;
-  border: 1px solid var(--annual-line);
-  border-radius: 999px;
-  color: var(--annual-green-dark);
-  display: inline-flex;
-  height: 2.5rem;
-  justify-content: center;
-  transition: border-color 160ms, background 160ms, transform 160ms;
-  width: 2.5rem;
-}
-
-.annual-plan-icon-button:hover {
-  background: #edf7f4;
-  border-color: #a7c9c0;
-  transform: translateY(-1px);
-}
-
-.annual-plan-icon-button:focus-visible,
-.annual-plan-primary-button:focus-visible,
 .annual-plan-clear-button:focus-visible,
 .annual-plan-category-filter button:focus-visible,
 .annual-plan-view-tabs button:focus-visible,
@@ -116,11 +83,6 @@
 .annual-plan-filters select:focus-visible {
   outline: 3px solid #8ac9b9;
   outline-offset: 3px;
-}
-
-.annual-plan-icon-button svg {
-  height: 1.15rem;
-  width: 1.15rem;
 }
 
 .annual-plan-summary {
@@ -1124,8 +1086,7 @@ button:focus-visible > .annual-plan-item-tooltip {
   margin: 0 0 0.7rem;
 }
 
-.annual-plan-no-results button,
-.annual-plan-primary-button {
+.annual-plan-no-results button {
   background: var(--annual-green);
   border: 0;
   border-radius: 10px;
@@ -1235,54 +1196,6 @@ button:focus-visible > .annual-plan-item-tooltip {
   color: var(--annual-green);
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-.annual-plan-state {
-  align-items: center;
-  background: #fff;
-  border: 1px solid #dbe7e3;
-  border-radius: 24px;
-  box-shadow: 0 25px 65px -45px rgba(15, 81, 71, 0.6);
-  color: var(--annual-ink);
-  display: flex;
-  flex-direction: column;
-  margin: clamp(2rem, 8vh, 6rem) auto;
-  max-width: 590px;
-  padding: clamp(2rem, 6vw, 4rem);
-  text-align: center;
-}
-
-.annual-plan-state-icon {
-  align-items: center;
-  background: #e4f2ed;
-  border-radius: 50%;
-  color: var(--annual-green);
-  display: inline-flex;
-  height: 4rem;
-  justify-content: center;
-  width: 4rem;
-}
-
-.annual-plan-state-icon svg {
-  height: 1.8rem;
-  width: 1.8rem;
-}
-
-.annual-plan-state h2 {
-  font-size: 1.55rem;
-  letter-spacing: -0.035em;
-  margin: 1.25rem 0 0.5rem;
-}
-
-.annual-plan-state p {
-  color: var(--annual-muted);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  margin: 0.3rem 0 1rem;
-}
-
-.annual-plan-state .annual-plan-primary-button {
-  margin-top: 0.4rem;
 }
 
 @media (max-width: 1050px) {

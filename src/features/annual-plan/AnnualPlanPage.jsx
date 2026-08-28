@@ -1,12 +1,16 @@
 import React from 'react';
 
-import AnnualPlanView from './components/AnnualPlanView';
-import { AnnualPlanProvider } from './context/AnnualPlanContext';
+import { AnnualPlanContent } from './components/AnnualPlanView';
+import {
+  documentOverviewMetadata,
+  publishedDocuments,
+} from './data/publishedDocuments';
 
 export default function AnnualPlanPage() {
   return (
-    <AnnualPlanProvider>
-      <AnnualPlanView />
-    </AnnualPlanProvider>
+    <AnnualPlanContent
+      documents={publishedDocuments}
+      sourceName={documentOverviewMetadata.source}
+    />
   );
 }

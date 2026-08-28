@@ -2,13 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { sampleDocuments } from '../data/sampleDocuments';
+import { publishedDocuments } from '../data/publishedDocuments';
 import { AnnualPlanContent } from './AnnualPlanView';
 
 describe('AnnualPlanContent', () => {
   test('shows recurring records in every month and keeps unscheduled records discoverable', async () => {
     const user = userEvent.setup();
-    render(<AnnualPlanContent documents={sampleDocuments} sampleMode />);
+    render(<AnnualPlanContent documents={publishedDocuments} />);
 
     expect(screen.getByRole('button', { name: 'Monthly Factsheet, January: 4 records' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Monthly Factsheet, December: 4 records' })).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('AnnualPlanContent', () => {
 
   test('filters by search, domicile, owner, and legal requirement', async () => {
     const user = userEvent.setup();
-    render(<AnnualPlanContent documents={sampleDocuments} />);
+    render(<AnnualPlanContent documents={publishedDocuments} />);
 
     await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'sustainability');
     expect(screen.getByTestId('matching-count')).toHaveTextContent('8');
@@ -38,7 +38,7 @@ describe('AnnualPlanContent', () => {
 
   test('opens full document details with keyboard activation and closes with Escape', async () => {
     const user = userEvent.setup();
-    render(<AnnualPlanContent documents={sampleDocuments} />);
+    render(<AnnualPlanContent documents={publishedDocuments} />);
 
     await user.click(screen.getByRole('tab', { name: 'Annual wheel' }));
     await user.click(screen.getByTestId('annual-wheel-month-3'));
@@ -60,18 +60,18 @@ describe('AnnualPlanContent', () => {
 
   test('clears active filters from the empty state', async () => {
     const user = userEvent.setup();
-    render(<AnnualPlanContent documents={sampleDocuments} />);
+    render(<AnnualPlanContent documents={publishedDocuments} />);
 
     await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'not-a-document');
     expect(screen.getByRole('heading', { name: 'No records match these filters' })).toBeInTheDocument();
 
     await user.click(screen.getAllByRole('button', { name: 'Clear filters' })[0]);
-    expect(screen.getByTestId('matching-count')).toHaveTextContent(String(sampleDocuments.length));
+    expect(screen.getByTestId('matching-count')).toHaveTextContent(String(publishedDocuments.length));
   });
 
   test('expands overview rows and opens a focused record group', async () => {
     const user = userEvent.setup();
-    render(<AnnualPlanContent documents={sampleDocuments} />);
+    render(<AnnualPlanContent documents={publishedDocuments} />);
 
     await user.click(screen.getByRole('button', { name: /^Annual Report 4 total records$/i }));
     expect(screen.getByRole('button', { name: /SE April Anna Yes/i })).toBeInTheDocument();
@@ -84,11 +84,11 @@ describe('AnnualPlanContent', () => {
 
   test('offers a sortable explorer for every filtered workbook row', async () => {
     const user = userEvent.setup();
-    render(<AnnualPlanContent documents={sampleDocuments} />);
+    render(<AnnualPlanContent documents={publishedDocuments} />);
 
     await user.click(screen.getByRole('tab', { name: 'All records' }));
     expect(screen.getByRole('heading', { name: 'Records explorer' })).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /Open details for/i })).toHaveLength(sampleDocuments.length);
+    expect(screen.getAllByRole('button', { name: /Open details for/i })).toHaveLength(publishedDocuments.length);
 
     const domicileHeader = screen.getByRole('columnheader', { name: /Domicile/i });
     expect(domicileHeader).toHaveAttribute('aria-sort', 'none');

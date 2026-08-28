@@ -1,16 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import {
-  ArrowPathIcon,
-  ArrowRightStartOnRectangleIcon,
-  CalendarDaysIcon,
   ChartPieIcon,
-  ExclamationTriangleIcon,
   MagnifyingGlassIcon,
   Squares2X2Icon,
   TableCellsIcon,
 } from '@heroicons/react/24/outline';
 
-import { useAnnualPlan } from '../context/AnnualPlanContext';
 import {
   DOCUMENT_CATEGORIES,
   splitDomiciles,
@@ -28,17 +23,6 @@ const PLAN_VIEWS = [
   ['records', 'All records', TableCellsIcon],
 ];
 
-function StateCard({ icon: Icon, title, children, action }) {
-  return (
-    <section className="annual-plan-state" role="status">
-      <span className="annual-plan-state-icon"><Icon aria-hidden="true" /></span>
-      <h2>{title}</h2>
-      <div>{children}</div>
-      {action}
-    </section>
-  );
-}
-
 function matchesSearch(document, search) {
   if (!search) return true;
   const haystack = Object.entries(document)
@@ -51,11 +35,7 @@ function matchesSearch(document, search) {
 
 export function AnnualPlanContent({
   documents,
-  lastUpdated,
-  onRefresh,
-  onSignOut,
-  sampleMode = false,
-  accountName = '',
+  sourceName = 'Document overview.xlsx',
 }) {
   const [search, setSearch] = useState('');
   const [domicile, setDomicile] = useState('all');
@@ -114,12 +94,6 @@ export function AnnualPlanContent({
 
   return (
     <div className="annual-plan-content">
-      {sampleMode && (
-        <div className="annual-plan-sample-banner" role="status">
-          Development sample mode — this data is not loaded from SharePoint.
-        </div>
-      )}
-
       <header className="annual-plan-hero">
         <div>
           <span className="annual-plan-eyebrow">Nordic Product Management</span>
@@ -130,19 +104,9 @@ export function AnnualPlanContent({
         </div>
         <div className="annual-plan-session-actions">
           <span>
-            {accountName || (sampleMode ? 'Local sample' : 'Microsoft connected')}
-            {lastUpdated && <small>Updated {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>}
+            Published workbook
+            <small>{sourceName}</small>
           </span>
-          {onRefresh && (
-            <button aria-label="Refresh workbook data" className="annual-plan-icon-button" onClick={onRefresh} type="button">
-              <ArrowPathIcon aria-hidden="true" />
-            </button>
-          )}
-          {onSignOut && (
-            <button aria-label="Sign out" className="annual-plan-icon-button" onClick={onSignOut} type="button">
-              <ArrowRightStartOnRectangleIcon aria-hidden="true" />
-            </button>
-          )}
         </div>
       </header>
 
@@ -314,82 +278,5 @@ export function AnnualPlanContent({
         onClose={() => setSelectedDocument(null)}
       />
     </div>
-  );
-}
-
-export default function AnnualPlanView() {
-  const {
-    account,
-    config,
-    connect,
-    disconnect,
-    documents,
-    error,
-    lastUpdated,
-    refresh,
-    sampleMode,
-    status,
-  } = useAnnualPlan();
-
-  if (status === 'configuration-error') {
-    const environmentNames = {
-      tenantId: 'VITE_ENTRA_TENANT_ID',
-      clientId: 'VITE_ENTRA_CLIENT_ID',
-      hostname: 'VITE_GRAPH_SHAREPOINT_HOSTNAME',
-      sitePath: 'VITE_GRAPH_SITE_PATH',
-      filePath: 'VITE_GRAPH_FILE_PATH',
-    };
-    return (
-      <StateCard icon={ExclamationTriangleIcon} title="Annual plan configuration required">
-        <p>
-          Add the missing Vite environment values: {config.missing.map((key) => environmentNames[key]).join(', ')}.
-          See <code>.env.example</code> and the README for setup.
-        </p>
-      </StateCard>
-    );
-  }
-
-  if (status === 'initializing' || status === 'loading') {
-    return (
-      <StateCard icon={ArrowPathIcon} title="Loading annual plan">
-        <p>{status === 'initializing' ? 'Preparing Microsoft sign-in…' : 'Reading the latest workbook from SharePoint…'}</p>
-      </StateCard>
-    );
-  }
-
-  if (status === 'signed-out') {
-    return (
-      <StateCard
-        action={<button className="annual-plan-primary-button" onClick={connect} type="button">Sign in with Microsoft</button>}
-        icon={CalendarDaysIcon}
-        title="Connect to the annual plan"
-      >
-        <p>Sign in with your Storebrand account to read the live SharePoint workbook.</p>
-      </StateCard>
-    );
-  }
-
-  if (status === 'error') {
-    return (
-      <StateCard
-        action={<button className="annual-plan-primary-button" onClick={account ? refresh : connect} type="button">Reconnect</button>}
-        icon={ExclamationTriangleIcon}
-        title="The annual plan could not be loaded"
-      >
-        <p>{error}</p>
-        <p>No sample or cached workbook data has been substituted.</p>
-      </StateCard>
-    );
-  }
-
-  return (
-    <AnnualPlanContent
-      accountName={account?.name || account?.username}
-      documents={documents}
-      lastUpdated={lastUpdated}
-      onRefresh={sampleMode ? null : refresh}
-      onSignOut={sampleMode ? null : disconnect}
-      sampleMode={sampleMode}
-    />
   );
 }
