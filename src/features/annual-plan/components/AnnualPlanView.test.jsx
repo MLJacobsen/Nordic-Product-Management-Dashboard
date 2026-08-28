@@ -45,13 +45,17 @@ describe('AnnualPlanContent', () => {
     expect(screen.getByText(/Rows marked “Yes”/i)).toBeInTheDocument();
     expect(screen.getByText(/each one repeats across all 12 months/i)).toBeInTheDocument();
     expect(screen.getByText(/dedicated Ad hoc column/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reset filters' })).toBeDisabled();
 
     await user.click(screen.getByRole('button', { name: 'Show monthly schedule filter' }));
     expect(screen.getByTestId('matching-count')).toHaveTextContent('4');
     expect(screen.getByRole('button', { name: 'Remove monthly schedule filter' })).toHaveAttribute('aria-pressed', 'true');
     expect(screen.getByRole('heading', { name: 'Records explorer' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'Remove monthly schedule filter' }));
+    await user.click(screen.getByRole('button', { name: 'Reset filters' }));
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('50');
+    expect(screen.getByRole('button', { name: 'Reset filters' })).toBeDisabled();
+
     await user.click(screen.getByRole('button', { name: 'Show no fixed month filter' }));
     expect(screen.getByTestId('matching-count')).toHaveTextContent('8');
 
