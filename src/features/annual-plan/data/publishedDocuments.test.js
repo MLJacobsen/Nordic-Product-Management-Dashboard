@@ -7,6 +7,7 @@ describe('published document overview', () => {
   test('contains the complete supplied workbook snapshot', () => {
     expect(documentOverviewMetadata).toEqual({
       source: 'Document overview.xlsx',
+      sourceUrl: 'https://storebrand.sharepoint.com/sites/NordiskProdukt/Felles/2%20Governing%20Documents/Document%20overview.xlsx?d=w770e3d7fec1a4edb9be5ec513b5ce478&csf=1&web=1&e=twSUIg',
       worksheet: 'Sheet1',
     });
     expect(publishedDocuments).toHaveLength(50);

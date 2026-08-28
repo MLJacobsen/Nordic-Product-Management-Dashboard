@@ -6,6 +6,22 @@ import { publishedDocuments } from '../data/publishedDocuments';
 import { AnnualPlanContent } from './AnnualPlanView';
 
 describe('AnnualPlanContent', () => {
+  test('opens the published workbook in a new tab', () => {
+    render(
+      <AnnualPlanContent
+        documents={publishedDocuments}
+        sourceUrl="https://example.com/document-overview.xlsx"
+      />,
+    );
+
+    expect(screen.getByRole('link', { name: 'Open published workbook: Document overview.xlsx' }))
+      .toHaveAttribute('href', 'https://example.com/document-overview.xlsx');
+    expect(screen.getByRole('link', { name: 'Open published workbook: Document overview.xlsx' }))
+      .toHaveAttribute('target', '_blank');
+    expect(screen.getByRole('link', { name: 'Open published workbook: Document overview.xlsx' }))
+      .toHaveAttribute('rel', 'noreferrer');
+  });
+
   test('shows recurring records in every month and keeps unscheduled records discoverable', async () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={publishedDocuments} />);
