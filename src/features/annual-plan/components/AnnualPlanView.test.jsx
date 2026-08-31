@@ -56,8 +56,7 @@ describe('AnnualPlanContent', () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
-    expect(screen.getByText('One workbook row equals one record')).toBeInTheDocument();
-    expect(screen.getByText(/starts with all 50 rows/i)).toBeInTheDocument();
+    expect(screen.queryByText('One workbook row equals one record')).not.toBeInTheDocument();
     expect(screen.getByText('Choose your scope')).toBeInTheDocument();
     expect(screen.getByText(/A number in a month is the count/i)).toBeInTheDocument();
     expect(screen.getByText(/Select a document name to expand/i)).toBeInTheDocument();
