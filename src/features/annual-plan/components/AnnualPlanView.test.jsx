@@ -57,7 +57,10 @@ describe('AnnualPlanContent', () => {
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
     expect(screen.getByText('One workbook row equals one record')).toBeInTheDocument();
-    expect(screen.getByText(/Monthly rows still count once here/i)).toBeInTheDocument();
+    expect(screen.getByText(/starts with all 50 rows/i)).toBeInTheDocument();
+    expect(screen.getByText('Choose your scope')).toBeInTheDocument();
+    expect(screen.getByText(/A number in a month is the count/i)).toBeInTheDocument();
+    expect(screen.getByText(/Select a document name to expand/i)).toBeInTheDocument();
     expect(screen.getByText(/Rows marked “Yes”/i)).toBeInTheDocument();
     expect(screen.getByText(/each one repeats across all 12 months/i)).toBeInTheDocument();
     expect(screen.getByText(/dedicated Ad hoc column/i)).toBeInTheDocument();

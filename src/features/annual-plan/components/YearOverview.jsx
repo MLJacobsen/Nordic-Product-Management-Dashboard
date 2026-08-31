@@ -62,16 +62,17 @@ export default function YearOverview({ documents, onSelectDocument }) {
     <section aria-labelledby="year-overview-heading" className="annual-overview-card">
       <div className="annual-overview-heading">
         <div>
-          <span className="annual-plan-eyebrow">Complete schedule</span>
-          <h2 id="year-overview-heading">Year overview</h2>
+          <span className="annual-plan-eyebrow">Schedule matrix</span>
+          <h2 id="year-overview-heading">Document delivery by month</h2>
           <p>
-            Expand a document row or select a month count to inspect its records.
-            The month header stays visible while you scroll.
+            Compare the complete workload across the year. The month header and document names remain
+            visible while you scroll.
           </p>
         </div>
         <div className="annual-overview-key">
-          <span><i className="fixed" />Scheduled</span>
-          <span><i className="recurring" />Monthly recurrence</span>
+          <span><i className="fixed" />Fixed month</span>
+          <span><i className="recurring" />Repeats monthly</span>
+          <span className="annual-overview-record-total">{documents.length} records shown</span>
         </div>
       </div>
 
@@ -211,7 +212,7 @@ export default function YearOverview({ documents, onSelectDocument }) {
           </tbody>
           <tfoot>
             <tr>
-              <th scope="row">Records by period</th>
+              <th scope="row">Total records due</th>
               {columnTotals.map((total, index) => <td key={SCHEDULE_COLUMNS[index]}>{total}</td>)}
             </tr>
           </tfoot>
