@@ -23,9 +23,24 @@ import YearOverview from './YearOverview';
 import '../annualPlan.css';
 
 const PLAN_VIEWS = [
-  ['overview', 'Year overview', Squares2X2Icon],
-  ['wheel', 'Annual wheel', ChartPieIcon],
-  ['records', 'All records', TableCellsIcon],
+  {
+    id: 'overview',
+    label: 'Year overview',
+    description: 'Compare timing across all months',
+    icon: Squares2X2Icon,
+  },
+  {
+    id: 'wheel',
+    label: 'Annual wheel',
+    description: 'Explore one month at a time',
+    icon: ChartPieIcon,
+  },
+  {
+    id: 'records',
+    label: 'All records',
+    description: 'Sort and review every workbook row',
+    icon: TableCellsIcon,
+  },
 ];
 
 function matchesSearch(document, search) {
@@ -115,7 +130,7 @@ export function AnnualPlanContent({
     if (nextIndex === null) return;
 
     event.preventDefault();
-    setActiveView(PLAN_VIEWS[nextIndex][0]);
+    setActiveView(PLAN_VIEWS[nextIndex].id);
     event.currentTarget.parentElement.querySelectorAll('[role="tab"]')[nextIndex]?.focus();
   };
 
@@ -153,14 +168,43 @@ export function AnnualPlanContent({
           </div>
           <div className="annual-plan-summary-help">
             <p>
-              Counts reflect the current filters. Monthly rows still count once here, even though they
-              repeat from January to December. Select a card to inspect the matching rows.
+              The dashboard starts with all 50 rows from the published workbook. Every filter and
+              summary card narrows the same dataset, so all counts and views stay in sync.
             </p>
             <button disabled={!hasActiveFilters} onClick={clearFilters} type="button">
               Reset filters
             </button>
           </div>
         </div>
+        <ol className="annual-plan-reading-guide">
+          <li>
+            <span>1</span>
+            <div>
+              <strong>Choose your scope</strong>
+              <p>Search or filter by market, responsible person, legal status, or document category.</p>
+            </div>
+          </li>
+          <li>
+            <span>2</span>
+            <div>
+              <strong>Read the schedule</strong>
+              <p>
+                A number in a month is the count of workbook rows due then. Striped cells repeat
+                monthly; the Ad hoc column has no fixed delivery month.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>3</span>
+            <div>
+              <strong>Open the detail</strong>
+              <p>
+                Select a document name to expand its markets and owners, or select a count to inspect
+                the exact records behind it.
+              </p>
+            </div>
+          </li>
+        </ol>
         <div aria-live="polite" className="annual-plan-summary">
           <button
             aria-label={`Open all ${filteredDocuments.length} records currently in view`}
@@ -283,7 +327,7 @@ export function AnnualPlanContent({
       </section>
 
       <section aria-label="Annual plan views" className="annual-plan-view-tabs" role="tablist">
-        {PLAN_VIEWS.map(([view, label, Icon], viewIndex) => (
+        {PLAN_VIEWS.map(({ id: view, label, description, icon: Icon }, viewIndex) => (
           <button
             aria-controls={`annual-plan-${view}-panel`}
             aria-selected={activeView === view}
@@ -295,8 +339,11 @@ export function AnnualPlanContent({
             tabIndex={activeView === view ? 0 : -1}
             type="button"
           >
-            <Icon aria-hidden="true" />
-            {label}
+            <span className="annual-plan-view-icon"><Icon aria-hidden="true" /></span>
+            <span>
+              <strong>{label}</strong>
+              <small aria-hidden="true">{description}</small>
+            </span>
           </button>
         ))}
       </section>
