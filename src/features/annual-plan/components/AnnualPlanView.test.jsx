@@ -52,7 +52,7 @@ describe('AnnualPlanContent', () => {
     expect(screen.getByTestId('matching-count')).toHaveTextContent('1');
   });
 
-  test('explains summary metrics and uses them as record filters', async () => {
+  test('explains summary metrics and uses them as document filters', async () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
@@ -60,24 +60,30 @@ describe('AnnualPlanContent', () => {
     expect(screen.getByText('Choose your scope')).toBeInTheDocument();
     expect(screen.getByText(/A number in a month is the count/i)).toBeInTheDocument();
     expect(screen.getByText(/Select a document name to expand/i)).toBeInTheDocument();
-    expect(screen.getByText(/Rows marked “Yes”/i)).toBeInTheDocument();
-    expect(screen.getByText(/each one repeats across all 12 months/i)).toBeInTheDocument();
+    expect(screen.getByText('Documents in overview')).toBeInTheDocument();
+    expect(screen.getByText('Recurring monthly documents')).toBeInTheDocument();
+    expect(screen.getByText('Ad hoc documents')).toBeInTheDocument();
+    expect(screen.getByText(/Documents marked “Yes”/i)).toBeInTheDocument();
+    expect(screen.getByText(/shown across all 12 months/i)).toBeInTheDocument();
     expect(screen.getByText(/dedicated Ad hoc column/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Reset filters' })).toBeDisabled();
 
-    await user.click(screen.getByRole('button', { name: 'Show monthly schedule filter' }));
+    await user.click(screen.getByRole('button', { name: 'Show recurring monthly documents filter' }));
     expect(screen.getByTestId('matching-count')).toHaveTextContent('4');
-    expect(screen.getByRole('button', { name: 'Remove monthly schedule filter' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Remove recurring monthly documents filter' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
     expect(screen.getByRole('heading', { name: 'Records explorer' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Reset filters' }));
     expect(screen.getByTestId('matching-count')).toHaveTextContent('50');
     expect(screen.getByRole('button', { name: 'Reset filters' })).toBeDisabled();
 
-    await user.click(screen.getByRole('button', { name: 'Show no fixed month filter' }));
+    await user.click(screen.getByRole('button', { name: 'Show ad hoc documents filter' }));
     expect(screen.getByTestId('matching-count')).toHaveTextContent('8');
 
-    await user.click(screen.getByRole('button', { name: 'Remove no fixed month filter' }));
+    await user.click(screen.getByRole('button', { name: 'Remove ad hoc documents filter' }));
     await user.click(screen.getByRole('button', { name: 'Show legal requirement filter' }));
     expect(screen.getByTestId('matching-count')).toHaveTextContent('38');
     expect(screen.getByRole('combobox', { name: 'Filter by legal requirement' })).toHaveValue('yes');
@@ -110,7 +116,7 @@ describe('AnnualPlanContent', () => {
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
     await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'not-a-document');
-    expect(screen.getByRole('heading', { name: 'No records match these filters' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'No documents match these filters' })).toBeInTheDocument();
 
     await user.click(screen.getAllByRole('button', { name: 'Clear filters' })[0]);
     expect(screen.getByTestId('matching-count')).toHaveTextContent(String(publishedDocuments.length));
