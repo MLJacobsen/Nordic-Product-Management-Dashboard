@@ -179,8 +179,8 @@ export function AnnualPlanContent({
             <div>
               <strong>Read the schedule</strong>
               <p>
-                A number in a month is the count of workbook rows due then. Striped cells repeat
-                monthly; the Ad hoc column has no fixed delivery month.
+                A number in a month is the count of documents due then. Striped cells repeat
+                monthly; the Ad hoc column contains documents handled when needed.
               </p>
             </div>
           </li>
@@ -190,23 +190,23 @@ export function AnnualPlanContent({
               <strong>Open the detail</strong>
               <p>
                 Select a document name to expand its markets and owners, or select a count to inspect
-                the exact records behind it.
+                the exact documents behind it.
               </p>
             </div>
           </li>
         </ol>
         <div aria-live="polite" className="annual-plan-summary">
           <button
-            aria-label={`Open all ${filteredDocuments.length} records currently in view`}
+            aria-label={`Open all ${filteredDocuments.length} documents in the overview`}
             onClick={showRecords}
             type="button"
           >
             <DocumentTextIcon aria-hidden="true" />
             <span>
               <strong data-testid="matching-count">{filteredDocuments.length}</strong>
-              <b>Records in view</b>
-              <small>Unique workbook rows included after the current filters.</small>
-              <em>Open records</em>
+              <b>Documents in overview</b>
+              <small>Documents and reports included after the current filters.</small>
+              <em>Open documents</em>
             </span>
           </button>
           <button
@@ -219,12 +219,12 @@ export function AnnualPlanContent({
             <span>
               <strong data-testid="legal-count">{legalCount}</strong>
               <b>Legally required</b>
-              <small>Rows marked “Yes” in the workbook’s Legal requirement field.</small>
-              <em>{legal === 'yes' ? 'Filter active' : 'Show these rows'}</em>
+              <small>Documents marked “Yes” in the workbook’s Legal requirement field.</small>
+              <em>{legal === 'yes' ? 'Filter active' : 'Show these documents'}</em>
             </span>
           </button>
           <button
-            aria-label={`${schedule === 'monthly' ? 'Remove' : 'Show'} monthly schedule filter`}
+            aria-label={`${schedule === 'monthly' ? 'Remove' : 'Show'} recurring monthly documents filter`}
             aria-pressed={schedule === 'monthly'}
             onClick={() => toggleScheduleRecords('monthly')}
             type="button"
@@ -232,13 +232,13 @@ export function AnnualPlanContent({
             <ArrowPathIcon aria-hidden="true" />
             <span>
               <strong data-testid="monthly-count">{recurring.length}</strong>
-              <b>Monthly source rows</b>
-              <small>Rows scheduled every month; each one repeats across all 12 months.</small>
-              <em>{schedule === 'monthly' ? 'Filter active' : 'Show these rows'}</em>
+              <b>Recurring monthly documents</b>
+              <small>Documents scheduled every month and shown across all 12 months.</small>
+              <em>{schedule === 'monthly' ? 'Filter active' : 'Show these documents'}</em>
             </span>
           </button>
           <button
-            aria-label={`${schedule === 'unscheduled' ? 'Remove' : 'Show'} no fixed month filter`}
+            aria-label={`${schedule === 'unscheduled' ? 'Remove' : 'Show'} ad hoc documents filter`}
             aria-pressed={schedule === 'unscheduled'}
             onClick={() => toggleScheduleRecords('unscheduled')}
             type="button"
@@ -246,9 +246,9 @@ export function AnnualPlanContent({
             <CalendarDaysIcon aria-hidden="true" />
             <span>
               <strong data-testid="unscheduled-count">{unscheduled.length}</strong>
-              <b>No fixed month</b>
-              <small>Ad hoc rows kept visible in the table’s dedicated Ad hoc column.</small>
-              <em>{schedule === 'unscheduled' ? 'Filter active' : 'Show these rows'}</em>
+              <b>Ad hoc documents</b>
+              <small>Documents handled when needed, shown in the dedicated Ad hoc column.</small>
+              <em>{schedule === 'unscheduled' ? 'Filter active' : 'Show these documents'}</em>
             </span>
           </button>
         </div>
@@ -353,7 +353,7 @@ export function AnnualPlanContent({
             <div aria-labelledby="annual-plan-wheel-tab" id="annual-plan-wheel-panel" role="tabpanel">
               {recurring.length > 0 && (
                 <p className="annual-plan-recurrence-note">
-                  Monthly records are repeated in every month of the wheel.
+                  Recurring monthly documents are repeated in every month of the wheel.
                 </p>
               )}
               <AnnualWheel
@@ -389,7 +389,7 @@ export function AnnualPlanContent({
                     })}
                   </div>
                 ) : (
-                  <p className="annual-plan-empty-panel">No matching ad hoc or unscheduled records.</p>
+                  <p className="annual-plan-empty-panel">No ad hoc documents match the current filters.</p>
                 )}
               </section>
             </div>
@@ -408,7 +408,7 @@ export function AnnualPlanContent({
 
       {!filteredDocuments.length && (
         <div className="annual-plan-no-results" role="status">
-          <h2>No records match these filters</h2>
+          <h2>No documents match these filters</h2>
           <button onClick={clearFilters} type="button">Clear filters</button>
         </div>
       )}

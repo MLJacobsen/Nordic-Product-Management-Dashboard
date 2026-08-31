@@ -85,7 +85,7 @@ export default function AnnualWheel({
 
           <div aria-hidden="true" className="annual-wheel-center-copy">
             <span>{documents.length}</span>
-            <small>matching records</small>
+            <small>documents scheduled</small>
           </div>
 
           {MONTHS.map((month, index) => {
@@ -147,7 +147,7 @@ export default function AnnualWheel({
             ))}
           </div>
         ) : (
-          <p className="annual-plan-empty-panel">No matching records in this month.</p>
+          <p className="annual-plan-empty-panel">No documents are scheduled in this month.</p>
         )}
       </section>
     </div>
