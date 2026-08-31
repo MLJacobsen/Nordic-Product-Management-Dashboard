@@ -160,21 +160,11 @@ export function AnnualPlanContent({
         </div>
       </header>
 
-      <section aria-labelledby="annual-plan-summary-heading" className="annual-plan-summary-section">
-        <div className="annual-plan-summary-heading">
-          <div>
-            <span className="annual-plan-eyebrow">How to read the overview</span>
-            <h2 id="annual-plan-summary-heading">One workbook row equals one record</h2>
-          </div>
-          <div className="annual-plan-summary-help">
-            <p>
-              The dashboard starts with all 50 rows from the published workbook. Every filter and
-              summary card narrows the same dataset, so all counts and views stay in sync.
-            </p>
-            <button disabled={!hasActiveFilters} onClick={clearFilters} type="button">
-              Reset filters
-            </button>
-          </div>
+      <section aria-label="Annual plan summary and guidance" className="annual-plan-summary-section">
+        <div className="annual-plan-summary-reset">
+          <button disabled={!hasActiveFilters} onClick={clearFilters} type="button">
+            Reset filters
+          </button>
         </div>
         <ol className="annual-plan-reading-guide">
           <li>
