@@ -87,6 +87,9 @@ export function AnnualPlanContent({
   const unscheduled = filteredDocuments.filter(
     (document) => document.schedule.kind === 'unscheduled',
   );
+  const totalUnscheduled = documents.filter(
+    (document) => document.schedule.kind === 'unscheduled',
+  ).length;
   const recurring = filteredDocuments.filter(
     (document) => document.schedule.kind === 'monthly',
   );
@@ -119,6 +122,10 @@ export function AnnualPlanContent({
   const toggleScheduleRecords = (kind) => {
     setSchedule((current) => (current === kind ? 'all' : kind));
     showRecords();
+  };
+  const showAllAdHocDocuments = () => {
+    clearFilters();
+    setSchedule('unscheduled');
   };
 
   const handleViewKeyDown = (event, viewIndex) => {
@@ -316,6 +323,59 @@ export function AnnualPlanContent({
           ))}
       </section>
 
+      <section aria-labelledby="annual-plan-ad-hoc-heading" className="annual-plan-ad-hoc-spotlight">
+        <div className="annual-plan-ad-hoc-header">
+          <div>
+            <span className="annual-plan-eyebrow">Flexible timing · Visible in every view</span>
+            <h2 id="annual-plan-ad-hoc-heading">Ad hoc documents</h2>
+            <p>
+              These documents have no fixed delivery month. Review them actively and open any item
+              below to see its owner, legal basis, distribution details, and process links.
+            </p>
+          </div>
+          <div aria-live="polite" className="annual-plan-ad-hoc-count">
+            <strong data-testid="ad-hoc-spotlight-count">{unscheduled.length}</strong>
+            <span>{unscheduled.length === 1 ? 'document shown' : 'documents shown'}</span>
+            <small>{totalUnscheduled} total in the master overview</small>
+          </div>
+        </div>
+
+        {unscheduled.length ? (
+          <div className="annual-plan-ad-hoc-grid">
+            {unscheduled.map((document) => {
+              const itemCategory = DOCUMENT_CATEGORIES[document.category] || DOCUMENT_CATEGORIES.other;
+              return (
+                <button
+                  aria-label={`Open details for ${document.document}, ${document.domicile || 'no domicile'}`}
+                  key={document.id}
+                  onClick={() => setSelectedDocument(document)}
+                  style={{ '--item-color': itemCategory.color }}
+                  type="button"
+                >
+                  <i aria-hidden="true" />
+                  <span className="annual-plan-ad-hoc-copy">
+                    <strong>{document.document}</strong>
+                    <small>
+                      {document.domicile || 'No domicile'} · {document.responsible || 'Owner not specified'}
+                    </small>
+                  </span>
+                  <span aria-hidden="true" className="annual-plan-ad-hoc-action">
+                    Details <ArrowTopRightOnSquareIcon />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="annual-plan-ad-hoc-empty">
+            <p>No ad hoc documents match the current filters.</p>
+            <button onClick={showAllAdHocDocuments} type="button">
+              Show all {totalUnscheduled} ad hoc documents
+            </button>
+          </div>
+        )}
+      </section>
+
       <section aria-label="Annual plan views" className="annual-plan-view-tabs" role="tablist">
         {PLAN_VIEWS.map(({ id: view, label, description, icon: Icon }, viewIndex) => (
           <button
@@ -363,35 +423,6 @@ export function AnnualPlanContent({
                 selectedMonth={selectedMonth}
               />
 
-              <section aria-labelledby="unscheduled-heading" className="annual-plan-unscheduled">
-                <div className="annual-plan-panel-heading">
-                  <div>
-                    <span className="annual-plan-eyebrow">Flexible timing</span>
-                    <h2 id="unscheduled-heading">Ad hoc & unscheduled</h2>
-                  </div>
-                  <span className="annual-plan-count-badge">{unscheduled.length}</span>
-                </div>
-                {unscheduled.length ? (
-                  <div className="annual-plan-unscheduled-grid">
-                    {unscheduled.map((document) => {
-                      const itemCategory = DOCUMENT_CATEGORIES[document.category] || DOCUMENT_CATEGORIES.other;
-                      return (
-                        <button
-                          key={document.id}
-                          onClick={() => setSelectedDocument(document)}
-                          style={{ '--item-color': itemCategory.color }}
-                          type="button"
-                        >
-                          <span>{document.document}</span>
-                          <small>{document.domicile || 'No domicile'} · {document.frequency || 'Timing not specified'}</small>
-                        </button>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <p className="annual-plan-empty-panel">No ad hoc documents match the current filters.</p>
-                )}
-              </section>
             </div>
           )}
 

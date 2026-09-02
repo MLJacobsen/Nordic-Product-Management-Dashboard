@@ -153,7 +153,7 @@ export function normalizeSchedule(monthValue, frequencyValue = '') {
 export function getDocumentCategory(documentName) {
   const name = cleanCell(documentName).toLowerCase();
 
-  if (/annual report|factsheet/.test(name)) return 'reports';
+  if (/annual report|factsheet|fund report/.test(name)) return 'reports';
   if (/sfdr/.test(name)) return 'disclosures';
   if (/eet|emt|ept|static data|template/.test(name)) return 'templates';
   if (/priip|kiid|prospectus|fund rules|uk cci/.test(name)) return 'investor';

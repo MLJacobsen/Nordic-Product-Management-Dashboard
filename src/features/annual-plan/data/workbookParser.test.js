@@ -1,5 +1,6 @@
 import {
   extractSafeLinks,
+  getDocumentCategory,
   normalizeSchedule,
   parseWorkbookRange,
   splitDomiciles,
@@ -48,6 +49,10 @@ describe('workbookParser', () => {
   test('splits combined domiciles and owners', () => {
     expect(splitDomiciles('NO/SE/LU')).toEqual(['NO', 'SE', 'LU']);
     expect(splitPeople('Merethe / Jamal; Joakim')).toEqual(['Merethe', 'Jamal', 'Joakim']);
+  });
+
+  test('keeps the renamed monthly fund report in the reports category', () => {
+    expect(getDocumentCategory('Monthly Fund Report')).toBe('reports');
   });
 
   test('only returns safe HTTP links', () => {

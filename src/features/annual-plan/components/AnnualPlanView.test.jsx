@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { publishedDocuments } from '../data/publishedDocuments';
@@ -22,19 +22,46 @@ describe('AnnualPlanContent', () => {
       .toHaveAttribute('rel', 'noreferrer');
   });
 
-  test('shows recurring records in every month and keeps unscheduled records discoverable', async () => {
+  test('shows the approved schedules in every derived annual-plan view', async () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
-    expect(screen.getByRole('button', { name: 'Monthly Factsheet, January: 4 records' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Monthly Factsheet, December: 4 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Annual Report, January: 1 record' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Annual Report, April: 3 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Semi-Annual Report, May: 1 record' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Semi-Annual Report, August: 3 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'EMT, December: 4 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'UCIT KIID, December: 2 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Monthly Fund Report, January: 4 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Monthly Fund Report, December: 4 records' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Fund Rules, Ad hoc: 2 records' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('tab', { name: 'Annual wheel' }));
     await user.click(screen.getByTestId('annual-wheel-month-0'));
-    expect(screen.getAllByRole('button', { name: /Monthly Factsheet/i })).toHaveLength(4);
-    expect(screen.getByRole('heading', { name: 'Ad hoc & unscheduled' })).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /^Fund Rules/i })).toHaveLength(2);
+    expect(screen.getAllByRole('button', { name: /Monthly Fund Report/i })).toHaveLength(4);
+    expect(screen.getByRole('region', { name: 'Ad hoc documents' })).toBeInTheDocument();
+  });
+
+  test('keeps ad hoc documents prominent, filter-aware, and directly accessible', async () => {
+    const user = userEvent.setup();
+    render(<AnnualPlanContent documents={publishedDocuments} />);
+
+    const adHocRegion = screen.getByRole('region', { name: 'Ad hoc documents' });
+    expect(adHocRegion).toBeInTheDocument();
+    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('8');
+    expect(screen.getByText('8 total in the master overview')).toBeInTheDocument();
+
+    const fundRulesButton = screen.getByRole('button', { name: 'Open details for Fund Rules, SE' });
+    await user.click(fundRulesButton);
+    expect(screen.getByRole('dialog', { name: 'Fund Rules' })).toBeInTheDocument();
+    await user.keyboard('{Escape}');
+    expect(fundRulesButton).toHaveFocus();
+
+    await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'not-a-document');
+    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('0');
+    await user.click(screen.getByRole('button', { name: 'Show all 8 ad hoc documents' }));
+    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('8');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('8');
   });
 
   test('filters by search, domicile, owner, and legal requirement', async () => {
@@ -62,7 +89,7 @@ describe('AnnualPlanContent', () => {
     expect(screen.getByText(/Select a document name to expand/i)).toBeInTheDocument();
     expect(screen.getByText('Documents in overview')).toBeInTheDocument();
     expect(screen.getByText('Recurring monthly documents')).toBeInTheDocument();
-    expect(screen.getByText('Ad hoc documents')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Ad hoc documents' })).toBeInTheDocument();
     expect(screen.getByText(/Documents marked “Yes”/i)).toBeInTheDocument();
     expect(screen.getByText(/shown across all 12 months/i)).toBeInTheDocument();
     expect(screen.getByText(/dedicated Ad hoc column/i)).toBeInTheDocument();
@@ -129,7 +156,7 @@ describe('AnnualPlanContent', () => {
     await user.click(screen.getByRole('button', { name: /^Annual Report 4 total records$/i }));
     expect(screen.getByRole('button', { name: /SE April Anna Yes/i })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'Annual Report, April: 4 records' }));
+    await user.click(screen.getByRole('button', { name: 'Annual Report, April: 3 records' }));
     expect(screen.getByRole('region', { name: 'Annual Report records' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: /SE Anna Legal requirement/i }));
     expect(screen.getByRole('dialog', { name: 'Annual Report' })).toBeInTheDocument();
@@ -140,8 +167,11 @@ describe('AnnualPlanContent', () => {
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
     await user.click(screen.getByRole('tab', { name: 'All records' }));
-    expect(screen.getByRole('heading', { name: 'Records explorer' })).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /Open details for/i })).toHaveLength(publishedDocuments.length);
+    const recordsExplorer = screen.getByRole('region', { name: 'Records explorer' });
+    expect(recordsExplorer).toBeInTheDocument();
+    expect(within(recordsExplorer).getAllByRole('button', { name: /Open details for/i })).toHaveLength(
+      publishedDocuments.length,
+    );
 
     const domicileHeader = screen.getByRole('columnheader', { name: /Domicile/i });
     expect(domicileHeader).toHaveAttribute('aria-sort', 'none');

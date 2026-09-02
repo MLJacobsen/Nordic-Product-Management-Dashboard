@@ -17,8 +17,8 @@ describe('published document overview', () => {
     const augustReport = publishedDocuments.find(
       (document) => document.document === 'Semi-Annual Report' && document.domicile === 'SE',
     );
-    const monthlyFactsheet = publishedDocuments.find(
-      (document) => document.document === 'Monthly Factsheet' && document.domicile === 'NO',
+    const monthlyFundReport = publishedDocuments.find(
+      (document) => document.document === 'Monthly Fund Report' && document.domicile === 'NO',
     );
     const adHocRules = publishedDocuments.find(
       (document) => document.document === 'Fund Rules' && document.domicile === 'SE',
@@ -28,7 +28,7 @@ describe('published document overview', () => {
       month: 'Augusti',
       schedule: { kind: 'fixed', months: [7] },
     });
-    expect(monthlyFactsheet.schedule).toMatchObject({
+    expect(monthlyFundReport.schedule).toMatchObject({
       kind: 'monthly',
       months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     });
@@ -36,5 +36,59 @@ describe('published document overview', () => {
       schedule: { kind: 'unscheduled', months: [] },
       responsible: 'Lars',
     });
+  });
+
+  test('contains the approved document names and market-specific delivery months', () => {
+    const annualReports = publishedDocuments.filter(
+      (document) => document.document === 'Annual Report',
+    );
+    const semiAnnualReports = publishedDocuments.filter(
+      (document) => document.document === 'Semi-Annual Report',
+    );
+    const monthlyFundReports = publishedDocuments.filter(
+      (document) => document.document === 'Monthly Fund Report',
+    );
+    const emtDocuments = publishedDocuments.filter((document) => document.document === 'EMT');
+    const ucitKiids = publishedDocuments.filter((document) => document.document === 'UCIT KIID');
+
+    expect(annualReports.find((document) => document.domicile === 'IE')).toMatchObject({
+      month: 'January',
+      schedule: { kind: 'fixed', months: [0] },
+    });
+    expect(
+      annualReports
+        .filter((document) => document.domicile !== 'IE')
+        .every((document) => document.month === 'April'),
+    ).toBe(true);
+
+    expect(semiAnnualReports.find((document) => document.domicile === 'IE')).toMatchObject({
+      month: 'May',
+      schedule: { kind: 'fixed', months: [4] },
+    });
+    expect(
+      semiAnnualReports
+        .filter((document) => document.domicile !== 'IE')
+        .every((document) => document.month === 'Augusti'),
+    ).toBe(true);
+
+    expect(monthlyFundReports).toHaveLength(4);
+    expect(
+      publishedDocuments.some((document) => document.document === 'Monthly Factsheet'),
+    ).toBe(false);
+    expect(monthlyFundReports.every((document) => document.schedule.kind === 'monthly')).toBe(true);
+
+    expect(emtDocuments).toHaveLength(4);
+    expect(
+      emtDocuments.every(
+        (document) => document.month === 'December' && document.schedule.months[0] === 11,
+      ),
+    ).toBe(true);
+
+    expect(ucitKiids).toHaveLength(2);
+    expect(
+      ucitKiids.every(
+        (document) => document.month === 'December' && document.schedule.months[0] === 11,
+      ),
+    ).toBe(true);
   });
 });
