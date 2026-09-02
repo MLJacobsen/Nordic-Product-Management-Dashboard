@@ -111,7 +111,7 @@
 .annual-records-table button:focus-visible,
 .annual-wheel-month:focus-visible,
 .annual-plan-document-button:focus-visible,
-.annual-plan-unscheduled button:focus-visible,
+.annual-plan-ad-hoc-spotlight button:focus-visible,
 .annual-plan-filters input:focus-visible,
 .annual-plan-filters select:focus-visible {
   outline: 3px solid #f6a46e;
@@ -1053,8 +1053,7 @@
 }
 
 .annual-wheel-shell,
-.annual-plan-month-panel,
-.annual-plan-unscheduled {
+.annual-plan-month-panel {
   background: #fff;
   border: 1px solid var(--annual-line);
   border-radius: 24px;
@@ -1311,46 +1310,172 @@ button:focus-visible > .annual-plan-item-tooltip {
   text-align: center;
 }
 
-.annual-plan-unscheduled {
-  margin-top: 1rem;
-  padding: 1.25rem;
+.annual-plan-ad-hoc-spotlight {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(232, 113, 46, 0.34), transparent 34%),
+    linear-gradient(135deg, #4a0a10 0%, #6e1018 70%, #811720 100%);
+  border: 2px solid #e8712e;
+  border-radius: 24px;
+  box-shadow: 0 22px 46px -30px rgba(59, 8, 13, 0.9);
+  color: #fff;
+  margin: 1rem 0 1.25rem;
+  overflow: hidden;
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
 }
 
-.annual-plan-unscheduled-grid {
+.annual-plan-ad-hoc-header {
+  align-items: center;
   display: grid;
-  gap: 0.65rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 1rem;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 
-.annual-plan-unscheduled button {
-  background: #fffaf8;
-  border: 1px solid #eadbd8;
-  border-top: 3px solid var(--item-color);
-  border-radius: 10px;
-  color: var(--annual-ink);
+.annual-plan-ad-hoc-header .annual-plan-eyebrow {
+  color: #ffb37f;
+}
+
+.annual-plan-ad-hoc-header h2 {
+  color: #fff;
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  letter-spacing: -0.035em;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.annual-plan-ad-hoc-header p {
+  color: #f5dfe1;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 780px;
+}
+
+.annual-plan-ad-hoc-count {
+  align-items: center;
+  background: #fff3e9;
+  border: 1px solid #ffc69e;
+  border-radius: 18px;
+  color: var(--annual-green-dark);
   display: flex;
   flex-direction: column;
-  padding: 0.8rem;
-  text-align: left;
-  transition: background 150ms, transform 150ms;
+  min-width: 150px;
+  padding: 0.75rem 1rem;
+  text-align: center;
 }
 
-.annual-plan-unscheduled button:hover {
-  background: #fdf0ef;
+.annual-plan-ad-hoc-count strong {
+  font-size: 2rem;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.annual-plan-ad-hoc-count span {
+  font-size: 0.7rem;
+  font-weight: 750;
+  margin-top: 0.25rem;
+}
+
+.annual-plan-ad-hoc-count small {
+  color: #7e6360;
+  font-size: 0.58rem;
+  margin-top: 0.18rem;
+}
+
+.annual-plan-ad-hoc-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 1.15rem;
+}
+
+.annual-plan-ad-hoc-grid button {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 13px;
+  color: var(--annual-ink);
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 5px minmax(0, 1fr) auto;
+  min-height: 72px;
+  padding: 0.75rem;
+  text-align: left;
+  transition: background 150ms, border-color 150ms, transform 150ms;
+}
+
+.annual-plan-ad-hoc-grid button:hover {
+  background: #fff;
+  border-color: #ffb37f;
   transform: translateY(-2px);
 }
 
-.annual-plan-unscheduled button span {
-  font-size: 0.78rem;
-  font-weight: 700;
+.annual-plan-ad-hoc-grid button > i {
+  align-self: stretch;
+  background: var(--item-color);
+  border-radius: 999px;
+  display: block;
+  min-height: 34px;
+  width: 5px;
 }
 
-.annual-plan-unscheduled button small {
+.annual-plan-ad-hoc-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.annual-plan-ad-hoc-copy strong {
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.annual-plan-ad-hoc-copy small {
   color: var(--annual-muted);
-  font-size: 0.65rem;
-  line-height: 1.4;
+  font-size: 0.62rem;
+  line-height: 1.35;
   margin-top: 0.25rem;
+}
+
+.annual-plan-ad-hoc-action {
+  align-items: center;
+  color: var(--annual-green);
+  display: inline-flex;
+  font-size: 0.6rem;
+  font-weight: 750;
+  gap: 0.2rem;
+}
+
+.annual-plan-ad-hoc-action svg {
+  height: 0.8rem;
+  width: 0.8rem;
+}
+
+.annual-plan-ad-hoc-empty {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+}
+
+.annual-plan-ad-hoc-empty p {
+  color: #fff;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.annual-plan-ad-hoc-empty button {
+  background: #fff3e9;
+  border: 1px solid #ffc69e;
+  border-radius: 999px;
+  color: var(--annual-green-dark);
+  font-family: inherit;
+  font-size: 0.67rem;
+  font-weight: 750;
+  padding: 0.55rem 0.8rem;
 }
 
 .annual-plan-no-results {
@@ -1491,6 +1616,10 @@ button:focus-visible > .annual-plan-item-tooltip {
   .annual-wheel-layout {
     grid-template-columns: minmax(450px, 1.3fr) minmax(260px, 0.7fr);
   }
+
+  .annual-plan-ad-hoc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 820px) {
@@ -1523,10 +1652,6 @@ button:focus-visible > .annual-plan-item-tooltip {
   .annual-plan-month-panel {
     max-height: 460px;
     min-height: 280px;
-  }
-
-  .annual-plan-unscheduled-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .annual-overview-heading {
@@ -1604,6 +1729,32 @@ button:focus-visible > .annual-plan-item-tooltip {
     grid-template-columns: 1fr;
   }
 
+  .annual-plan-ad-hoc-header {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .annual-plan-ad-hoc-count {
+    align-items: baseline;
+    flex-direction: row;
+    gap: 0.4rem;
+    justify-content: flex-start;
+    min-width: 0;
+  }
+
+  .annual-plan-ad-hoc-count small {
+    margin-left: auto;
+  }
+
+  .annual-plan-ad-hoc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .annual-plan-ad-hoc-empty {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .annual-plan-view-tabs button {
     align-items: center;
     flex-direction: row;
@@ -1639,7 +1790,6 @@ button:focus-visible > .annual-plan-item-tooltip {
     font-size: 0.52rem;
   }
 
-  .annual-plan-unscheduled-grid,
   .annual-plan-details-grid {
     grid-template-columns: 1fr;
   }
