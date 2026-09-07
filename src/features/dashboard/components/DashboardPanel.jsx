@@ -7,7 +7,7 @@ import AumOverviewLux from './AumOverviewLux';
 import AumOverviewSe from './AumOverviewSe';
 import FbfOverview from './FbfOverview';
 import FundNavTable from './FundNavTable';
-import FundNavTableSE from './FundNavTableSe';
+import FundNavTableSE from './FundNavTableSE';
 import LuxFlowOverview from './LuxFlowOverview';
 import LuxNavOverview from './LuxNavOverview';
 import NewFundLaunches from './NewFundLaunches';

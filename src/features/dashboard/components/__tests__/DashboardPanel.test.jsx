@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import DashboardPanel from '../DashboardPanel';
 
@@ -10,6 +10,8 @@ vi.mock('../../services/fundService', () => ({
 
 vi.mock('../../services/newsService', () => ({
   fetchWsjNews: vi.fn(() => Promise.resolve([{ title: 'Test News', link: '#', pubDate: '2026-05-26' }])),
+  fetchE24News: vi.fn(() => Promise.resolve([{ title: 'Test News', link: '#', pubDate: '2026-05-26' }])),
+  fetchDagensIndustriNews: vi.fn(() => Promise.resolve([{ title: 'Test News', link: '#', pubDate: '2026-05-26' }])),
 }));
 
 describe('DashboardPanel', () => {
@@ -18,6 +20,10 @@ describe('DashboardPanel', () => {
     await waitFor(() => {
       expect(screen.getByTestId('dashboard-panel')).toBeInTheDocument();
     });
-    expect(screen.getByText('Nordic PM Dashboard')).toBeInTheDocument();
+    expect(screen.getByText('Nordic Product Management Dashboard')).toBeInTheDocument();
+    expect(screen.getByTestId('revenue-overview')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /Sverige/ }));
+    expect(screen.getByTestId('revenue-overview-se')).toBeInTheDocument();
   });
 });

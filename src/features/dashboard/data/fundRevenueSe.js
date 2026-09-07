@@ -45,4 +45,7 @@ const fundRevenueSe = [
   estRevenueMillSek: fund.aumMillSek * fund.terPct / 100,
 }));
 
-export default fundRevenueSe;
+export default fundRevenueSe.map((fund) => ({
+  ...fund,
+  estRevenueMillSek: (fund.aumMillSek * fund.terPct) / 100,
+}));

@@ -69,4 +69,7 @@ const fundRevenue = [
   estRevenueMillNok: fund.aumMillNok * fund.terPct / 100,
 }));
 
-export default fundRevenue;
+export default fundRevenue.map((fund) => ({
+  ...fund,
+  estRevenueMillNok: (fund.aumMillNok * fund.terPct) / 100,
+}));

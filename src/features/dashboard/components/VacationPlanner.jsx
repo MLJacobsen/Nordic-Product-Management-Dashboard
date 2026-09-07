@@ -46,7 +46,7 @@ function VacationPlanner() {
   useEffect(() => {
     // Save only locally-added/modified people (not shared-origin ones that haven't changed)
     const sharedNames = new Set(sharedVacation.map((p) => p.name));
-    const localOnly = people.filter((p) => !sharedNames.has(p.name) || 
+    const localOnly = people.filter((p) => !sharedNames.has(p.name) ||
       JSON.stringify(p.weeks) !== JSON.stringify((sharedVacation.find(s => s.name === p.name) || {}).weeks));
     localStorage.setItem(STORAGE_KEY, JSON.stringify(localOnly));
   }, [people]);
