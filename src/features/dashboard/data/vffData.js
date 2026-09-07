@@ -8,27 +8,27 @@
  */
 
 const vffData = {
-  month: 'June 2026',
-  dataMonth: 6, // 1=Jan … 12=Dec — update when new month is added
+  month: 'July 2026',
+  dataMonth: 7, // 1=Jan … 12=Dec — update when new month is added
   dataYear: 2026,
-  summary: 'Net subscription in June was positive for Storebrand AM (+1.0 mrd). Total market net subscription was 24.2 mrd NOK. AUM reached 509 mrd NOK (15.9% market share).',
+  summary: 'Net subscription in July was positive for Storebrand AM (+2.9 mrd). Total market net subscription was 23.6 mrd NOK. AUM reached 596.7 mrd NOK (17.9% market share).',
 
   totalSAM: {
-    netSubscription: 1.0, // mrd. kr. (1,048 mill. from VFF Excel)
-    netSubscriptionVffTotal: 24.2, // mrd. kr.
-    netSubscriptionShare: 4.3, // %
-    aum: 509, // mrd. kr.
-    aumVffTotal: 3192, // mrd. kr.
-    aumShare: 15.9, // %
+    netSubscription: 2.9, // mrd. kr. (2,934 mill. from VFF Excel)
+    netSubscriptionVffTotal: 23.6, // mrd. kr.
+    netSubscriptionShare: 12.4, // %
+    aum: 596.7, // mrd. kr.
+    aumVffTotal: 3331.6, // mrd. kr.
+    aumShare: 17.9, // %
   },
 
   privateSAM: {
-    netSubscription: 0.3, // mrd. kr. (300 mill. from VFF personkunder Excel)
-    netSubscriptionVffTotal: 5.1, // mrd. kr.
-    netSubscriptionShare: 5.8, // %
-    aum: 86, // mrd. kr.
-    aumVffTotal: 908, // mrd. kr.
-    aumShare: 9.4, // %
+    netSubscription: 0.7, // mrd. kr. (698 mill. from VFF personkunder Excel)
+    netSubscriptionVffTotal: 7.2, // mrd. kr.
+    netSubscriptionShare: 9.6, // %
+    aum: 96.3, // mrd. kr.
+    aumVffTotal: 943.2, // mrd. kr.
+    aumShare: 10.2, // %
   },
 
   // Monthly net subscription history (mrd. kr.) for chart
@@ -39,6 +39,7 @@ const vffData = {
     { month: 'Apr 2026', sam: 0.9, vffTotal: 32.5 },
     { month: 'May 2026', sam: 1.4, vffTotal: 36.8 },
     { month: 'Jun 2026', sam: 1.0, vffTotal: 24.2 },
+    { month: 'Jul 2026', sam: 2.9, vffTotal: 23.6 },
   ],
 };
 
