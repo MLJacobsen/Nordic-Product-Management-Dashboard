@@ -30,11 +30,15 @@ describe('AnnualPlanContent', () => {
     expect(screen.getByRole('button', { name: 'Annual Report, April: 3 records' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Semi-Annual Report, May: 1 record' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Semi-Annual Report, August: 3 records' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'EMT, December: 4 records' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'UCIT KIID, December: 2 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'EMT, January: 3 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'EMT, October: 1 record' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'UCIT KIID, January: 1 record' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'UCIT KIID, October: 1 record' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Quarterly Fund Report, March: 1 record' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Quarterly Fund Report, December: 1 record' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Monthly Fund Report, January: 4 records' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Monthly Fund Report, December: 4 records' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Fund Rules, Ad hoc: 2 records' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Fund Rules / Articles of Association, Ad hoc: 2 records' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('tab', { name: 'Annual wheel' }));
     await user.click(screen.getByTestId('annual-wheel-month-0'));
@@ -48,20 +52,23 @@ describe('AnnualPlanContent', () => {
 
     const adHocRegion = screen.getByRole('region', { name: 'Ad hoc documents' });
     expect(adHocRegion).toBeInTheDocument();
-    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('8');
-    expect(screen.getByText('8 total in the master overview')).toBeInTheDocument();
+    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('13');
+    expect(screen.getByText('13 total in the master overview')).toBeInTheDocument();
 
-    const fundRulesButton = screen.getByRole('button', { name: 'Open details for Fund Rules, SE' });
+    const fundRulesButton = screen.getByRole('button', { name: 'Open details for Fund Rules / Articles of Association, SE' });
+    expect(fundRulesButton).toHaveAccessibleDescription(
+      /Legally binding document outlining the fund's management framework/i,
+    );
     await user.click(fundRulesButton);
-    expect(screen.getByRole('dialog', { name: 'Fund Rules' })).toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: 'Fund Rules / Articles of Association' })).toBeInTheDocument();
     await user.keyboard('{Escape}');
     expect(fundRulesButton).toHaveFocus();
 
     await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'not-a-document');
     expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('0');
-    await user.click(screen.getByRole('button', { name: 'Show all 8 ad hoc documents' }));
-    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('8');
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('8');
+    await user.click(screen.getByRole('button', { name: 'Show all 13 ad hoc documents' }));
+    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('13');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('13');
   });
 
   test('filters by search, domicile, owner, and legal requirement', async () => {
@@ -108,11 +115,11 @@ describe('AnnualPlanContent', () => {
     expect(screen.getByRole('button', { name: 'Reset filters' })).toBeDisabled();
 
     await user.click(screen.getByRole('button', { name: 'Show ad hoc documents filter' }));
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('8');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('13');
 
     await user.click(screen.getByRole('button', { name: 'Remove ad hoc documents filter' }));
     await user.click(screen.getByRole('button', { name: 'Show legal requirement filter' }));
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('38');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('37');
     expect(screen.getByRole('combobox', { name: 'Filter by legal requirement' })).toHaveValue('yes');
   });
 
@@ -126,12 +133,11 @@ describe('AnnualPlanContent', () => {
     documentButton.focus();
     await user.keyboard('{Enter}');
 
-    expect(screen.getByRole('dialog', { name: 'Annual Report' })).toBeInTheDocument();
-    expect(screen.getByText('UCITS Directive Art. 69')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'https://storebrand.fondlista.se/' })).toHaveAttribute(
-      'rel',
-      'noreferrer',
-    );
+    const dialog = screen.getByRole('dialog', { name: 'Annual Report' });
+    expect(dialog).toBeInTheDocument();
+    expect(within(dialog).getByText('UCITS Directive Art. 69')).toBeInTheDocument();
+    expect(within(dialog).getByText(/Audited annual report presenting the fund's financial statements/i)).toBeInTheDocument();
+    expect(within(dialog).getByText(/Auxality produces the report/i)).toBeInTheDocument();
 
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -153,12 +159,13 @@ describe('AnnualPlanContent', () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
-    await user.click(screen.getByRole('button', { name: /^Annual Report 4 total records$/i }));
-    expect(screen.getByRole('button', { name: /SE April Anna Yes/i })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /^Annual Report 4 total records/i }));
+    expect(screen.getByRole('button', { name: /SE April Anna/i })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Annual Report, April: 3 records' }));
-    expect(screen.getByRole('region', { name: 'Annual Report records' })).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /SE Anna Legal requirement/i }));
+    const focusedRecords = screen.getByRole('region', { name: 'Annual Report records' });
+    expect(focusedRecords).toBeInTheDocument();
+    await user.click(within(focusedRecords).getByRole('button', { name: /^SE Anna/i }));
     expect(screen.getByRole('dialog', { name: 'Annual Report' })).toBeInTheDocument();
   });
 
@@ -177,5 +184,40 @@ describe('AnnualPlanContent', () => {
     expect(domicileHeader).toHaveAttribute('aria-sort', 'none');
     await user.click(screen.getByRole('button', { name: 'Domicile' }));
     expect(domicileHeader).toHaveAttribute('aria-sort', 'ascending');
+  });
+
+  test('edits multiple responsible people only through the shared workbook callback', async () => {
+    const user = userEvent.setup();
+    const updateResponsible = vi.fn(async (document, people) => ({
+      ...document,
+      responsible: people.join(' / '),
+    }));
+    render(
+      <AnnualPlanContent
+        documents={publishedDocuments}
+        sharedWorkbook={{
+          account: { name: 'Authorized User' },
+          canEdit: true,
+          config: { enabled: true },
+          refresh: vi.fn(),
+          signIn: vi.fn(),
+          signOut: vi.fn(),
+          state: { error: '', lastSyncedAt: new Date(), message: '', status: 'ready' },
+          updateResponsible,
+        }}
+      />,
+    );
+
+    await user.click(screen.getByRole('button', { name: /^Annual Report 4 total records/i }));
+    await user.click(screen.getByRole('button', { name: /SE April Anna/i }));
+    const dialog = screen.getByRole('dialog', { name: 'Annual Report' });
+
+    await user.type(within(dialog).getByRole('textbox', { name: 'Add one or more people' }), 'Nina, Marit');
+    await user.click(within(dialog).getByRole('button', { name: 'Save to shared workbook' }));
+
+    expect(updateResponsible).toHaveBeenCalledWith(
+      expect.objectContaining({ document: 'Annual Report', domicile: 'SE', responsible: 'Anna' }),
+      ['Anna', 'Nina', 'Marit'],
+    );
   });
 });

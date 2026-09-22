@@ -51,7 +51,9 @@ A task management application that allows users to create, organize, and filter 
 
 ## Publishing the annual plan workbook
 
-`Document overview.xlsx` is the master for the annual plan. The dashboard publishes a static snapshot of `Sheet1`, so users can open the overview immediately without Microsoft sign-in or a live workbook connection.
+`Document overview.xlsx` is the master for the annual plan. The dashboard publishes
+a static snapshot of the `Overview` worksheet, so users can open the overview
+immediately without Microsoft sign-in.
 
 When a revised workbook is provided, regenerate the published snapshot:
 
@@ -59,19 +61,69 @@ When a revised workbook is provided, regenerate the published snapshot:
 npm run import:annual-plan -- "C:\path\to\Document overview.xlsx"
 ```
 
-To use a worksheet other than `Sheet1`, pass its name as the second argument:
+To use a worksheet other than `Overview`, pass its name as the second argument:
 
 ```bash
 npm run import:annual-plan -- "C:\path\to\Document overview.xlsx" "Annual plan"
 ```
 
-The import command preserves the worksheet cells in
+The import command preserves the worksheet cells and source row order in
 `src/features/annual-plan/data/documentOverview.json`. The existing defensive
-header and month normalization then prepares them for the dashboard. Review the
-result, run `npm test` and `npm run build`, and deploy the new commit.
+header parser maps fields by their names rather than fixed column positions.
+Schedule parsing supports single months, monthly rows, ad-hoc rows, and
+comma-separated month lists. `March, June, Sept, Dec` and `Quarter end` are
+normalized to the same quarterly cadence. Review the result, run `npm test` and
+`npm run build`, and deploy the new commit.
 
-The source workbook itself is not served by the site. No credentials, Entra app
-registration, or SharePoint configuration are needed.
+### Shared responsibility editing
+
+The public dashboard always displays the bundled snapshot. Shared responsibility
+editing is an optional authenticated enhancement: after Microsoft Entra sign-in,
+the dashboard reads the current worksheet through Microsoft Graph, replaces the
+displayed rows with the live values, and periodically revalidates them. A manual
+**Refresh** control is also available. Background refresh pauses while a
+responsibility edit is active.
+
+Saving uses a persistent Graph Excel workbook session. Before writing, the app
+re-reads the worksheet, verifies the source row identity and expected
+responsibility, updates the actual column headed `Responsible`, and re-reads the
+workbook to confirm the value. If another user changed the row, the app reports a
+conflict instead of silently overwriting it. Multiple names are serialized as
+`Name / Name`, while commas, slashes, semicolons, and ampersands remain accepted
+on read.
+
+Create a Microsoft Entra **single-page application** registration:
+
+1. Add SPA redirect URIs:
+   - `http://localhost:3000/`
+   - `https://mljacobsen.github.io/Nordic-Product-Management-Dashboard/`
+2. Add Microsoft Graph delegated permission `Files.ReadWrite.All`.
+3. If the app resolves the SharePoint site by hostname/path, also add delegated
+   `Sites.Read.All`. Configure `VITE_GRAPH_SITE_ID` to avoid this additional
+   discovery permission.
+4. Grant tenant admin consent where Storebrand policy requires it.
+5. Ensure intended users have permission to edit the source workbook itself.
+6. Do not create or store a client secret; browser SPAs use delegated PKCE.
+
+Configure the values shown in `.env.example`. For GitHub Pages, create matching
+GitHub Actions repository/environment variables and expose them to the Vite build:
+
+```yaml
+env:
+  VITE_ENTRA_TENANT_ID: ${{ vars.VITE_ENTRA_TENANT_ID }}
+  VITE_ENTRA_CLIENT_ID: ${{ vars.VITE_ENTRA_CLIENT_ID }}
+  VITE_ENTRA_REDIRECT_URI: ${{ vars.VITE_ENTRA_REDIRECT_URI }}
+  VITE_GRAPH_SITE_ID: ${{ vars.VITE_GRAPH_SITE_ID }}
+  VITE_GRAPH_SHAREPOINT_HOSTNAME: ${{ vars.VITE_GRAPH_SHAREPOINT_HOSTNAME }}
+  VITE_GRAPH_SITE_PATH: ${{ vars.VITE_GRAPH_SITE_PATH }}
+  VITE_GRAPH_FILE_PATH: ${{ vars.VITE_GRAPH_FILE_PATH }}
+  VITE_GRAPH_WORKSHEET: ${{ vars.VITE_GRAPH_WORKSHEET }}
+```
+
+If these values are absent, the production UI clearly remains read-only and does
+not claim that responsibility changes can be saved. Client and tenant IDs are
+configuration values rather than secrets, but credentials and tokens must never
+be committed.
 
 ### GitHub Pages configuration
 

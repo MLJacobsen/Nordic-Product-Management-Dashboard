@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import { DOCUMENT_CATEGORIES, extractSafeLinks } from '../data/workbookParser';
+import ResponsibilityEditor from './ResponsibilityEditor';
 
 const DETAIL_FIELDS = [
   ['Document / report', 'document'],
@@ -12,7 +13,7 @@ const DETAIL_FIELDS = [
   ['Legal requirement', 'legalRequirement'],
   ['Regulation / source', 'regulationSource'],
   ['Language', 'language'],
-  ['System support', 'systemSupport'],
+  ['Produced by', 'producedBy'],
   ['Published / distributed', 'publicationDistribution'],
   ['Process description link', 'processLink'],
   ['Responsible within Product', 'responsible'],
@@ -46,7 +47,14 @@ function FieldValue({ value }) {
   );
 }
 
-export default function DocumentDetailsDialog({ document, onClose }) {
+export default function DocumentDetailsDialog({
+  canEditResponsible = false,
+  document,
+  onClose,
+  onEditActivityChange = () => {},
+  onSaveResponsible = null,
+  sharedState = { status: 'signedOut' },
+}) {
   const closeButtonRef = useRef(null);
   const dialogRef = useRef(null);
   const previouslyFocusedRef = useRef(null);
@@ -129,6 +137,15 @@ export default function DocumentDetailsDialog({ document, onClose }) {
             </div>
           ))}
         </dl>
+
+        {canEditResponsible && onSaveResponsible && (
+          <ResponsibilityEditor
+            document={document}
+            onEditingChange={onEditActivityChange}
+            onSave={onSaveResponsible}
+            sharedState={sharedState}
+          />
+        )}
       </section>
     </div>
   );

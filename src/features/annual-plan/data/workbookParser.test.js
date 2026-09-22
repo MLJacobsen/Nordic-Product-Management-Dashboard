@@ -15,6 +15,11 @@ describe('workbookParser', () => {
     ['Monthly', 'Monthly', 'monthly', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]],
     ['', 'Monthly / Q', 'monthly', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]],
     ['', 'Ad hoc', 'unscheduled', []],
+    ['March, June, Sept, Dec', 'Quarterly', 'quarterly', [2, 5, 8, 11]],
+    ['march, JUNE, september, december', '', 'quarterly', [2, 5, 8, 11]],
+    ['Quarter end', '', 'quarterly', [2, 5, 8, 11]],
+    ['', 'Quarterly', 'quarterly', [2, 5, 8, 11]],
+    ['Jan, July', '', 'multi', [0, 6]],
   ])('normalizes month "%s" and frequency "%s"', (month, frequency, kind, months) => {
     expect(normalizeSchedule(month, frequency)).toEqual({ kind, months });
   });

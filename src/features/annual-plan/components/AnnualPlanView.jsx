@@ -1,4 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   ArrowPathIcon,
   ArrowTopRightOnSquareIcon,
@@ -19,6 +23,7 @@ import {
 import AnnualWheel from './AnnualWheel';
 import DocumentDetailsDialog from './DocumentDetailsDialog';
 import RecordsExplorer from './RecordsExplorer';
+import SharedWorkbookStatus from './SharedWorkbookStatus';
 import YearOverview from './YearOverview';
 import '../annualPlan.css';
 
@@ -55,6 +60,8 @@ function matchesSearch(document, search) {
 
 export function AnnualPlanContent({
   documents,
+  onEditActivityChange = () => {},
+  sharedWorkbook = null,
   sourceName = 'Document overview.xlsx',
   sourceUrl,
 }) {
@@ -67,6 +74,14 @@ export function AnnualPlanContent({
   const [activeView, setActiveView] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedDocument, setSelectedDocument] = useState(null);
+
+  useEffect(() => {
+    if (!selectedDocument) return;
+    const current = documents.find(
+      (document) => document.sourceIdentity === selectedDocument.sourceIdentity,
+    );
+    if (current && current !== selectedDocument) setSelectedDocument(current);
+  }, [documents, selectedDocument]);
 
   const domiciles = useMemo(() => (
     [...new Set(documents.flatMap((document) => splitDomiciles(document.domicile)))].sort()
@@ -166,6 +181,17 @@ export function AnnualPlanContent({
           </a>
         </div>
       </header>
+
+      {sharedWorkbook && (
+        <SharedWorkbookStatus
+          account={sharedWorkbook.account}
+          config={sharedWorkbook.config}
+          onRefresh={sharedWorkbook.refresh}
+          onSignIn={sharedWorkbook.signIn}
+          onSignOut={sharedWorkbook.signOut}
+          state={sharedWorkbook.state}
+        />
+      )}
 
       <section aria-label="Annual plan summary and guidance" className="annual-plan-summary-section">
         <div className="annual-plan-summary-reset">
@@ -346,6 +372,7 @@ export function AnnualPlanContent({
               const itemCategory = DOCUMENT_CATEGORIES[document.category] || DOCUMENT_CATEGORIES.other;
               return (
                 <button
+                  aria-describedby={`ad-hoc-description-${document.id}`}
                   aria-label={`Open details for ${document.document}, ${document.domicile || 'no domicile'}`}
                   key={document.id}
                   onClick={() => setSelectedDocument(document)}
@@ -358,9 +385,19 @@ export function AnnualPlanContent({
                     <small>
                       {document.domicile || 'No domicile'} · {document.responsible || 'Owner not specified'}
                     </small>
+                    <small className="annual-plan-ad-hoc-description">
+                      {document.description || 'Description not provided'}
+                    </small>
                   </span>
                   <span aria-hidden="true" className="annual-plan-ad-hoc-action">
                     Details <ArrowTopRightOnSquareIcon />
+                  </span>
+                  <span
+                    className="annual-plan-tooltip annual-plan-item-tooltip"
+                    id={`ad-hoc-description-${document.id}`}
+                    role="tooltip"
+                  >
+                    {document.description || 'Description not provided'}
                   </span>
                 </button>
               );
@@ -445,8 +482,18 @@ export function AnnualPlanContent({
       )}
 
       <DocumentDetailsDialog
+        canEditResponsible={sharedWorkbook?.canEdit}
         document={selectedDocument}
+        onEditActivityChange={onEditActivityChange}
         onClose={() => setSelectedDocument(null)}
+        onSaveResponsible={sharedWorkbook?.updateResponsible
+          ? async (people) => {
+            const updated = await sharedWorkbook.updateResponsible(selectedDocument, people);
+            setSelectedDocument(updated);
+            return updated;
+          }
+          : null}
+        sharedState={sharedWorkbook?.state}
       />
     </div>
   );

@@ -50,7 +50,7 @@ const FIELD_DEFINITIONS = {
   legalRequirement: ['Legal requirement (Yes/No)', 'Legal requirement', 'Legal'],
   regulationSource: ['Regulation / Source', 'Regulation/Source', 'Regulation', 'Source'],
   language: ['Language'],
-  systemSupport: ['System support'],
+  producedBy: ['Produced by', 'System support'],
   publicationDistribution: ['Published /Distributed', 'Published/Distributed', 'Publication/Distribution'],
   processLink: ['Process description link', 'Process link'],
   responsible: ['Responsible with in Product', 'Responsible within Product', 'Responsible', 'Owner'],
@@ -64,24 +64,38 @@ const MONTH_ALIASES = {
   februari: 1,
   februar: 1,
   march: 2,
+  mar: 2,
   mars: 2,
   april: 3,
+  apr: 3,
   may: 4,
   maj: 4,
   mai: 4,
   june: 5,
+  jun: 5,
   juni: 5,
   july: 6,
+  jul: 6,
   juli: 6,
   august: 7,
+  aug: 7,
   augusti: 7,
   september: 8,
+  sep: 8,
+  sept: 8,
   october: 9,
+  oct: 9,
   oktober: 9,
   november: 10,
+  nov: 10,
   december: 11,
+  dec: 11,
   desember: 11,
+  jan: 0,
+  feb: 1,
 };
+
+const QUARTER_END_MONTHS = [2, 5, 8, 11];
 
 function normalizeHeader(value) {
   return String(value ?? '')
@@ -143,11 +157,42 @@ export function normalizeSchedule(monthValue, frequencyValue = '') {
     .replace(/\.$/, '')
     .trim();
 
+  if (
+    /quarter\s*end/.test(normalizedMonth)
+    || (!normalizedMonth && /quarterly|quarter\s*end/.test(frequency))
+  ) {
+    return { kind: 'quarterly', months: QUARTER_END_MONTHS };
+  }
+
   if (Object.hasOwn(MONTH_ALIASES, normalizedMonth)) {
     return { kind: 'fixed', months: [MONTH_ALIASES[normalizedMonth]] };
   }
 
+  const months = [...new Set(
+    normalizedMonth
+      .split(/\s*(?:,|;|\||\band\b)\s*/i)
+      .map((part) => part.replace(/\.$/, '').trim())
+      .filter((part) => Object.hasOwn(MONTH_ALIASES, part))
+      .map((part) => MONTH_ALIASES[part]),
+  )].sort((left, right) => left - right);
+
+  if (months.length > 1) {
+    const isQuarterEnd = months.length === QUARTER_END_MONTHS.length
+      && months.every((monthIndex, index) => monthIndex === QUARTER_END_MONTHS[index]);
+    return { kind: isQuarterEnd ? 'quarterly' : 'multi', months };
+  }
+
   return { kind: 'unscheduled', months: [] };
+}
+
+export function scheduleLabel(document) {
+  if (document.schedule.kind === 'monthly') return 'Every month';
+  if (document.schedule.kind === 'quarterly') return 'Quarter end';
+  if (document.schedule.kind === 'unscheduled') return document.frequency || 'Ad hoc';
+  if (document.schedule.months.length > 1) {
+    return document.schedule.months.map((monthIndex) => MONTHS[monthIndex]).join(', ');
+  }
+  return MONTHS[document.schedule.months[0]] || document.month || 'Unscheduled';
 }
 
 export function getDocumentCategory(documentName) {
@@ -165,6 +210,15 @@ export function splitPeople(value) {
     .split(/[\/,;&]+/)
     .map((person) => person.trim())
     .filter(Boolean);
+}
+
+export function serializePeople(people) {
+  return [...new Set(
+    people
+      .flatMap((person) => splitPeople(person))
+      .map((person) => person.trim())
+      .filter(Boolean),
+  )].join(' / ');
 }
 
 export function splitDomiciles(value) {
@@ -192,13 +246,28 @@ export function extractSafeLinks(value) {
   return links;
 }
 
-export function parseWorkbookRange(values) {
+export function getWorkbookSchema(values) {
   if (!Array.isArray(values) || values.length === 0) {
     throw new Error('The workbook range did not contain any rows.');
   }
 
   const headerRowIndex = findHeaderRow(values);
-  const columnMap = buildColumnMap(values[headerRowIndex]);
+  return {
+    columnMap: buildColumnMap(values[headerRowIndex]),
+    headerRowIndex,
+  };
+}
+
+export function getDocumentIdentity(document) {
+  return [
+    normalizeHeader(document.document),
+    normalizeHeader(document.domicile),
+    normalizeHeader(document.description),
+  ].join('|');
+}
+
+export function parseWorkbookRange(values, { startRow = 1 } = {}) {
+  const { columnMap, headerRowIndex } = getWorkbookSchema(values);
 
   return values
     .slice(headerRowIndex + 1)
@@ -213,20 +282,23 @@ export function parseWorkbookRange(values) {
       const domicile = read('domicile');
       const frequency = read('frequency');
       const month = read('month');
-      const rowNumber = headerRowIndex + rowOffset + 2;
+      const rowNumber = startRow + headerRowIndex + rowOffset + 1;
+      const description = read('description');
+      const sourceIdentity = getDocumentIdentity({ document, domicile, description });
 
       return {
         id: `${rowNumber}-${normalizeHeader(document)}-${normalizeHeader(domicile)}`,
         rowNumber,
+        sourceIdentity,
         document,
         domicile,
-        description: read('description'),
+        description,
         frequency,
         month,
         legalRequirement: read('legalRequirement'),
         regulationSource: read('regulationSource'),
         language: read('language'),
-        systemSupport: read('systemSupport'),
+        producedBy: read('producedBy'),
         publicationDistribution: read('publicationDistribution'),
         processLink: read('processLink'),
         responsible: read('responsible'),

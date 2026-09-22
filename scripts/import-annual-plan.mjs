@@ -4,7 +4,7 @@ import process from 'node:process';
 import readXlsxFile from 'read-excel-file/node';
 
 const workbookPath = process.argv[2];
-const worksheetName = process.argv[3] || 'Sheet1';
+const worksheetName = process.argv[3] || 'Overview';
 
 if (!workbookPath) {
   console.error('Usage: npm run import:annual-plan -- <workbook.xlsx> [worksheet]');
