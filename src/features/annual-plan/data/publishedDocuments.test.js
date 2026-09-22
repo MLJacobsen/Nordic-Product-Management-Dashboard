@@ -4,91 +4,57 @@ import {
 } from './publishedDocuments';
 
 describe('published document overview', () => {
-  test('contains the complete supplied workbook snapshot', () => {
+  test('contains the complete current Overview worksheet snapshot', () => {
     expect(documentOverviewMetadata).toEqual({
       source: 'Document overview.xlsx',
       sourceUrl: 'https://storebrand.sharepoint.com/sites/NordiskProdukt/Felles/2%20Governing%20Documents/Document%20overview.xlsx?d=w770e3d7fec1a4edb9be5ec513b5ce478&csf=1&web=1&e=twSUIg',
-      worksheet: 'Sheet1',
+      worksheet: 'Overview',
     });
     expect(publishedDocuments).toHaveLength(50);
+    expect(publishedDocuments.every((document) => document.description)).toBe(true);
+    expect(publishedDocuments.every((document) => document.responsible)).toBe(true);
   });
 
-  test('preserves workbook details and normalized schedules', () => {
-    const augustReport = publishedDocuments.find(
-      (document) => document.document === 'Semi-Annual Report' && document.domicile === 'SE',
+  test('preserves the current names, owners, and header-driven fields', () => {
+    const fundRules = publishedDocuments.find(
+      (document) => document.document === 'Fund Rules / Articles of Association'
+        && document.domicile === 'SE',
     );
-    const monthlyFundReport = publishedDocuments.find(
-      (document) => document.document === 'Monthly Fund Report' && document.domicile === 'NO',
-    );
-    const adHocRules = publishedDocuments.find(
-      (document) => document.document === 'Fund Rules' && document.domicile === 'SE',
+    const informationBrochure = publishedDocuments.find(
+      (document) => document.document === 'Information Brochure',
     );
 
-    expect(augustReport).toMatchObject({
-      month: 'Augusti',
-      schedule: { kind: 'fixed', months: [7] },
-    });
-    expect(monthlyFundReport.schedule).toMatchObject({
-      kind: 'monthly',
-      months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    });
-    expect(adHocRules).toMatchObject({
-      schedule: { kind: 'unscheduled', months: [] },
+    expect(fundRules).toMatchObject({
       responsible: 'Lars',
+      schedule: { kind: 'unscheduled', months: [] },
+    });
+    expect(informationBrochure).toMatchObject({
+      domicile: 'SE',
+      producedBy: expect.stringContaining('In design'),
+      responsible: 'Anna',
     });
   });
 
-  test('contains the approved document names and market-specific delivery months', () => {
-    const annualReports = publishedDocuments.filter(
-      (document) => document.document === 'Annual Report',
-    );
-    const semiAnnualReports = publishedDocuments.filter(
-      (document) => document.document === 'Semi-Annual Report',
-    );
-    const monthlyFundReports = publishedDocuments.filter(
+  test('normalizes monthly and quarterly source rows without duplicating records', () => {
+    const monthlyReports = publishedDocuments.filter(
       (document) => document.document === 'Monthly Fund Report',
     );
-    const emtDocuments = publishedDocuments.filter((document) => document.document === 'EMT');
-    const ucitKiids = publishedDocuments.filter((document) => document.document === 'UCIT KIID');
+    const quarterlyReport = publishedDocuments.find(
+      (document) => document.document === 'Quarterly Fund Report',
+    );
 
-    expect(annualReports.find((document) => document.domicile === 'IE')).toMatchObject({
-      month: 'January',
-      schedule: { kind: 'fixed', months: [0] },
-    });
+    expect(monthlyReports).toHaveLength(4);
     expect(
-      annualReports
-        .filter((document) => document.domicile !== 'IE')
-        .every((document) => document.month === 'April'),
-    ).toBe(true);
-
-    expect(semiAnnualReports.find((document) => document.domicile === 'IE')).toMatchObject({
-      month: 'May',
-      schedule: { kind: 'fixed', months: [4] },
-    });
-    expect(
-      semiAnnualReports
-        .filter((document) => document.domicile !== 'IE')
-        .every((document) => document.month === 'Augusti'),
-    ).toBe(true);
-
-    expect(monthlyFundReports).toHaveLength(4);
-    expect(
-      publishedDocuments.some((document) => document.document === 'Monthly Factsheet'),
-    ).toBe(false);
-    expect(monthlyFundReports.every((document) => document.schedule.kind === 'monthly')).toBe(true);
-
-    expect(emtDocuments).toHaveLength(4);
-    expect(
-      emtDocuments.every(
-        (document) => document.month === 'December' && document.schedule.months[0] === 11,
+      monthlyReports.every(
+        (document) => document.schedule.kind === 'monthly'
+          && document.schedule.months.length === 12,
       ),
     ).toBe(true);
-
-    expect(ucitKiids).toHaveLength(2);
-    expect(
-      ucitKiids.every(
-        (document) => document.month === 'December' && document.schedule.months[0] === 11,
-      ),
-    ).toBe(true);
+    expect(quarterlyReport).toMatchObject({
+      domicile: 'IE',
+      responsible: 'Marit',
+      schedule: { kind: 'quarterly', months: [2, 5, 8, 11] },
+    });
+    expect(publishedDocuments).toHaveLength(50);
   });
 });

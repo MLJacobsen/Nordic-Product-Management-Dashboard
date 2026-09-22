@@ -4,7 +4,7 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 
-import { DOCUMENT_CATEGORIES, MONTHS } from '../data/workbookParser';
+import { DOCUMENT_CATEGORIES, scheduleLabel } from '../data/workbookParser';
 
 const COLUMNS = [
   ['document', 'Document / report'],
@@ -14,16 +14,10 @@ const COLUMNS = [
   ['legalRequirement', 'Legal'],
 ];
 
-function scheduleLabel(document) {
-  if (document.schedule.kind === 'monthly') return 'Every month';
-  if (document.schedule.kind === 'unscheduled') return document.frequency || 'Ad hoc';
-  return MONTHS[document.schedule.months[0]] || document.month || 'Unscheduled';
-}
-
 function sortValue(document, key) {
   if (key === 'schedule') {
     if (document.schedule.kind === 'monthly') return '00';
-    if (document.schedule.kind === 'fixed') {
+    if (document.schedule.months.length) {
       return String(document.schedule.months[0] + 1).padStart(2, '0');
     }
     return '99';
@@ -94,6 +88,9 @@ export default function RecordsExplorer({ documents, onSelectDocument }) {
                       <span>
                         <strong>{document.document}</strong>
                         <small>{category.label}</small>
+                        <small className="annual-record-description">
+                          {document.description || 'Description not provided'}
+                        </small>
                       </span>
                     </span>
                   </td>

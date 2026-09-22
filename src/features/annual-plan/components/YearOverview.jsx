@@ -9,7 +9,11 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
-import { DOCUMENT_CATEGORIES, MONTHS } from '../data/workbookParser';
+import {
+  DOCUMENT_CATEGORIES,
+  MONTHS,
+  scheduleLabel,
+} from '../data/workbookParser';
 
 const SCHEDULE_COLUMNS = [...MONTHS, 'Ad hoc'];
 
@@ -18,12 +22,6 @@ function documentsForColumn(documents, columnIndex) {
     return documents.filter((document) => document.schedule.kind === 'unscheduled');
   }
   return documents.filter((document) => document.schedule.months.includes(columnIndex));
-}
-
-function scheduleLabel(document) {
-  if (document.schedule.kind === 'monthly') return 'Every month';
-  if (document.schedule.kind === 'unscheduled') return document.frequency || 'Ad hoc';
-  return MONTHS[document.schedule.months[0]] || document.month || 'Unscheduled';
 }
 
 export default function YearOverview({ documents, onSelectDocument }) {
@@ -88,7 +86,10 @@ export default function YearOverview({ documents, onSelectDocument }) {
               <button key={document.id} onClick={() => onSelectDocument(document)} type="button">
                 <span>{document.domicile || '—'}</span>
                 <strong>{document.responsible || 'Owner not assigned'}</strong>
-                <small>{document.legalRequirement === 'Yes' ? 'Legal requirement' : 'Non-mandatory'}</small>
+                <small>{document.description || 'Description not provided'}</small>
+                <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
+                  {document.description || 'Description not provided'}
+                </span>
               </button>
             ))}
           </div>
@@ -147,6 +148,12 @@ export default function YearOverview({ documents, onSelectDocument }) {
                               <span>
                                 {documentName}
                                 <small>{groupedDocuments.length} total records</small>
+                                <small className="annual-overview-description">
+                                  {groupedDocuments[0].description || 'Description not provided'}
+                                </small>
+                              </span>
+                              <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
+                                {groupedDocuments[0].description || 'Description not provided'}
                               </span>
                             </button>
                           </th>
@@ -188,6 +195,12 @@ export default function YearOverview({ documents, onSelectDocument }) {
                                     <span>
                                       <strong>{scheduleLabel(document)}</strong>
                                       <small>{document.responsible || 'Owner not assigned'}</small>
+                                      <small className="annual-overview-description">
+                                        {document.description || 'Description not provided'}
+                                      </small>
+                                    </span>
+                                    <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
+                                      {document.description || 'Description not provided'}
                                     </span>
                                     <span className={`annual-overview-legal ${document.legalRequirement.toLowerCase() === 'yes' ? 'yes' : ''}`}>
                                       {document.legalRequirement || '—'}

@@ -31,6 +31,7 @@ function describeArc(startAngle, endAngle) {
 function DocumentButton({ document, onSelect }) {
   const category = DOCUMENT_CATEGORIES[document.category] || DOCUMENT_CATEGORIES.other;
   const conciseDescription = [
+    document.description,
     document.domicile,
     document.responsible ? `Owner: ${document.responsible}` : '',
     document.legalRequirement ? `Legal: ${document.legalRequirement}` : '',
@@ -45,6 +46,7 @@ function DocumentButton({ document, onSelect }) {
     >
       <span className="annual-plan-document-name">{document.document}</span>
       <span className="annual-plan-document-meta">{document.domicile || 'No domicile'}</span>
+      <span className="annual-plan-document-description">{document.description || 'Description not provided'}</span>
       <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
         {conciseDescription || 'Open document details'}
       </span>
@@ -85,7 +87,7 @@ export default function AnnualWheel({
 
           <div aria-hidden="true" className="annual-wheel-center-copy">
             <span>{documents.length}</span>
-            <small>documents scheduled</small>
+            <small>source documents</small>
           </div>
 
           {MONTHS.map((month, index) => {
