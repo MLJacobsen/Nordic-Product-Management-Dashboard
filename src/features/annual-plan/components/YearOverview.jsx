@@ -14,6 +14,7 @@ import {
   MONTHS,
   scheduleLabel,
 } from '../data/workbookParser';
+import AccessibleTooltip from './AccessibleTooltip';
 
 const SCHEDULE_COLUMNS = [...MONTHS, 'Ad hoc'];
 
@@ -83,14 +84,14 @@ export default function YearOverview({ documents, onSelectDocument }) {
           </div>
           <div className="annual-overview-focus-items">
             {focusedGroup.documents.map((document) => (
-              <button key={document.id} onClick={() => onSelectDocument(document)} type="button">
-                <span>{document.domicile || '—'}</span>
-                <strong>{document.responsible || 'Owner not assigned'}</strong>
-                <small>{document.description || 'Description not provided'}</small>
-                <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
-                  {document.description || 'Description not provided'}
-                </span>
-              </button>
+              <AccessibleTooltip content={document.description} key={document.id}>
+                {(tooltipProps) => (
+                  <button {...tooltipProps} onClick={() => onSelectDocument(document)} type="button">
+                    <span>{document.domicile || '—'}</span>
+                    <strong>{document.responsible || 'Owner not assigned'}</strong>
+                  </button>
+                )}
+              </AccessibleTooltip>
             ))}
           </div>
           <button
@@ -137,25 +138,24 @@ export default function YearOverview({ documents, onSelectDocument }) {
                       <React.Fragment key={rowKey}>
                         <tr className="annual-overview-document-row">
                           <th scope="row">
-                            <button
-                              aria-expanded={isExpanded}
-                              onClick={() => toggleRow(rowKey)}
-                              type="button"
-                            >
-                              {isExpanded
-                                ? <ChevronDownIcon aria-hidden="true" />
-                                : <ChevronRightIcon aria-hidden="true" />}
-                              <span>
-                                {documentName}
-                                <small>{groupedDocuments.length} total records</small>
-                                <small className="annual-overview-description">
-                                  {groupedDocuments[0].description || 'Description not provided'}
-                                </small>
-                              </span>
-                              <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
-                                {groupedDocuments[0].description || 'Description not provided'}
-                              </span>
-                            </button>
+                            <AccessibleTooltip content={groupedDocuments[0].description}>
+                              {(tooltipProps) => (
+                                <button
+                                  {...tooltipProps}
+                                  aria-expanded={isExpanded}
+                                  onClick={() => toggleRow(rowKey)}
+                                  type="button"
+                                >
+                                  {isExpanded
+                                    ? <ChevronDownIcon aria-hidden="true" />
+                                    : <ChevronRightIcon aria-hidden="true" />}
+                                  <span>
+                                    {documentName}
+                                    <small>{groupedDocuments.length} total records</small>
+                                  </span>
+                                </button>
+                              )}
+                            </AccessibleTooltip>
                           </th>
                           {SCHEDULE_COLUMNS.map((period, columnIndex) => {
                             const periodDocuments = documentsForColumn(groupedDocuments, columnIndex);
@@ -190,22 +190,20 @@ export default function YearOverview({ documents, onSelectDocument }) {
                             <td colSpan={14}>
                               <div>
                                 {groupedDocuments.map((document) => (
-                                  <button key={document.id} onClick={() => onSelectDocument(document)} type="button">
-                                    <span className="annual-overview-domicile">{document.domicile || '—'}</span>
-                                    <span>
-                                      <strong>{scheduleLabel(document)}</strong>
-                                      <small>{document.responsible || 'Owner not assigned'}</small>
-                                      <small className="annual-overview-description">
-                                        {document.description || 'Description not provided'}
-                                      </small>
-                                    </span>
-                                    <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
-                                      {document.description || 'Description not provided'}
-                                    </span>
-                                    <span className={`annual-overview-legal ${document.legalRequirement.toLowerCase() === 'yes' ? 'yes' : ''}`}>
-                                      {document.legalRequirement || '—'}
-                                    </span>
-                                  </button>
+                                  <AccessibleTooltip content={document.description} key={document.id}>
+                                    {(tooltipProps) => (
+                                      <button {...tooltipProps} onClick={() => onSelectDocument(document)} type="button">
+                                        <span className="annual-overview-domicile">{document.domicile || '—'}</span>
+                                        <span>
+                                          <strong>{scheduleLabel(document)}</strong>
+                                          <small>{document.responsible || 'Owner not assigned'}</small>
+                                        </span>
+                                        <span className={`annual-overview-legal ${document.legalRequirement.toLowerCase() === 'yes' ? 'yes' : ''}`}>
+                                          {document.legalRequirement || '—'}
+                                        </span>
+                                      </button>
+                                    )}
+                                  </AccessibleTooltip>
                                 ))}
                               </div>
                             </td>

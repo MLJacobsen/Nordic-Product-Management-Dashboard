@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import {
+  act,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { publishedDocuments } from '../data/publishedDocuments';
@@ -53,9 +58,26 @@ describe('AnnualPlanContent', () => {
     const adHocRegion = screen.getByRole('region', { name: 'Ad hoc documents' });
     expect(adHocRegion).toBeInTheDocument();
     expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('13');
-    expect(screen.getByText('13 total in the master overview')).toBeInTheDocument();
+    expect(screen.getByText('13 total')).toBeInTheDocument();
 
+    const reviewButton = screen.getByRole('button', { name: 'Review documents' });
+    expect(reviewButton).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('button', { name: 'Open details for Fund Rules / Articles of Association, SE' }))
+      .not.toBeInTheDocument();
+
+    await user.click(reviewButton);
+    expect(reviewButton).toHaveAttribute('aria-expanded', 'true');
     const fundRulesButton = screen.getByRole('button', { name: 'Open details for Fund Rules / Articles of Association, SE' });
+    expect(within(fundRulesButton).queryByText(/Legally binding document outlining/i)).not.toBeInTheDocument();
+    await user.hover(fundRulesButton);
+    expect(await screen.findByRole('tooltip')).toHaveTextContent(
+      /Legally binding document outlining the fund's management framework/i,
+    );
+    await user.unhover(fundRulesButton);
+    await act(async () => fundRulesButton.focus());
+    expect(await screen.findByRole('tooltip', { name: /Legally binding document outlining/i })).toHaveTextContent(
+      /Legally binding document outlining the fund's management framework/i,
+    );
     expect(fundRulesButton).toHaveAccessibleDescription(
       /Legally binding document outlining the fund's management framework/i,
     );
@@ -66,7 +88,7 @@ describe('AnnualPlanContent', () => {
 
     await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'not-a-document');
     expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('0');
-    await user.click(screen.getByRole('button', { name: 'Show all 13 ad hoc documents' }));
+    await user.click(screen.getByRole('button', { name: 'Show all 13' }));
     expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('13');
     expect(screen.getByTestId('matching-count')).toHaveTextContent('13');
   });
@@ -130,7 +152,11 @@ describe('AnnualPlanContent', () => {
     await user.click(screen.getByRole('tab', { name: 'Annual wheel' }));
     await user.click(screen.getByTestId('annual-wheel-month-3'));
     const documentButton = screen.getAllByRole('button', { name: /Annual Report/i })[0];
-    documentButton.focus();
+    expect(within(documentButton).queryByText(/Audited annual report presenting/i)).not.toBeInTheDocument();
+    await act(async () => documentButton.focus());
+    expect(await screen.findByRole('tooltip', { name: /Audited annual report presenting/i }))
+      .toHaveTextContent(/Audited annual report presenting/i);
+    expect(documentButton).toHaveAccessibleDescription(/Audited annual report presenting/i);
     await user.keyboard('{Enter}');
 
     const dialog = screen.getByRole('dialog', { name: 'Annual Report' });
@@ -159,7 +185,12 @@ describe('AnnualPlanContent', () => {
     const user = userEvent.setup();
     render(<AnnualPlanContent documents={publishedDocuments} />);
 
-    await user.click(screen.getByRole('button', { name: /^Annual Report 4 total records/i }));
+    const annualReportRow = screen.getByRole('button', { name: /^Annual Report 4 total records/i });
+    expect(within(annualReportRow).queryByText(/Audited annual report presenting/i)).not.toBeInTheDocument();
+    await act(async () => annualReportRow.focus());
+    expect(await screen.findByRole('tooltip', { name: /Audited annual report presenting/i }))
+      .toBeInTheDocument();
+    await user.click(annualReportRow);
     expect(screen.getByRole('button', { name: /SE April Anna/i })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Annual Report, April: 3 records' }));

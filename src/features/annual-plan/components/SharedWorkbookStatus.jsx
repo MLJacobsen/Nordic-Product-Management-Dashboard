@@ -22,25 +22,12 @@ export default function SharedWorkbookStatus({
   onSignOut,
   state,
 }) {
-  if (!config.enabled) {
-    return (
-      <section aria-label="Shared responsibility editing" className="annual-plan-shared-status unconfigured">
-        <LockClosedIcon aria-hidden="true" />
-        <div>
-          <strong>Public overview · responsibility editing is not configured</strong>
-          <p>
-            The published workbook snapshot is available to everyone. An administrator must configure
-            Microsoft Entra and Graph before shared responsibility changes can be saved.
-          </p>
-        </div>
-      </section>
-    );
-  }
+  if (!config.enabled) return null;
 
   const busy = ['initializing', 'loading', 'saving', 'signingIn'].includes(state.status);
   if (!account) {
     return (
-      <section aria-label="Shared responsibility editing" className="annual-plan-shared-status">
+      <section aria-label="Shared responsibility editing" className="annual-plan-shared-status signed-out">
         <LockClosedIcon aria-hidden="true" />
         <div>
           <strong>Sign in to edit shared responsibilities</strong>
