@@ -15,8 +15,8 @@ describe('SharedWorkbookStatus', () => {
     vi.clearAllMocks();
   });
 
-  test('clearly labels the public snapshot as read-only when Graph is not configured', () => {
-    render(
+  test('renders no public banner or empty layout space when Graph is not configured', () => {
+    const { container } = render(
       <SharedWorkbookStatus
         {...handlers}
         account={null}
@@ -25,10 +25,8 @@ describe('SharedWorkbookStatus', () => {
       />,
     );
 
-    expect(screen.getByRole('region', { name: 'Shared responsibility editing' })).toHaveTextContent(
-      'Public overview · responsibility editing is not configured',
-    );
-    expect(screen.queryByRole('button', { name: 'Sign in' })).not.toBeInTheDocument();
+    expect(container).toBeEmptyDOMElement();
+    expect(screen.queryByText(/responsibility editing is not configured/i)).not.toBeInTheDocument();
   });
 
   test('offers sign-in only when delegated editing is configured', async () => {

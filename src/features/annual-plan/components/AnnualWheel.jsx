@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { DOCUMENT_CATEGORIES, MONTHS } from '../data/workbookParser';
+import AccessibleTooltip from './AccessibleTooltip';
 
 function polarToCartesian(center, radius, angle) {
   const radians = ((angle - 90) * Math.PI) / 180;
@@ -38,19 +39,20 @@ function DocumentButton({ document, onSelect }) {
   ].filter(Boolean).join(' · ');
 
   return (
-    <button
-      className="annual-plan-document-button"
-      onClick={() => onSelect(document)}
-      style={{ '--item-color': category.color, '--item-background': category.background }}
-      type="button"
-    >
-      <span className="annual-plan-document-name">{document.document}</span>
-      <span className="annual-plan-document-meta">{document.domicile || 'No domicile'}</span>
-      <span className="annual-plan-document-description">{document.description || 'Description not provided'}</span>
-      <span className="annual-plan-tooltip annual-plan-item-tooltip" role="tooltip">
-        {conciseDescription || 'Open document details'}
-      </span>
-    </button>
+    <AccessibleTooltip content={conciseDescription || 'Open document details'}>
+      {(tooltipProps) => (
+        <button
+          {...tooltipProps}
+          className="annual-plan-document-button"
+          onClick={() => onSelect(document)}
+          style={{ '--item-color': category.color, '--item-background': category.background }}
+          type="button"
+        >
+          <span className="annual-plan-document-name">{document.document}</span>
+          <span className="annual-plan-document-meta">{document.domicile || 'No domicile'}</span>
+        </button>
+      )}
+    </AccessibleTooltip>
   );
 }
 

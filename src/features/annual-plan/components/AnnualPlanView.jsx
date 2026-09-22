@@ -8,6 +8,7 @@ import {
   ArrowTopRightOnSquareIcon,
   CalendarDaysIcon,
   ChartPieIcon,
+  ChevronDownIcon,
   DocumentTextIcon,
   MagnifyingGlassIcon,
   ScaleIcon,
@@ -21,6 +22,7 @@ import {
   splitPeople,
 } from '../data/workbookParser';
 import AnnualWheel from './AnnualWheel';
+import AccessibleTooltip from './AccessibleTooltip';
 import DocumentDetailsDialog from './DocumentDetailsDialog';
 import RecordsExplorer from './RecordsExplorer';
 import SharedWorkbookStatus from './SharedWorkbookStatus';
@@ -74,6 +76,7 @@ export function AnnualPlanContent({
   const [activeView, setActiveView] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [isAdHocExpanded, setIsAdHocExpanded] = useState(false);
 
   useEffect(() => {
     if (!selectedDocument) return;
@@ -141,6 +144,7 @@ export function AnnualPlanContent({
   const showAllAdHocDocuments = () => {
     clearFilters();
     setSchedule('unscheduled');
+    setIsAdHocExpanded(true);
   };
 
   const handleViewKeyDown = (event, viewIndex) => {
@@ -352,65 +356,66 @@ export function AnnualPlanContent({
       <section aria-labelledby="annual-plan-ad-hoc-heading" className="annual-plan-ad-hoc-spotlight">
         <div className="annual-plan-ad-hoc-header">
           <div>
-            <span className="annual-plan-eyebrow">Flexible timing · Visible in every view</span>
+            <span className="annual-plan-eyebrow">Flexible timing</span>
             <h2 id="annual-plan-ad-hoc-heading">Ad hoc documents</h2>
-            <p>
-              These documents have no fixed delivery month. Review them actively and open any item
-              below to see its owner, legal basis, distribution details, and process links.
-            </p>
+            <p>No fixed month. Expand to review matching documents and open their details.</p>
           </div>
-          <div aria-live="polite" className="annual-plan-ad-hoc-count">
-            <strong data-testid="ad-hoc-spotlight-count">{unscheduled.length}</strong>
-            <span>{unscheduled.length === 1 ? 'document shown' : 'documents shown'}</span>
-            <small>{totalUnscheduled} total in the master overview</small>
+          <div className="annual-plan-ad-hoc-controls">
+            <div aria-live="polite" className="annual-plan-ad-hoc-count">
+              <strong data-testid="ad-hoc-spotlight-count">{unscheduled.length}</strong>
+              <span>{unscheduled.length === 1 ? 'matching document' : 'matching documents'}</span>
+              <small>{totalUnscheduled} total</small>
+            </div>
+            {unscheduled.length ? (
+              <button
+                aria-controls="annual-plan-ad-hoc-list"
+                aria-expanded={isAdHocExpanded}
+                className="annual-plan-ad-hoc-toggle"
+                onClick={() => setIsAdHocExpanded((current) => !current)}
+                type="button"
+              >
+                {isAdHocExpanded ? 'Hide documents' : 'Review documents'}
+                <ChevronDownIcon aria-hidden="true" />
+              </button>
+            ) : (
+              <button className="annual-plan-ad-hoc-toggle" onClick={showAllAdHocDocuments} type="button">
+                Show all {totalUnscheduled}
+              </button>
+            )}
           </div>
         </div>
 
-        {unscheduled.length ? (
-          <div className="annual-plan-ad-hoc-grid">
+        {unscheduled.length && isAdHocExpanded ? (
+          <div className="annual-plan-ad-hoc-grid" id="annual-plan-ad-hoc-list">
             {unscheduled.map((document) => {
               const itemCategory = DOCUMENT_CATEGORIES[document.category] || DOCUMENT_CATEGORIES.other;
               return (
-                <button
-                  aria-describedby={`ad-hoc-description-${document.id}`}
-                  aria-label={`Open details for ${document.document}, ${document.domicile || 'no domicile'}`}
-                  key={document.id}
-                  onClick={() => setSelectedDocument(document)}
-                  style={{ '--item-color': itemCategory.color }}
-                  type="button"
-                >
-                  <i aria-hidden="true" />
-                  <span className="annual-plan-ad-hoc-copy">
-                    <strong>{document.document}</strong>
-                    <small>
-                      {document.domicile || 'No domicile'} · {document.responsible || 'Owner not specified'}
-                    </small>
-                    <small className="annual-plan-ad-hoc-description">
-                      {document.description || 'Description not provided'}
-                    </small>
-                  </span>
-                  <span aria-hidden="true" className="annual-plan-ad-hoc-action">
-                    Details <ArrowTopRightOnSquareIcon />
-                  </span>
-                  <span
-                    className="annual-plan-tooltip annual-plan-item-tooltip"
-                    id={`ad-hoc-description-${document.id}`}
-                    role="tooltip"
-                  >
-                    {document.description || 'Description not provided'}
-                  </span>
-                </button>
+                <AccessibleTooltip content={document.description} key={document.id}>
+                  {(tooltipProps) => (
+                    <button
+                      {...tooltipProps}
+                      aria-label={`Open details for ${document.document}, ${document.domicile || 'no domicile'}`}
+                      onClick={() => setSelectedDocument(document)}
+                      style={{ '--item-color': itemCategory.color }}
+                      type="button"
+                    >
+                      <i aria-hidden="true" />
+                      <span className="annual-plan-ad-hoc-copy">
+                        <strong>{document.document}</strong>
+                        <small>
+                          {document.domicile || 'No domicile'} · {document.responsible || 'Owner not specified'}
+                        </small>
+                      </span>
+                      <span aria-hidden="true" className="annual-plan-ad-hoc-action">
+                        Details <ArrowTopRightOnSquareIcon />
+                      </span>
+                    </button>
+                  )}
+                </AccessibleTooltip>
               );
             })}
           </div>
-        ) : (
-          <div className="annual-plan-ad-hoc-empty">
-            <p>No ad hoc documents match the current filters.</p>
-            <button onClick={showAllAdHocDocuments} type="button">
-              Show all {totalUnscheduled} ad hoc documents
-            </button>
-          </div>
-        )}
+        ) : null}
       </section>
 
       <section aria-label="Annual plan views" className="annual-plan-view-tabs" role="tablist">
