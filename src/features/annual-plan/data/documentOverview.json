@@ -237,7 +237,7 @@
       "Lars"
     ],
     [
-      "Information Brochure",
+      "Prospectus (Information broschyr)",
       "SE",
       "A document containing supplementary information about the fund and the management company, including the fund rules, charges, investors’ rights, and practical information on subscribing for, redeeming and holding fund units.",
       "Ad hoc, when significant changes occur",
@@ -664,6 +664,45 @@
       "Carne (Fund manager)",
       "",
       "Joakim"
+    ],
+    [
+      "EDGAR Reporting (SEC)",
+      "",
+      "Report holdings to SEC via EDGAR Portal. The reporting is called 13F",
+      "Quarterly",
+      "File within 45 days after the end of each quarter.",
+      "Yes",
+      "Section 13(f) of the Securities Exchange Act of 1934 [15 U.S.C. 78m(f)] (“Exchange Act”) and rule 13f-1 [17 CFR 240.13f-1] thereunder.",
+      "English",
+      "",
+      "SEC Reporting (EDGAR) Routine.docx",
+      "Jamal"
+    ],
+    [
+      "EDGAR Reporting (SEC)",
+      "",
+      "Report large trader status to SEC via EDGAR Portal. The reporting is called 13H",
+      "Annually",
+      "File within 45 days after the end of each calendar year.",
+      "Yes",
+      "Rule 13h-1 and Form 13H under Section 13(h) of the Securities Exchange Act of 1934 (\"Exchange Act').",
+      "English",
+      "",
+      "SEC Reporting (EDGAR) Routine.docx",
+      "Jamal"
+    ],
+    [
+      "EDGAR Reporting (SEC)",
+      "",
+      "Report proxy voting to SEC via EDGAR Portal. The reporting is called NP-X",
+      "Annually",
+      "Filing period 01.07-31.08",
+      "Yes",
+      "Section 30 of the Investment Company Act of 1940 (“Investment Company Act”) and Rule 30b1-4 thereunder (17 CFR 270.30b1-4).",
+      "English",
+      "",
+      "SEC Reporting (EDGAR) Routine.docx",
+      "Jamal"
     ]
   ]
 }
