@@ -57,8 +57,8 @@ describe('AnnualPlanContent', () => {
 
     const adHocRegion = screen.getByRole('region', { name: 'Ad hoc documents' });
     expect(adHocRegion).toBeInTheDocument();
-    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('13');
-    expect(screen.getByText('13 total')).toBeInTheDocument();
+    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('16');
+    expect(screen.getByText('16 total')).toBeInTheDocument();
 
     const reviewButton = screen.getByRole('button', { name: 'Review documents' });
     expect(reviewButton).toHaveAttribute('aria-expanded', 'false');
@@ -88,9 +88,9 @@ describe('AnnualPlanContent', () => {
 
     await user.type(screen.getByRole('searchbox', { name: 'Search document text' }), 'not-a-document');
     expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('0');
-    await user.click(screen.getByRole('button', { name: 'Show all 13' }));
-    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('13');
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('13');
+    await user.click(screen.getByRole('button', { name: 'Show all 16' }));
+    expect(screen.getByTestId('ad-hoc-spotlight-count')).toHaveTextContent('16');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('16');
   });
 
   test('filters by search, domicile, owner, and legal requirement', async () => {
@@ -133,15 +133,15 @@ describe('AnnualPlanContent', () => {
     expect(screen.getByRole('heading', { name: 'Records explorer' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Reset filters' }));
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('50');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('53');
     expect(screen.getByRole('button', { name: 'Reset filters' })).toBeDisabled();
 
     await user.click(screen.getByRole('button', { name: 'Show ad hoc documents filter' }));
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('13');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('16');
 
     await user.click(screen.getByRole('button', { name: 'Remove ad hoc documents filter' }));
     await user.click(screen.getByRole('button', { name: 'Show legal requirement filter' }));
-    expect(screen.getByTestId('matching-count')).toHaveTextContent('37');
+    expect(screen.getByTestId('matching-count')).toHaveTextContent('40');
     expect(screen.getByRole('combobox', { name: 'Filter by legal requirement' })).toHaveValue('yes');
   });
 

@@ -10,7 +10,7 @@ describe('published document overview', () => {
       sourceUrl: 'https://storebrand.sharepoint.com/sites/NordiskProdukt/Felles/2%20Governing%20Documents/Document%20overview.xlsx?d=w770e3d7fec1a4edb9be5ec513b5ce478&csf=1&web=1&e=twSUIg',
       worksheet: 'Overview',
     });
-    expect(publishedDocuments).toHaveLength(50);
+    expect(publishedDocuments).toHaveLength(53);
     expect(publishedDocuments.every((document) => document.description)).toBe(true);
     expect(publishedDocuments.every((document) => document.responsible)).toBe(true);
   });
@@ -20,15 +20,15 @@ describe('published document overview', () => {
       (document) => document.document === 'Fund Rules / Articles of Association'
         && document.domicile === 'SE',
     );
-    const informationBrochure = publishedDocuments.find(
-      (document) => document.document === 'Information Brochure',
+    const prospectus = publishedDocuments.find(
+      (document) => document.document === 'Prospectus (Information broschyr)',
     );
 
     expect(fundRules).toMatchObject({
       responsible: 'Lars',
       schedule: { kind: 'unscheduled', months: [] },
     });
-    expect(informationBrochure).toMatchObject({
+    expect(prospectus).toMatchObject({
       domicile: 'SE',
       producedBy: expect.stringContaining('In design'),
       responsible: 'Anna',
@@ -55,6 +55,6 @@ describe('published document overview', () => {
       responsible: 'Marit',
       schedule: { kind: 'quarterly', months: [2, 5, 8, 11] },
     });
-    expect(publishedDocuments).toHaveLength(50);
+    expect(publishedDocuments).toHaveLength(53);
   });
 });
